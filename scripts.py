@@ -10,7 +10,6 @@ from javascript import Date # on gagne environ un ordre de grandeur en vitesse p
 from browser import  alert # pour les tests
 from browser.local_storage import storage
 
-
 # openonglet
 
 def cachecontenudecolore():
@@ -490,28 +489,58 @@ window.onbeforeunload = code2sortie
 
 #recist
 
+def isnumber(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+
+
 def calcrecist(ev):
     try:
         #creatsch:float=float(document["creatsch"].value)
         l_A:list=[]
         l_B:list=[]
+        i:int=0
         lirecist:list=document.select('[irecist]')
         lirecist.pop() #le dernier item c'est le bouton qui n'a pas de valeur
-        print(len(lirecist))
         for i in range(1,11):
             item=lirecist.pop()
             if i%2==0:
-                l_A.append(float(item.value))
+                l_A.append(item.value)
             else:
-                l_B.append(float(item.value))
+                l_B.append(item.value)
+        # attention, à ce stade les listes sont non validées et de type string peut être non castable en réel
+        i=6
+        for (a,b) in zip(l_A,l_B):
+            i-=1 # j'avoue ne pas saisir pk le compteur de lignes est inversé dps 6 mais ça marche...
+            if (isnumber(a) and isnumber(b)) or (a=='' and b==''):
+                #élimine les lignes à moitié nulles ou contenant du texte
+                if a=='' and b=='': # met à zéro les lignes vides
+                    l_A[i-1]=0
+                    l_B[i-1]=0
+                else:
+                    l_A[i-1]=float(a)
+                    l_B[i-1]=float(b)
+            else:
+                raise TypeError(i)
+
         suma:float=sum(l_A)
         sumb:float=sum(l_B)
         recist:float=round(100/suma*sumb-100,1)
         document["recist_suma"].textContent = suma
         document["recist_sumb"].textContent = sumb
-        document["recist_recist"].textContent ='SPD {:+.1f} % : {}'.format(recist,"progression" if recist>=20 else ("réponse partielle" if recist<=-30 else "maladie stable")) #1 chiffre après , et signé
+        document["recist_recist"].textContent ='SPD {:+.1f} % : {}'.format(recist,"progression" if recist>=20 else ("réponse complète" if recist==-100 else "réponse partielle" if recist<=-30 else "maladie stable")) #1 chiffre après , et signé
     except ZeroDivisionError:
-        document["recist_recist"].textContent = "-"
+        document["recist_recist"].textContent = "division par zéro : il doit y avoir une erreur de saisie de la colone 1..."
+    except TypeError as e:
+        ermsg:str="erreur de saisie"
+        if len(e.args)==1:
+            ermsg=f"{ermsg} ligne {e.args[0]}"
+        document["recist_recist"].textContent = ermsg
+    except Exception:
+        document["recist_recist"].textContent = "erreur générique"
 
 formulaire_anime("recist",calcrecist)
 

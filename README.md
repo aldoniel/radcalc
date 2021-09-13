@@ -14,7 +14,6 @@ Permet de calculer
         * [ ] bug : affichage incorrect du modal sur PC (BTS trop grand sort de l'écran : faudrait ajouter un ascenseur)
 * Onco
     * RECIST
-        [ ] bug : zero division error si pas rempli en entier !
     * [ ] cheson
 * [ ] Endoc
     * calcul wash-out surrénales
@@ -23,7 +22,7 @@ Permet de calculer
     * [ ] % sténose
 
 ## Todo
-1. [ ] corriger le bug recist
+1. [x] corriger le bug recist
 1. [ ] faire endoc
 1. [ ] faire vascu
 1. [ ] arranger le modal
