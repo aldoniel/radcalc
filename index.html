@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval'">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1,user-scalable=no">
+    <title>Radcalc</title>
+    <link rel="stylesheet" href="css/w3.css">
+    <script src="js/brython.js"></script>
+    <script src="js/brython_stdlib.js"></script>
+    <script type="text/javascript">
+
+        function startBrython() {
+            document.addEventListener('deviceready', brython, false);
+            brython() // pour tester dans le navigateur, à enlever sur téléphone
+        }
+    </script>
+</head>
+
+<body onload="startBrython()"><!--;openonglet(event,'algo') //debug">-->
+    <script type="text/javascript" src="cordova.js"></script>
+    <!--menu haut -->
+    <div class="w3-container">
+        <div class="w3-bar w3-light-green">
+            <button class="w3-bar-item w3-button tablink w3-green"  onclick="openonglet(event,'DFG')">DFG</button>
+           <!-- <button class="w3-bar-item w3-button tablink " onclick="openonglet(event,'Brock')">Poumon</button> -->
+            <div class="w3-dropdown-hover">
+                <button class="w3-button tablink ">Poumon</button>
+                <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                    <a href="#" class="w3-bar-item w3-button tablink" onclick="openonglet(event,'brock')">Nodule en TDM (Brock)</a>
+                    <a href="#" class="w3-bar-item w3-button tablink" onclick="openonglet(event,'herder')">Nodule en TEP (Herder)</a>
+                    <a href="#" class="w3-bar-item w3-button tablink" onclick="openonglet(event,'vtd')">Temps de doublement</a>
+                    <a href="#" class="w3-bar-item w3-button tablink" onclick="openonglet(event,'algo')">Algorithmes décisionnels</a>
+                </div>
+            </div>
+            <div class="w3-dropdown-hover">
+                <button class="w3-button tablink ">Onco</button>
+                <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                    <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'RECIST')">RECIST</a>
+                </div>
+            </div>
+        </div>
+        <!--onglet DFG -->
+        <div id="DFG" class="w3-container w3-border onglet" style="display:none">
+            <div class="w3-container w3-teal">
+                <h5>Débit de Filtration Glomérulaire (DFG) estimé de l'adulte</h5>
+            </div>
+
+            <div class="w3-container">
+                <label class="w3-text-teal"><b>Créatinine ?</b></label>
+                <input required class="w3-input w3-border w3-light-grey" iDFG=1 type="number" min="1" step="any" id="creat" title="Seulement des chiffres S.V.P.">
+                <p>
+                    <input class="w3-radio" type="radio" name="ucr" checked >
+                    <label>en µmol/l</label>
+    
+                    <input class="w3-radio" type="radio" name="ucr" id="mgdl">
+                    <label>en mg/l</label>
+                </p>
+
+                <label class="w3-text-teal" ><b>Âge (années) ?</b></label>
+                <input class="w3-input w3-border w3-light-grey" type="number" min="1"  step="any" id="age"  title="Seulement des chiffres S.V.P." iDFG=2>
+                <p>
+                <input class="w3-radio" type="radio" name="genre" value="1" checked iDFG=3>
+                <label>Homme</label>
+
+                <input class="w3-radio" type="radio" name="genre" value="0.742" iDFG=3>
+                <label>Femme</label>
+                </p>
+                <p>
+                <input class="w3-radio" type="radio" name="ethnie" value="1" checked iDFG=4>
+                <label>non Africain-Américain</label>
+            
+                <input class="w3-radio" type="radio" name="ethnie" value="1.212" iDFG=4>
+                <label>Africain-Américain</label>
+                </p>
+                <p><span class="w3-tag w3-large w3-teal">MDRD</span> <span id="MDRD">-</span> ml/min/1,73 m<sup>2</sup> de DFG <button  id="infomdrd" class="w3-button w3-circle w3-green">?</button ></p>
+                <p><span class="w3-tag w3-large w3-teal">CKD-EPI</span> <span id="CKD">-</span> ml/min/1,73 m<sup>2</sup> de DFG <button  id="infockd" class="w3-button w3-circle w3-green">?</button ></p>
+                <p><input id="IDMS"  type="checkbox"> Standardisation IDMS (indispensable pour l'équation du CKD-EPI)</p>
+
+                <label class="w3-text-teal"><b>Poids (kg ; seulement pour Cockcroft) ?</b></label>
+                <input class="w3-input w3-border w3-light-grey" type="number" min="1"  step="any" id=poids ipoids=1 title="Seulement des chiffres S.V.P.">
+
+                <p><span class="w3-tag w3-large w3-teal">Cockcroft</span> <span id=dfgcg>-</span> ml/min de clairance de créatinine <button  id="infococ" class="w3-button w3-circle w3-green">?</button ></p>
+                <p>Remarque : La formule de Cockroft et Gault est conservée pour des raisons historiques (cf infra).</p>    
+                <button class="w3-btn w3-indigo" iDFG=5 id="calcdfg" ipoids=2 >Calculer</button>
+                <p></p>
+                <div class="w3-container w3-teal">
+                    <h5>Débit de Filtration Glomérulaire (DFG) estimé de l'enfant</h5>                
+                </div>
+                <p>Estimation à partir de l'équation de Schwartz modifiée.</p>
+                <p><label class="w3-text-teal"><b>Créatinine ?</b></label>
+                <input required class="w3-input w3-border w3-light-grey" ischwartz=1 type="number" min="1" step="any" id="creatsch" title="Seulement des chiffres S.V.P."></p>
+                <p><input class="w3-radio" name="usch" type="radio" checked >
+                <label>en µmol/l</label>
+                <input class="w3-radio" id="mmolsch" type="radio" name="usch">
+                <label> en mg/l</label>
+                </p>
+                <p><label class="w3-text-teal"><b>Taille en cm ?</b></label>
+                <input required class="w3-input w3-border w3-light-grey" ischwartz=2 type="number" min="1" step="any" id="taillecmsch" title="Seulement des chiffres S.V.P."></p>                    
+                <p><span class="w3-tag w3-large w3-teal">DFG</span> <span id=dfgsch>-</span> ml/min de clairance de créatinine/1,73m² <button  id="infosch" class="w3-button w3-circle w3-green">?</button ></p>
+                <button class="w3-btn w3-indigo" ischwartz=3>Calculer</button>
+                <p></p>
+                <div class="w3-container w3-teal">
+                <h5>Débit de filtration glomérulaire absolu</h5>
+                </div>
+                <p>Le DFG est habituellement relatif, c'est à dire exprimé en ml/mn/1,73m² (rapporté à sur une surface corporelle normale). Pour les dosages de médicaments à excrétion rénale, le DFG absolu, ajusté à la surface corporelle de l'individu, est recommandé. Cf. <a href="http://www.egfr.se/eGFRfr.html#absolutegfr">réf.</a></p>
+                <p><label class="w3-text-teal"><b>DFG relatif en ml/mn/1,73m² ?</b></label>
+                <input required class="w3-input w3-border w3-light-grey" iDFGabs=1 type="number" min="1" step="any" id="DFGrel" title="Seulement des chiffres S.V.P."></p>
+                <p><label class="w3-text-teal"><b>Taille en cm ?</b></label>
+                <input required class="w3-input w3-border w3-light-grey" iDFGabs=2 type="number" min="1" step="any" id="taillecm" title="Seulement des chiffres S.V.P."></p>
+                <p><label class="w3-text-teal"><b>poids en kg ?</b></label>
+                <input required class="w3-input w3-border w3-light-grey" iDFGabs=3 type="number" min="1" step="any" id="poidskg" title="Seulement des chiffres S.V.P."></p>
+                
+                <p><span class="w3-tag w3-large w3-teal">DFG absolu</span> <span id=DFGabs>-</span> ml/min de clairance de créatinine <button  id="infoDFGabs" class="w3-button w3-circle w3-green">?</button ></p>    
+                <p></p>
+                <div class="w3-container w3-teal">Stades d'insuffisance rénale</div>
+                <table class="w3-table-all ">
+                    <tr >
+                    <th>Stade</th>
+                    <th>DFG</th>
+                    <th>Définition</th></tr>
+                    <tr>
+                    <td>1</td>
+                                <td>≥ 90</td>
+                                <td>Maladie rénale chronique* avec DFG normal ou augmenté</td>
+                            </tr><tr>
+                    <td>2</td>
+                                <td>60-89</td>
+                                <td>Maladie rénale chronique* avec DFG légèrement diminué</td>
+                            </tr><tr>
+                    <td>3 A</td>
+                                <td>45-59</td>
+                                <td>Insuffisance rénale chronique modérée</td>
+                            </tr><tr>
+                    <td>3 B</td>
+                                <td>30-44</td>
+                                <td>Insuffisance rénale chronique modérée</td>
+                            </tr><tr>
+                    <td>4</td>
+                                <td>15-29</td>
+                                <td>Insuffisance rénale chronique sévère</td>
+                            </tr><tr>
+                    <td>5</td>
+                                <td>&lt; 15</td>
+                                <td>Insuffisance rénale chronique terminale</td>
+                            </tr></table>
+                            <p>*Avec marqueurs d’atteinte rénale : protéinurie clinique, hématurie, leucocyturie, ou anomalies morphologiques ou histologiques, ou marqueurs de dysfonction tubulaire, persistant plus de trois mois.</p>
+                            <div class="w3-container w3-teal">Recommandations CIRTACI</div>
+                            <p>Selon les fiches <a href="http://www.sfrnet.org/sfr/societe/5-groupes-de-travail/qualite-securite-gestion-des-risques/agents-de-contraste-cirtaci/article.phtml?id=rc%2forg%2fsfrnet%2fhtm%2fArticle%2f2008%2fmie-20080918-000000-11514" target="_blank">CIRTACI</a>, les facteurs d'insuffisance rénale aiguë post-constraste sont :</p>
+                            <ul><li>Liés au patient<ul><li>L'insuffisance rénale aiguë ou chronique.</li><li>La déshydratation marquée.</li></ul></li>
+                            <li>Liés à la procédure<ul><li>Fortes doses de produit de contraste administrés en intra-artériel avec exposition rénale au premier passage.</li><li>Multiples injections de produit de contraste dans les 48 ou 72 heures.<li>Actes interventionnels cardio-vasculaires.</li></ul></li>
+                            </ul>
+                            <p>Les seuils à risque sont :</p>
+                            <ul><li>Risque si DFG < 45 ml/min/1,73 m² en cas de voie artérielle de 1<sup>er</sup> passage</li><li>Risque si DFG < 30 ml/min/1,73 m² sinon (voie veineuse ou artérielle de 2<sup>e</sup> passage.)</li></ul>
+
+                <div class="w3-container w3-teal">Notes</div>
+                <ul><li>Expérimentalement, ce calculateur reproduit à l'arrondi près les valeurs de <a href="https://www.sfndt.org/professionnels/calculateurs/mdrds-ckd-epi-cockcroft" target="_blank">celui</a> de la Société Francophone de Néphrologie Dialyse et Transplantation ; de <a href="http://www.egfr.se/eGFRfr.html#absolutegfr" target="_blank">celui</a> de l'Université de Lund pour le DFG absolu, et
+                de <a href = "https://www.mdcalc.com/revised-schwartz-equation-glomerular-filtration-rate-gfr-2009" target="_blank">celui</a> du site mdcal pour l'équation de Schwartz modifiée.</li>
+                    <li>Voir également <a href="https://www.has-sante.fr/upload/docs/application/pdf/2012-10/evaluation_du_debit_de_filtration_glomerulaire_et_du_dosage_de_la_creatininemie_dans_le_diagnostic_de_la_maladie_renale_chronique_chez_ladulte_-_fiche_buts.pdf" target="_blank">Estimer le débit de filtration glomérulaire par l’équation CKD-EPI</a> de l'HAS.</li></ul>
+            </div>
+        </div>
+        <!--onglet Brock -->
+        <div id="brock" class="w3-container w3-border onglet" style="display:none">
+            <div class="w3-container w3-teal">
+                <h5>Probabilité de malignité d'un nodule en TDM (Modèle de Brock)</h5>
+            </div>
+            <p><label class="w3-text-teal"><b>Âge (années)</b></label>
+                <input required class="w3-input w3-border w3-light-grey" ibrock=1 type="number" min="1" step="any" id="brock_age" title="Seulement des chiffres S.V.P."></p>
+                <label class="w3-text-teal"><b>Sexe ?</b></label>
+                <p><input class="w3-radio"  ibrock=2  type="radio" name="brock_sexe" value="0"  >
+                <label>Homme</label>
+                <input class="w3-radio" ibrock=2 type="radio" name="brock_sexe" value="0.6010727"  >
+                <label>Femme</label>
+                </p><label class="w3-text-teal"><b>Histoire familiale de cancer pulmonaire ?</b></label>
+                <p><input class="w3-radio"  ibrock=3  type="radio" name="brock_kcfam" id="brock_kcfam"  >
+                <label>Oui</label>
+                <input class="w3-radio" ibrock=3 type="radio" name="brock_kcfam"  >
+                <label>Non</label>
+                </p><label class="w3-text-teal"><b>Emphysème associé ?</b></label>
+                <p><input class="w3-radio"  ibrock=4  type="radio" name="brock_emphyseme" id="brock_emphyseme"  >
+                <label>Oui</label>
+                <input class="w3-radio" ibrock=4 type="radio" name="brock_emphyseme"  >
+                <label>Non</label>
+                </p><p><label class="w3-text-teal"><b>Taille du nodule ? (mm)</b></label>
+                <input required class="w3-input w3-border w3-light-grey" ibrock=5 type="number" min="0" step="any" id="brock_taille_nodule" title="Seulement des chiffres S.V.P."></p>
+                <label class="w3-text-teal"><b>Type de nodule ?</b></label>
+                <p><input class="w3-radio"  ibrock=6  type="radio" name="brock_nodule_type" value="0"  >
+                <label>Solide</label>
+                <input class="w3-radio" ibrock=6 type="radio" name="brock_nodule_type" value="0.3769578"  >
+                <label>Mixte</label>
+                <input class="w3-radio" ibrock=6 type="radio" name="brock_nodule_type" value="-0.1276173"  >
+                <label>Verre-dépoli</label>
+                </p><label class="w3-text-teal"><b>Nodule d'un lobe supérieur ?</b></label>
+                <p><input class="w3-radio"  ibrock=7  type="radio" name="brock_LS" id="brock_LS"  >
+                <label>Oui</label>
+                <input class="w3-radio" ibrock=7 type="radio" name="brock_LS"  >
+                <label>Non</label>
+                </p><label class="w3-text-teal"><b>Nodule spiculé ?</b></label>
+                <p><input class="w3-radio"  ibrock=8  type="radio" name="brock_spicule" id="brock_spicule"  >
+                <label>Oui</label>
+                <input class="w3-radio" ibrock=8 type="radio" name="brock_spicule"  >
+                <label>Non</label>
+                </p><p><label class="w3-text-teal"><b>Nombre total de nodules ?</b></label>
+                <input required class="w3-input w3-border w3-light-grey" ibrock=9 type="number" min="1" step="any" id="brock_nb_nodule" title="Seulement des chiffres S.V.P."></p>
+                
+                
+                <p><span class="w3-tag w3-large w3-teal">Probabilité de malignité*</span> <span id="brock_proba_kc">-</span> %</p>
+                <p><button class="w3-btn w3-indigo " ibrock=10 id="brock_calc" ipoids=2 >Calculer</button></p>
+                <p><span id="brock_avis"><span></p>
+                <div class="w3-container w3-teal">Notes</div>
+                <ul><li>*Ceci est la probabilité qu'un tel nodule chez un tel patient, sera diagnosticable comme un cancer pendant un suivi standard de 2 à 4 ans. Réf. <button id="infobrock" class="w3-button w3-circle   w3-green">?</button></li>
+                    <li>Expérimentalement, ce calculateur reproduit les valeurs de <a href="https://brocku.ca/lung-cancer-screening-and-risk-prediction/risk-calculators/" target="_blank">celui</a> de l'université de Brock dit « Nodule Malignancy Prediction Calculator (full model) » </li>
+                    <li>Les recommandation BTS (British Thoracic Society) datent d'août 2015 et sont utilisées ici à défaut de recommandations françaises (fév. 2021). Réf. <button id="infoBTS" class="w3-button w3-circle   w3-green">?</button></li>
+                </ul>
+        </div>
+
+         <!--onglet Herder -->
+        <div id="herder" class="w3-container w3-border onglet" style="display:none">
+            <div class="w3-container w3-teal">
+                <h5>Probabilité de malignité d'un nodule en TEP (Modèle de Herder) pour les nodules <u>solides</u></h5>
+            </div>
+            <p><label class="w3-text-teal"><b>Âge ? (années) </b></label>
+                <input required class="w3-input w3-border w3-light-grey" iherder=1 type="number" min="1" step="any" id="herder_age" title="Seulement des chiffres S.V.P."></p>
+                <label class="w3-text-teal"><b>Tabagisme :</b></label>
+                <p><input class="w3-radio"  iherder=2  type="radio" name="herder_tabac" value="0.7917"  >
+                <label>Fumeur ou ancien fumeur</label>
+                <input class="w3-radio"  type="radio" name="herder_tabac" value="0"  >
+                <label>N'a jamais fumé</label>
+                </p><label class="w3-text-teal"><b>ATCD de cancer extra-thoracique ?</b></label>
+                <p><input class="w3-radio"  iherder=3  type="radio" name="herder_kc" value="1.3388"  >
+                <label>Oui</label>
+                <input class="w3-radio"  type="radio" name="herder_kc" value="0"  >
+                <label>Non</label>
+                </p><label class="w3-text-teal"><b>Localisation au lobe supérieur ?</b></label>
+                <p><input class="w3-radio"  iherder=4  type="radio" name="herder_LS" value="0.7838"  >
+                <label>Oui</label>
+                <input class="w3-radio"  type="radio" name="herder_LS" value="0"  >
+                <label>Non</label>
+                </p><p><label class="w3-text-teal"><b>Taille du nodule (mm) ?</b></label>
+                <input required class="w3-input w3-border w3-light-grey" iherder=5 type="number" min="0" step="any" id="herder_mm" title="Seulement des chiffres S.V.P."></p>
+                <label class="w3-text-teal"><b>Nodule spiculé ?</b></label>
+                <p><input class="w3-radio"  iherder=6  type="radio" name="herder_spicule" value="1.0407"  >
+                <label>Oui</label>
+                <input class="w3-radio"  type="radio" name="herder_spicule" value="0"  >
+                <label>Non</label>
+                </p><label class="w3-text-teal"><b>Avidité pour le FDG ? </b><button id="infoherder_fixe" class="w3-button w3-circle w3-green">?</button></label>
+                <p><input class="w3-radio"  iherder=7  type="radio" name="herder_fdg" value="0"  >
+                <label>Aucune</label>
+                <input class="w3-radio"  type="radio" name="herder_fdg" value="2.322"  >
+                <label>Faible</label>
+                <input class="w3-radio"  type="radio" name="herder_fdg" value="4.617"  >
+                <label>Modérée</label>
+                <input class="w3-radio"  type="radio" name="herder_fdg" value="4.771"  >
+                <label>Intense</label>
+                </p>
+
+                <p><span class="w3-tag w3-large w3-teal">Probabilité de malignité*</span> <span id="herder_proba_kc">-</span> %</p>
+                <p><button class="w3-btn w3-indigo " iherder=8 id="herder_calc" >Calculer</button></p>
+                <p><div id="herder_avis"></div></p>
+                <div class="w3-container w3-teal">Notes</div>
+                <ul>
+                    <li>Le modèle Herder <button id="infoherder" class="w3-button w3-circle   w3-green>?</span> ajoute l'intensité de la fixation au TEP-FDG au modèle de la Mayo Clinic. Le modèle d'Herder était un peu plus fiable (+13,6% d'AUC) que le modèle de la Mayo Clinic (et de <a href="https://doi.org/10.1016/j.lungcan.2015.03.018">Brock</a> ).</li>
+                    <li>Plus sur les AUC des modèles <button id="infoAUC" class="w3-button w3-circle   w3-green">?</button></li>
+                </ul>
+        </div>
+        <!--onglet vtd -->
+        <div id="vtd" class="w3-container w3-border onglet" style="display:none">
+            <div class="w3-container w3-teal">
+                <h5>Temps de doublement</h5>
+            </div>
+            <br>
+            <div class="w3-container w3-cyan">
+                <h6>Examen 1</h6>
+            </div>
+            <p><label class="w3-text-teal"><b>Date du 1er scanner ?</b></label>
+            <input required class="w3-input w3-border w3-light-grey" ivtd=1 type="date" id="vtd_date1" placeholder="dd-mm-yyyy" value="" title="Date au format AAAA-MM-JJ"></p>
+            <p><button class="w3-button w3-white w3-border w3-border-blue w3-round-large" id="vtd_3m" >Il y a 3 mois</button></p>
+            <p><label class="w3-text-teal"><b>Volume du nodule (ex. en mm³) ?</b></label>
+            <input required class="w3-input w3-border w3-light-grey" ivtd=2 type="number" min="0" step="any" id="vtd_vol1" title="Seulement des chiffres S.V.P."></p>
+            <p>ou</p>
+            <p><label class="w3-text-teal"><b>Volume approximatif (ex "5" ou "5x6" ou "5-6-7" mm)</b></label> <button id="infovtd1" class="w3-button w3-circle w3-green">?</button>
+                <input required class="w3-input w3-border w3-light-grey" ivtd2=1 type="tel" min="0" step="any" id="vtd_vol1b"></p>
+                <span id="vtd_vol1c"></span>
+            <div class="w3-container w3-cyan">
+                <h6>Examen 2<span id="vtd_delta"></span></h6> 
+            </div>
+            <p><label class="w3-text-teal"><b>Date du 2e scanner ?</b></label>
+            <input required class="w3-input w3-border w3-light-grey" ivtd=3 type="date" id="vtd_date2" placeholder="yyyy-mm-dd" value="" title="Date au format AAAA-MM-JJ"></p>
+            <p><button class="w3-button w3-white w3-border w3-border-blue w3-round-large" id="vtd_ajd" >Aujourd'hui</button></p>
+            <p><label class="w3-text-teal"><b>Volume du nodule (ex. en mm³) ?</b></label>
+            <input required class="w3-input w3-border w3-light-grey" ivtd=4 type="number" min="0" step="any" id="vtd_vol2" title="Seulement des chiffres S.V.P."></p>
+            <p>ou</p>
+            <p><label class="w3-text-teal"><b>Volume approximatif (ex "5" ou "5x6" ou "5-6-7" mm)</b></label> <button id="infovtd2" class="w3-button w3-circle w3-green">?</button>
+                <input required class="w3-input w3-border w3-light-grey" ivtd2=2 type="tel" min="0" step="any" id="vtd_vol2b"></p>
+                <span id="vtd_vol2c"></span>
+            <p><span class="w3-tag w3-large w3-teal">Temps de doublement</span> <span id="vtd_vdt">-</span></p>
+            <p><button class="w3-btn w3-indigo " ivtd=5 id="vtd_calc">Calculer</button></p>
+                <p><div id="vtd_avis"></div></p>
+                <div class="w3-container w3-teal">Notes</div>
+                <ul>
+                    <li>Ces recommandations (BTS) sont pour les <b>nodules solides.</b></li>
+                    <li>Selon les <a href="https://www.brit-thoracic.org.uk/quality-improvement/guidelines/pulmonary-nodules/" target="_blank">recommandations BTS</a>, le temps de doublement est idéalement à utiliser avec la volumétrie (mesure automatisée du volume), afin de contrôler les nodules à 1 an pour les nodules de 5-6mm et à 3 mois pour les nodules ≥6mm. Il faut évidemment utiliser le même algorithme, le même scanner idéalement,
+                     ne pas mesurer un ganglion intra-pulmonaire..., etc.</li>
+                     <li>Un VTD entre 30 et 400 jours est suspect.</li>
+                <li>Les nodules ≥8 mm ne doivent être suivis (BTS) que si leur probabilité de malignité est <10% (Brock, Herder).</li>
+                <li>Ce calculateur a été testé contre celui de <a href="https://www.radiology.no/vdt/" target="_blank">Tore Sjøbod</a> et l'application P-Nodule Risk.</li>
+                <li><a href="test.html" >test</a></li>
+            </ul>
+        </div>
+        <!--onglet RECIST -->
+        <div id="RECIST" class="w3-container w3-border onglet" style="display:none">
+            <h2>RECIST 1.1</h2>
+            <p><button class="w3-btn w3-red" id="recist_clear">Effacer les valeurs</button></p>
+            <table class="w3-table-all w3-centered" style="width:50%">
+                <tr >
+                <th>Lésion</th>
+                <th>Avant</th>
+                <th>Aujourd'hui</th></tr>
+                <tr>
+                <td>1</td>
+                            <td><input class="w3-input w3-border" type="number" min="0" irecist=1 title="Seulement des chiffres S.V.P."></td>
+                            <td><input class="w3-input w3-border" type="number" min="0" irecist=2 title="Seulement des chiffres S.V.P."></td>
+                        </tr><tr>
+                <td>2</td>
+                            <td><input class="w3-input w3-border" type="number" min="0" irecist=3 title="Seulement des chiffres S.V.P."></td>
+                            <td><input class="w3-input w3-border" type="number" min="0" irecist=4 title="Seulement des chiffres S.V.P."></td>
+                        </tr><tr>
+                <td>3</td>
+                            <td><input class="w3-input w3-border" type="number" min="0" irecist=5 title="Seulement des chiffres S.V.P."></td>
+                            <td><input class="w3-input w3-border" type="number" min="0" irecist=6 title="Seulement des chiffres S.V.P."></td>
+                        </tr><tr>
+                <td>4</td>
+                            <td><input class="w3-input w3-border" type="number" min="0" irecist=7 title="Seulement des chiffres S.V.P."></td>
+                            <td><input class="w3-input w3-border" type="number" min="0" irecist=8 title="Seulement des chiffres S.V.P."></td>
+                        </tr><tr>
+                <td>5</td>
+                            <td><input class="w3-input w3-border" type="number" min="0" irecist=9 title="Seulement des chiffres S.V.P."></td>
+                            <td><input class="w3-input w3-border" type="number" min="0" irecist=10 title="Seulement des chiffres S.V.P."></td>
+                        </tr><tr>
+                            <td><b>Somme</b></td>
+                            <td><span id="recist_suma">-</span></td>
+                            <td><span id="recist_sumb">-</span></td>            
+                        </tr>
+                </table>
+                        <p><span class="w3-tag w3-large w3-teal">RECIST</span> <span id="recist_recist">-</span></p>
+                        <p><button class="w3-btn w3-indigo " irecist=11 id="recist_calc">Calculer</button></p>
+                        <div class="w3-container w3-teal">Mémo (cibles)</div>
+                        <ul><li><b>Réponse complète (RC)</b> : Disparition de toutes les lésions. De plus, tous les ganglions lymphatiques (cible ou non-cible), doivent avoir atteint une dimension < 10 mm dans leur plus petit axe.</li>
+                        <ul><li>Attention : les ganglions sélectionnés comme lésions cibles doivent toujours être mesurés (dimension du plus petit axe dans le plan anatomique utilisé pour l’examen BASELINE), même s’ils diminuent en taille durant l’étude et que leur petit axe devient < 10 mm.<li>Dès lors, lorsque des ganglions sont utilisés comme lésion cible, la « somme » des dimensions des lésions n’est pas nécessairement nulle, même en cas de réponse complète, puisqu’un ganglion normal est défini comme ayant un plus petit axe < 10 mm.</li>
+                            </ul>
+                        <li><b>Réponse partielle (RP)</b> : Diminution d'au moins 30 % de la somme des diamètres des lésions cibles par rapport à la somme initiale des diamètres (Examen BASELINE).</li>
+                        <li><b>Progression (PD) </b>: Augmentation ≥ 20 % de la somme des diamètres des lésions cibles par rapport à la plus petite somme des diamètres observée durant l’étude (NADIR), y compris la visite de baseline. En plus de cette augmentation relative de 20%, cette somme doit augmenter d’au moins 0,5 cm.
+                            <ul><li>Nota bene : l’apparition d'une ou plusieurs nouvelles lésions est également considérée comme progression.</li>
+                            <li>Attention : s’il existe une progression par rapport au NADIR et une réponse par rapport à l’examen BASELINE, c’est la progression qui prévaut.</li></ul>
+                        </li>
+                        <li><b>Stabilisation (SD)</b> : Ni RP (ou RC), ni PD.</li>
+                            <li>Source de cet extrait : <a href="http://www.cepd.fr/" target="_blank">Fiche RECIST de la cohorte des Carcinomes Endocrines Peu Différenciés.</a> Résumé excellent à voir pour les autres critères.</li></ul>
+        </div>
+        
+
+        <!--onglet algo -->
+        <div id="algo" class="w3-container w3-border onglet" style="display:none">
+            <h2>Algorithmes décisionnels</h2>
+            <p>Prise en charges et suivi des nodules pulmonaires</p>
+            <ul>
+                <li><button  type="button" modalbouton  class="w3-button w3-indigo" src="img/bts.svg" alt="BTS 2015">Guidelines BTS 2015</button> prise en charge des nodules pulmonaires. Réf. <button id="infoBTS2" class="w3-button w3-circle   w3-green">?</button></li><br>
+                <li><button  type="button" modalbouton  class="w3-button w3-indigo" src="img/solid-nodules2.png" alt="Fleischner 2017 Suivi des nodules solides" >Fleischner 2017 solides</button> fréquence de suivi (sans volumétrie).</li><br>
+                <li><button  type="button" modalbouton  class="w3-button w3-indigo" src="img/subsolid-nodules2.png" alt="Fleischner 2017 Suivi des nodules avec verre-dépoli">Fleischner 2017 avec verre-dépoli</button> fréquence de suivi (sans volumétrie).</li><br>
+            </ul>
+        </div>
+        <script>
+            // global var
+            var onglet, tablinks;
+            onglet = document.getElementsByClassName("onglet"); 
+            tablinks = document.getElementsByClassName("tablink");
+            var current_onglet;
+            try {
+                current_onglet=localStorage.getItem('last_onglet') //essaie de lire le dernier onglet avant fermeture
+                if (current_onglet==null){
+                    current_onglet="DFG" // au cas où le localstorage est corrompu
+                }
+            } catch (error) {
+                current_onglet="DFG" //mettre un onglet d'info générale au 1er démarrage
+            }
+            openonglet(null,current_onglet) //NULL car c'est compliqué de simuler un event
+
+            function openonglet(evt, ongletName) {
+                var i;
+                document.getElementById(current_onglet).style.display = "none"; //cacher l'onglet actif
+                current_onglet=ongletName;
+                //for (i = 0; i < onglet.length; i++) {
+                //    onglet[i].style.display = "none";//cache le contenu
+                //}
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" w3-green", "");  //décolore le menu
+                }
+                document.getElementById(ongletName).style.display = "block";
+                if (evt!=null){
+                    evt.currentTarget.className += " w3-green";
+                    if (ongletName!= "DFG"){evt.currentTarget.closest(".w3-dropdown-hover").children[0].className += " w3-green";}
+                }
+                //mon code lamentable pour colorer. Je décide de ne pas recolorer à la rouverture car ça complique le code...
+
+            }
+        </script>
+<script type="text/python3">
+
+    from browser import window, run_script
+
+    def load_script(req):
+       src = req.responseText
+       run_script(src)
+    
+    SCRIPT_PATH = 'scripts.py' # Desarrolla la app en www/app.py
+    
+    request = window.XMLHttpRequest.new()
+    request.onload = lambda e:load_script(request)
+    request.open('GET', SCRIPT_PATH, False) # False == carga síncrona, True == asíncrona (False si vamos a cargar varios scripts que dependen unos de otros)
+    request.send()
+</script>
+<!-- The Modal -->
+<script type="text/javascript" src="js/zoom.min.js"> </script>
+<div id="modal_id" class="modal">
+    <span class="modal_close">&times;</span>
+    <div width="100%"  style="overflow:scroll;"> <!--y'avait visible, qu'est sans doute bien ss android. sous windows auto donne les ascenseurs -->
+    <img class="modal-content" id="img01" >
+    </div>
+  <!--   <script type="text/javascript"> 
+        var zm = new Zoom(document.getElementById('img01'), {
+            pan: true,
+            rotate: false
+        });
+    </script> -->
+    <div id="caption"></div>
+  </div>
+</body>
+
+</html>
