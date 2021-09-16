@@ -264,7 +264,6 @@ def herder_calc(ev):
             herder_comment+="Selon le risque individuel et la préférence du patient, envisager une biopsie guidée par l'imagerie ; ou sinon, une biopsie-exérèse ou une surveillance en TDM."
         elif herder_proba_kc>70:
             herder_comment+="Envisager une exérèse ou un traitement non-chirurgical (± une biopsie guidée par l'imagerie)."
-        #document["herder_avis"].textContent=herder_comment
         document["herder_avis"].html=herder_comment
     except Exception:
         document["herder_proba_kc"].textContent="-"
@@ -499,7 +498,6 @@ def isnumber(s):
 
 def calcrecist(ev):
     try:
-        #creatsch:float=float(document["creatsch"].value)
         l_A:list=[]
         l_B:list=[]
         i:int=0
@@ -514,17 +512,17 @@ def calcrecist(ev):
         # attention, à ce stade les listes sont non validées et de type string peut être non castable en réel
         i=6
         for (a,b) in zip(l_A,l_B):
-            i-=1 # j'avoue ne pas saisir pk le compteur de lignes est inversé dps 6 mais ça marche...
+            i-=1 # en popant la liste je l'ai inversée, du coup le compteur aussi...
             if (isnumber(a) and isnumber(b)) or (a=='' and b==''):
                 #élimine les lignes à moitié nulles ou contenant du texte
-                if a=='' and b=='': # met à zéro les lignes vides
+                if a=='' and b=='': # met à zéro les lignes vides (rq : firefox renvoie '' si on tappe du texte ds le champ nombre)
                     l_A[i-1]=0
                     l_B[i-1]=0
                 else:
                     l_A[i-1]=float(a)
                     l_B[i-1]=float(b)
             else:
-                raise TypeError(i)
+                raise TypeError(i) # ex, si un navigateur accepte du texte ds un champ nombre...
 
         suma:float=sum(l_A)
         sumb:float=sum(l_B)
@@ -551,3 +549,48 @@ def recist_clear(ev):
         item.value=""
 
 document["recist_clear"].bind("click", recist_clear)
+
+#washout
+
+def calcwashout(ev):
+    try:
+        uh0:float=float(document["uh0"].value)
+        uh70:float=float(document["uh70"].value)
+        uh15:float=float(document["uh15"].value)
+        worel:float= 100*(uh70-uh15)/uh70
+        woabs:float=100*(uh70-uh15)/(uh70-uh0)
+
+        document["washout_avis"].html="Remarque : la densité spontanée est entre -30 et -115 U.H., ne s'agit-il pas d'un myélolipome ? ...</p>" if (uh0<=-30 and uh0>=-115) else "<p>Remarque : la densité spontanée est ≤ à 10 U.H., en faveur d'un adénome. Le calcul du lavage n'était pas nécessaire.</p>" if uh0<=10 else "erreur de saisie ?" if uh0>200 else ""
+        document["washout_relatif"].textContent ='{:+.1f} % : {}'.format(worel,"en faveur d'un adénome" if worel>=40 else "indéterminé")
+        document["washout_absolu"].textContent = '{:+.1f} % : {}'.format(woabs,"en faveur d'un adénome" if woabs>=60 else "indéterminé")
+
+    except Exception:
+        document["washout_relatif"].textContent = "-"
+        document["washout_absolu"].textContent = "-"
+
+formulaire_anime("washout",calcwashout)
+
+# chuteirm
+
+def calcchuteirm(ev):
+    try:
+        insur:float=float(document["insur"].value)
+        outsur:float=float(document["outsur"].value)
+        chutesurr:float=100*(insur-outsur)/insur
+        document["chuteirm_sur"].textContent ='{:+.1f} % {}'.format(chutesurr,"> 16,5% en faveur d'un adénome" if chutesurr>16.5 else "indéterminé")
+        
+        try:
+            inrat:float=float(document["inrat"].value)
+            outrat:float=float(document["outrat"].value)
+            chuterat=(outsur/outrat)*(inrat/insur)
+            document["chuteirm_rat"].textContent = '{:+.2f} {}'.format(chuterat,"< 0,71 en faveur d'un adénome" if chuterat<0.71 else "indéterminé")
+        except Exception:
+            document["chuteirm_rat"].textContent = '-'
+
+    except Exception:
+        document["chuteirm_rat"].textContent = '-'
+        document["chuteirm_sur"].textContent = "-"
+
+formulaire_anime("chuteirm",calcchuteirm)
+
+

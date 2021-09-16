@@ -42,6 +42,12 @@
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'RECIST')">RECIST</a>
                 </div>
             </div>
+            <div class="w3-dropdown-hover">
+                <button class="w3-button tablink ">Endoc</button>
+                <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                    <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'washout')">Adénomes</a>
+                </div>
+            </div>
         </div>
         <!--onglet DFG -->
         <div id="DFG" class="w3-container w3-border onglet" style="display:none">
@@ -370,6 +376,70 @@
                 <li><button  type="button" modalbouton  class="w3-button w3-indigo" src="img/solid-nodules2.png" alt="Fleischner 2017 Suivi des nodules solides" >Fleischner 2017 solides</button> fréquence de suivi (sans volumétrie).</li><br>
                 <li><button  type="button" modalbouton  class="w3-button w3-indigo" src="img/subsolid-nodules2.png" alt="Fleischner 2017 Suivi des nodules avec verre-dépoli">Fleischner 2017 avec verre-dépoli</button> fréquence de suivi (sans volumétrie).</li><br>
             </ul>
+        </div>
+         <!--onglet washout -->
+        <div id="washout" class="w3-container w3-border onglet" style="display:none">
+            <div class="w3-container w3-teal">
+                <h5>Calcul du washout surrénalien (lavage) en scanner</h5>
+            </div>
+            <p><label class="w3-text-teal"><b>Densité sans injection</b></label>
+                <input required class="w3-input w3-border w3-light-grey" iwashout=1 type="number" min="-115" step="any" id="uh0" title="Seulement des chiffres S.V.P."></p>
+            <p><label class="w3-text-teal"><b>Densité au temps précoce à 60" (60-90" pic de rehaussement supposé)</b></label>
+                <input required class="w3-input w3-border w3-light-grey" iwashout=2 type="number" min="-115" step="any" id="uh70" title="Seulement des chiffres S.V.P."></p>
+            <p><label class="w3-text-teal"><b>Densité au temps tardif à 15' (10-15')</b></label>
+                <input required class="w3-input w3-border w3-light-grey" iwashout=3 type="number" min="-115" step="any" id="uh15" title="Seulement des chiffres S.V.P."></p>
+            <div id="washout_avis"></div>
+            <p><span class="w3-tag w3-large w3-teal">Wash out relatif</span> <span id="washout_relatif">-</span></p>
+            <p><span class="w3-tag w3-large w3-teal">Wash out absolu</span> <span id="washout_absolu">-</span></p>
+            <p><button class="w3-btn w3-indigo" iwashout=4 >Calculer</button></p> <!--je mets plus d'id, ac formulaire_anime, ça sert plus -->
+            
+            <div class="w3-container w3-teal">
+                <h5>Chute de signal en IRM</h5>
+            </div>
+            <p><label class="w3-text-teal"><b>Surrénale : Signal en phase</b></label>
+                <input required class="w3-input w3-border w3-light-grey" ichuteirm=1 type="number" step="any" id="insur" title="Seulement des chiffres S.V.P."></p>
+                <p><label class="w3-text-teal"><b>Surrénale : Signal en opposition de phase</b></label>
+                <input required class="w3-input w3-border w3-light-grey" ichuteirm=2 type="number" step="any" id="outsur" title="Seulement des chiffres S.V.P."></p>
+                <p><label class="w3-text-teal"><b>Rate : Signal en phase</b></label>
+                <input required class="w3-input w3-border w3-light-grey" ichuteirm=3 type="number"  step="any" id="inrat" title="Seulement des chiffres S.V.P."></p>
+                <p><label class="w3-text-teal"><b>Rate : Signal en opposition de phase</b></label>
+                <input required class="w3-input w3-border w3-light-grey" ichuteirm=4 type="number"  step="any" id="outrat" title="Seulement des chiffres S.V.P."></p>
+                <p>Remarque : L'analyse est d'abord visuelle. Les rapports de chute de signal sont une aide débattue.</p>
+                <p><span class="w3-tag w3-large w3-teal">Chute de signal du nodule surrénalien</span> <span id="chuteirm_sur">-</span></p>
+            <p><span class="w3-tag w3-large w3-teal">Chute de signal du nodule surrénalien rapporté à la rate</span> <span id="chuteirm_rat">-</span></p>
+            <p><button class="w3-btn w3-indigo" ichuteirm=5 >Calculer</button></p>
+
+            
+            <div class="w3-container w3-teal">Mémo</div>
+            <h5>Algorithme décisionnel</h5>
+            <ol> 
+                <li>Contexte ? (oncologique, syndrome hormonal, hématome, tuberculose...)</li>
+                <li>Si la masse est > 6cm ou à croissance rapide, elle est suspecte (25% de néoplasies après 6cm); les adénomes sont <4 cm et homogènes.</li>
+                <li>Si la densité spontanée est <10U.H., → STOP : en faveur d'un adénome (riche en graisse) (seuil pour Se 71% ; Sp 98% <a href="https://www.ajronline.org/doi/10.2214/ajr.171.1.9648789" target="_blank">cf. réf</a>)</li>
+                <ul><li>Remarque, les informations infra sont données pour les adénomes pauvres en graisse (Les seuils et couples Se/Sp sont différents sinon) et non-nécrotiques.</li></ul>
+                <li>Calcul du washout (W.O.) relatif et absolu au scanner</li>
+                    <ol type='A'>
+                        <li>Si le W.O. absolu est ≥ 60% ou le W.O. relatif ≥ 40% (pour un temps tardif à 15') → en faveur d'un adénome. (Se 89%, Sp 95% et Se 83% Sp 93% respectivement, le W.O. absolu est un rien plus performant. <a href="https://www.ajronline.org/doi/10.2214/ajr.175.5.1751411" target="_blank">cf. réf</a>)</li>
+                        <ul><li>Remarque, les seuils sont respectivement 50 et 40% pour un tardif à 10', mais avec une moindre précision diagnostique. <a href="dx.doi.org/10.1259/bjr.20151018" target="_blank">cf. réf. peu claire</a></li>
+                        <li>Cependant, certains adénomes se lavent précocément. Si le W.O. relatif est > à 40% sur une TDM multiphasique, le diagnostique d'adénome peut être porté avec confiance sans scanner surrénalien dédié.</li></ul>
+                        <li>Sinon c'est indéterminé en TDM et il faut calculer la chute de signal en IRM.</li>
+                        <ol type='a'>
+                            <li>Si la chute de signal est > 16,5% → en faveur d'un adénome. Visuellement, l'adénome se rehausse précocément et se lave.</li>
+                            <li>Sinon, c'est indéterminé → TEP (plus pour le contexte multimétastatique que la discrimination) ; histologie ; surveillance.</li>
+                        </ol>
+                    </ol>  
+                <li>Explorations hormonales.</li>
+                <li>Suivi : pas de suivi en imagerie pour les masses clairement bénignes < 4 cm et < 10U.H. selon la société Européenne d'Endocrinologie ESE 2016. En cas de doute sur une métastase mimant un adénome, un suivi est cependant utile.</li>
+            </ol>
+            <h5>Masses mimant des adénomes</h5>
+            <ul>
+                <li>Métastases riches en graisses (CHC...)</li>
+                <li>Métastases hypervasculaires (CHC, rein...)</li>
+                <li>Phéochromocytomes (riche en graisse, hypervasculaire)</li>
+            </ul>
+            <h5>Références</h5>
+            <ul><li>Notes largement issues de <a href="https://dx.doi.org/10.1259/bjr.20151018" target="_blank">Adrenal imaging for adenoma characterization..., BJR 2016, Jung Jae Park et al.</a> </li>
+            <li><a href="http://www.sfendocrino.org/_images/mediatheque/articles/pdf/recommandations/2006%20consensus%20sfe%20incidentalomes%20surrenaliens.pdf" target="_blank">Consensus SFE 2006 incidentalomes surrénaliens</a></li></ul>
         </div>
         <script>
             // global var

@@ -188,12 +188,26 @@ input_float("poids en kg ?","poidskg")"""
 
 #--------------------- schartz -------------------------
 # rq ne pas prendre ce code pr comptant, ya pleins de bugs j'ai du CR à la main
-glob_var.nom_compteur="ischwartz"
+# glob_var.nom_compteur="ischwartz"
 
-input_float("Créatinine ?","creatsch")
-input_checked("mmolsch","en µmol/l",checked=True,compteur=True)
-input_checked_decoy("mgdlsch"," en mg/l")
-input_float("Taille en cm ?","taillecmsch")
+# input_float("Créatinine ?","creatsch")
+# input_checked("mmolsch","en µmol/l",checked=True,compteur=True)
+# input_checked_decoy("mgdlsch"," en mg/l")
+# input_float("Taille en cm ?","taillecmsch")
+
+#--------------------- washout -------------------------
+
+# glob_var.nom_compteur="iwashout"
+# input_float("Densité sans injection","uh0")
+# input_float('Densité au temps portal 70" (60-75")',"uh70")
+# input_float("Densité au temps tardif 15'","uh15")
+
+
+glob_var.nom_compteur="ichuteirm"
+input_float("Surrénale : Signal en phase","insur")
+input_float('Surrénale : Signal en opposition de phase',"outsur")
+input_float("Rate : Signal en phase","inrat")
+input_float('Rate : Signal en opposition de phase',"outrat")
 
 
 
