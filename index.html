@@ -48,6 +48,7 @@
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'washout')">Adénomes</a>
                 </div>
             </div>
+            <button class="w3-bar-item w3-button tablink w3-green"  onclick="openonglet(event,'apropos')">?</button>
         </div>
         <!--onglet DFG -->
         <div id="DFG" class="w3-container w3-border onglet" style="display:none">
@@ -441,6 +442,37 @@
             <ul><li>Notes largement issues de <a href="https://dx.doi.org/10.1259/bjr.20151018" target="_blank">Adrenal imaging for adenoma characterization..., BJR 2016, Jung Jae Park et al.</a> </li>
             <li><a href="http://www.sfendocrino.org/_images/mediatheque/articles/pdf/recommandations/2006%20consensus%20sfe%20incidentalomes%20surrenaliens.pdf" target="_blank">Consensus SFE 2006 incidentalomes surrénaliens</a></li></ul>
         </div>
+        <!--onglet apropos -->
+        <div id="apropos" class="w3-container w3-border onglet" style="display:none">
+            <div class="w3-container w3-teal">
+                <h5>Avertissements</h5>
+            </div>
+            <p>L'auteur de cette application se présente en tant que programmateur amateur sans autre titre ni prétention.</p>
+            <p>
+                Cette application est fournie à titre informatif et sans aucune garantie. Elle s'adresse à un public averti ayant une formation médicale. En aucun cas les informations
+                 qu'elle apporte ne peuvent se subtituer à une consultation médicale ni réaliser un diagnostique. Bien que j'ai apporté du soin à sa réalisation, 
+                des erreurs peuvent persister. Les différents calculateurs ont été testés manuellement contre d'autres calculateurs déjà publiquement accessibles. 
+                Néanmoins, le code n'a évidemment pas été certifié ni prouvé.
+                 La saisie de l'utilisateur est grossièrement vérifiée, mais une erreur de saisie de votre part pourrait produire un résultat aberrant.
+                Cette application ne se subtitue pas au raisonnement médical et tout résultat devrait être interprété avec un oeil critique.</p>
+             <p>Cette application n'est pas un produit médical professionel.</p>
+            <p>Le code source que j'ai rédigé est placé sous la licence CeCILL de droit français (cf. infra).</p>
+             <p>En poursuivant l'utilisation, vous acceptez ces condictions sans réserve. Veuillez prendre connaissance de la licence et l'accepter.</p>
+             <div class="w3-container w3-teal">
+                <h5>Informations techniques</h5></div>
+                <ul>
+                    <li>Les informations sont traitées localement, hors ligne.</li>
+                    <li>Il n'y a pas de contenu distant en dehors des hyperliens.</li>
+                    <li>Il n'y a pas de publicité (ni aucun financement externe.)</li>
+                    <li>Le code est un mélange de python via <a href="https://brython.info/" target="_blank">Brython</a>, de <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">W3.CSS</a>, html, javascript.</li>
+                    <li>L'application est portée sur android par <a href="https://cordova.apache.org/" target="_blank">Cordova</a>.</li>
+                </ul>
+                <div class="w3-container w3-teal">
+                    <h5>Licence</h5></div>
+                    <div id="cecill"></div>
+            </div>
+        </div>
+
         <script>
             // global var
             var onglet, tablinks;
@@ -470,7 +502,7 @@
                 document.getElementById(ongletName).style.display = "block";
                 if (evt!=null){
                     evt.currentTarget.className += " w3-green";
-                    if (ongletName!= "DFG"){evt.currentTarget.closest(".w3-dropdown-hover").children[0].className += " w3-green";}
+                    if (ongletName!= "DFG" && ongletName!="apropos"){evt.currentTarget.closest(".w3-dropdown-hover").children[0].className += " w3-green";}
                 }
                 //mon code lamentable pour colorer. Je décide de ne pas recolorer à la rouverture car ça complique le code...
 
@@ -484,7 +516,7 @@
        src = req.responseText
        run_script(src)
     
-    SCRIPT_PATH = 'scripts.py' # Desarrolla la app en www/app.py
+    SCRIPT_PATH = 'scripts.py'
     
     request = window.XMLHttpRequest.new()
     request.onload = lambda e:load_script(request)

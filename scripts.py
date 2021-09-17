@@ -488,7 +488,7 @@ window.onbeforeunload = code2sortie
 
 #recist
 
-def isnumber(s):
+def isnumber(s)->bool:
     try:
         float(s)
         return True
@@ -593,4 +593,7 @@ def calcchuteirm(ev):
 
 formulaire_anime("chuteirm",calcchuteirm)
 
+def cecilladd():
+    document["cecill"].html=open('cecill21fr.html').read()
 
+cecilladd()
