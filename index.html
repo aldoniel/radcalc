@@ -1,3 +1,36 @@
+<!-- Copyright aldoniel 2021
+
+contact électronique : new issue -> https://github.com/aldoniel/radcalc/issues 
+
+Ce logiciel est un programme informatique servant à faciliter des calculs radiologiques.
+
+Ce logiciel est régi par la licence CeCILL soumise au droit français et
+respectant les principes de diffusion des logiciels libres. Vous pouvez
+utiliser, modifier et/ou redistribuer ce programme sous les conditions
+de la licence CeCILL telle que diffusée par le CEA, le CNRS et l'INRIA 
+sur le site "http://www.cecill.info".
+
+En contrepartie de l'accessibilité au code source et des droits de copie,
+de modification et de redistribution accordés par cette licence, il n'est
+offert aux utilisateurs qu'une garantie limitée.  Pour les mêmes raisons,
+seule une responsabilité restreinte pèse sur l'auteur du programme,  le
+titulaire des droits patrimoniaux et les concédants successifs.
+
+A cet égard  l'attention de l'utilisateur est attirée sur les risques
+associés au chargement,  à l'utilisation,  à la modification et/ou au
+développement et à la reproduction du logiciel par l'utilisateur étant 
+donné sa spécificité de logiciel libre, qui peut le rendre complexe à 
+manipuler et qui le réserve donc à des développeurs et des professionnels
+avertis possédant  des  connaissances  informatiques approfondies.  Les
+utilisateurs sont donc invités à charger  et  tester  l'adéquation  du
+logiciel à leurs besoins dans des conditions permettant d'assurer la
+sécurité de leurs systèmes et ou de leurs données et, plus généralement, 
+à l'utiliser et l'exploiter dans les mêmes conditions de sécurité. 
+
+Le fait que vous puissiez accéder à cet en-tête signifie que vous avez 
+pris connaissance de la licence CeCILL, et que vous en avez accepté les
+termes. -->
+
 <!DOCTYPE html>
 <html>
 
@@ -23,8 +56,8 @@
 <body onload="startBrython()"><!--;openonglet(event,'algo') //debug">-->
     <script type="text/javascript" src="cordova.js"></script>
     <!--menu haut -->
-    <div class="w3-container">
-        <div class="w3-bar w3-light-green">
+    <div class="w3-container" >
+        <div class="w3-bar w3-light-green" id="menu" style="display:block">
             <button class="w3-bar-item w3-button tablink w3-green"  onclick="openonglet(event,'DFG')">DFG</button>
            <!-- <button class="w3-bar-item w3-button tablink " onclick="openonglet(event,'Brock')">Poumon</button> -->
             <div class="w3-dropdown-hover">
@@ -48,7 +81,7 @@
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'washout')">Adénomes</a>
                 </div>
             </div>
-            <button class="w3-bar-item w3-button tablink w3-green"  onclick="openonglet(event,'apropos')">?</button>
+            <button class="w3-bar-item w3-button tablink w3-green" id="evapropos" onclick="openonglet(event,'apropos')">?</button>
         </div>
         <!--onglet DFG -->
         <div id="DFG" class="w3-container w3-border onglet" style="display:none">
@@ -319,7 +352,9 @@
         </div>
         <!--onglet RECIST -->
         <div id="RECIST" class="w3-container w3-border onglet" style="display:none">
-            <h2>RECIST 1.1</h2>
+            <div class="w3-container w3-teal">
+                <h5>RECIST 1.1</h5>
+            </div>
             <p><button class="w3-btn w3-red" id="recist_clear">Effacer les valeurs</button></p>
             <table class="w3-table-all w3-centered" style="width:50%">
                 <tr >
@@ -426,7 +461,7 @@
                         <li>Sinon c'est indéterminé en TDM et il faut calculer la chute de signal en IRM.</li>
                         <ol type='a'>
                             <li>Si la chute de signal est > 16,5% → en faveur d'un adénome. Visuellement, l'adénome se rehausse précocément et se lave.</li>
-                            <li>Sinon, c'est indéterminé → TEP (plus pour le contexte multimétastatique que la discrimination) ; histologie ; surveillance.</li>
+                            <li>Sinon, c'est indéterminé → TEP (fixe moins que le foie (ou moins de 1,5x le foie) habituellement) ; histologie ; surveillance.</li>
                         </ol>
                     </ol>  
                 <li>Explorations hormonales.</li>
@@ -456,8 +491,9 @@
                  La saisie de l'utilisateur est grossièrement vérifiée, mais une erreur de saisie de votre part pourrait produire un résultat aberrant.
                 Cette application ne se subtitue pas au raisonnement médical et tout résultat devrait être interprété avec un oeil critique.</p>
              <p>Cette application n'est pas un produit médical professionel.</p>
-            <p>Le code source que j'ai rédigé est placé sous la licence CeCILL de droit français (cf. infra).</p>
+            <p>Le code source que j'ai rédigé est placé sous la licence CeCILL de droit français, qui respecte les principes de diffusion des logiciels libres (cf infra).</p>
              <p>En poursuivant l'utilisation, vous acceptez ces condictions sans réserve. Veuillez prendre connaissance de la licence et l'accepter.</p>
+             <div id="defile"></div><p></p>
              <div class="w3-container w3-teal">
                 <h5>Informations techniques</h5></div>
                 <ul>
@@ -470,6 +506,7 @@
                 <div class="w3-container w3-teal">
                     <h5>Licence</h5></div>
                     <div id="cecill"></div>
+                    <a id="cecillaccepter"></a>
             </div>
         </div>
 
@@ -482,10 +519,10 @@
             try {
                 current_onglet=localStorage.getItem('last_onglet') //essaie de lire le dernier onglet avant fermeture
                 if (current_onglet==null){
-                    current_onglet="DFG" // au cas où le localstorage est corrompu
+                    current_onglet="apropos" // au cas où le localstorage est corrompu
                 }
             } catch (error) {
-                current_onglet="DFG" //mettre un onglet d'info générale au 1er démarrage
+                current_onglet="apropos" //mettre un onglet d'info générale au 1er démarrage
             }
             openonglet(null,current_onglet) //NULL car c'est compliqué de simuler un event
 
@@ -505,7 +542,6 @@
                     if (ongletName!= "DFG" && ongletName!="apropos"){evt.currentTarget.closest(".w3-dropdown-hover").children[0].className += " w3-green";}
                 }
                 //mon code lamentable pour colorer. Je décide de ne pas recolorer à la rouverture car ça complique le code...
-
             }
         </script>
 <script type="text/python3">

@@ -1,3 +1,36 @@
+""" Copyright aldoniel 2021
+
+contact électronique : new issue -> https://github.com/aldoniel/radcalc/issues 
+
+Ce logiciel est un programme informatique servant à faciliter des calculs radiologiques.
+
+Ce logiciel est régi par la licence CeCILL soumise au droit français et
+respectant les principes de diffusion des logiciels libres. Vous pouvez
+utiliser, modifier et/ou redistribuer ce programme sous les conditions
+de la licence CeCILL telle que diffusée par le CEA, le CNRS et l'INRIA 
+sur le site "http://www.cecill.info".
+
+En contrepartie de l'accessibilité au code source et des droits de copie,
+de modification et de redistribution accordés par cette licence, il n'est
+offert aux utilisateurs qu'une garantie limitée.  Pour les mêmes raisons,
+seule une responsabilité restreinte pèse sur l'auteur du programme,  le
+titulaire des droits patrimoniaux et les concédants successifs.
+
+A cet égard  l'attention de l'utilisateur est attirée sur les risques
+associés au chargement,  à l'utilisation,  à la modification et/ou au
+développement et à la reproduction du logiciel par l'utilisateur étant 
+donné sa spécificité de logiciel libre, qui peut le rendre complexe à 
+manipuler et qui le réserve donc à des développeurs et des professionnels
+avertis possédant  des  connaissances  informatiques approfondies.  Les
+utilisateurs sont donc invités à charger  et  tester  l'adéquation  du
+logiciel à leurs besoins dans des conditions permettant d'assurer la
+sécurité de leurs systèmes et ou de leurs données et, plus généralement, 
+à l'utiliser et l'exploiter dans les mêmes conditions de sécurité. 
+
+Le fait que vous puissiez accéder à cet en-tête signifie que vous avez 
+pris connaissance de la licence CeCILL, et que vous en avez accepté les
+termes. """
+
 # from typing import Callable !! ne pas importer, ça ralentit à mort l'initialisation de brython: plus 4s. Anoter seulement les types élémentaires.
 from browser import document, html,window
 from browser.local_storage import storage
@@ -12,31 +45,65 @@ from browser.local_storage import storage
 
 # openonglet
 
-def cachecontenudecolore():
+""" def cachecontenudecolore():
     classonglet = document.select('.onglet')
     for onglet in classonglet:
         onglet.style.display = "none" #cacher tout le contenu (chaque rubrique)
     classtablink = document.select('.tablink')
     for tablink in classtablink:
-        tablink.className=tablink.className.replace(" w3-green", "")
+        tablink.className=tablink.className.replace(" w3-green", "") """ # cette fonction génialement écrite est lente et écrite en js
     #c'est un peu bourrin mais ça décolore le texte partout
 
 #cachecontenudecolore()
 
 #plutot qu'utiliser bind, on va ajouter la fonction brython au js namespace https://brython.info/static_doc/en/jsobjects.html
 #ev.target.attrs["onglet"]
-def brython_openonglet(ev,nomonglet:str):
+""" def brython_openonglet(ev,nomonglet:str):
     cachecontenudecolore()
     document.getElementById(nomonglet).style.display = "block"
     ev.currentTarget.className += " w3-green"
     if nomonglet!="DFG":
         ev.currentTarget.closest(".w3-dropdown-hover").children[0].className += " w3-green"
-
+ """ # cette fonction génialement écrite est lente et écrite en js
 
 #window.brython_openonglet = brython_openonglet
-
-
 document <= html.H5('Brython Ready! :)')
+
+cecillaccepte:bool #variable pas utilisée... bug utiliser directement storage['cecillaccepte'] prblm
+
+def cecillacceptefunc(ev): #noms pas clair à rationaliser
+    global cecillaccepte
+    cecillaccepte=True
+    storage['cecillaccepte']="1"
+    document["menu"].style.display="block"
+    window.scroll(0,0) #js, scroll en haut
+
+
+try:
+    cecillaccepte=True if storage['cecillaccepte']=="1" else False
+except KeyError:
+    storage['cecillaccepte']="0"
+    cecillaccepte=False
+
+if not cecillaccepte:
+    document["menu"].style.display="none"
+    link = html.CENTER(html.A(html.BUTTON("↓ Faire défiler la page vers le bouton accepter ↓", Class="w3-button w3-red"),href="#cecillaccepter"))
+    document["defile"]<=link
+    accepte = html.CENTER(html.BUTTON("J'accepte la licence CeCILL sus-mentionnée", Class="w3-button w3-red w3-large"))
+    accepte.bind("click",cecillacceptefunc)
+    document["cecillaccepter"]<=accepte
+
+
+def cecilladd(ev):
+    document["cecill"].html=open('cecill21fr.html').read()
+    document["evapropos"].unbind("click", cecilladd)
+
+
+if window.current_onglet=="apropos": # si on charge d'emblée sur le légal
+    cecilladd(None)
+else:
+    document["evapropos"].bind("click", cecilladd) # si on charge d'emblée sur le légal, ça sert à rien de mettre l'ev pcq c'est déjà chargé
+    print("on charge sur autre chose que le légal")
 
 class glob_var:
     nextInput_maxint:dict={}
@@ -593,7 +660,3 @@ def calcchuteirm(ev):
 
 formulaire_anime("chuteirm",calcchuteirm)
 
-def cecilladd():
-    document["cecill"].html=open('cecill21fr.html').read()
-
-cecilladd()

@@ -26,6 +26,7 @@ Permet de calculer
 
 ## Todo
 1. [x] corriger le bug recist
+1. [ ] menu recist incohérent
 1. [ ] faire endoc
 1. [ ] faire vascu
 1. [x] ajouter les avertissements légaux

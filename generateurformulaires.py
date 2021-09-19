@@ -209,6 +209,10 @@ input_float('Surrénale : Signal en opposition de phase',"outsur")
 input_float("Rate : Signal en phase","inrat")
 input_float('Rate : Signal en opposition de phase',"outrat")
 
+# --------------------stenose--------------------------
+
+glob_var.nom_compteur="icstenose"
+
 
 
 ret:str=""
