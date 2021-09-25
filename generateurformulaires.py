@@ -202,18 +202,27 @@ input_float("poids en kg ?","poidskg")"""
 # input_float('Densité au temps portal 70" (60-75")',"uh70")
 # input_float("Densité au temps tardif 15'","uh15")
 
-
+"""
 glob_var.nom_compteur="ichuteirm"
 input_float("Surrénale : Signal en phase","insur")
 input_float('Surrénale : Signal en opposition de phase',"outsur")
 input_float("Rate : Signal en phase","inrat")
 input_float('Rate : Signal en opposition de phase',"outrat")
-
+"""
 # --------------------stenose--------------------------
-
+"""
 glob_var.nom_compteur="icstenose"
-
-
+input_float("Sténose","petitdiam")
+input_float('Diamètre normal',"gddiam")
+input_checked("steform","NASCET",checked=True,compteur=True)
+input_checked_decoy("steform","ECST")
+"""
+#-----------------testis-------------------
+glob_var.nom_compteur="itestis"
+label("Dimensions du testicule dans les 3 plans")
+input_float("x","testix")
+input_float('y',"testiy")
+input_float('z',"testiz")
 
 ret:str=""
 while ret!="exit" and ret!="None":

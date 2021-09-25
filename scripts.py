@@ -69,23 +69,17 @@ from browser.local_storage import storage
 #window.brython_openonglet = brython_openonglet
 document <= html.H5('Brython Ready! :)')
 
-cecillaccepte:bool #variable pas utilisée... bug utiliser directement storage['cecillaccepte'] prblm
-
-def cecillacceptefunc(ev): #noms pas clair à rationaliser
-    global cecillaccepte
-    cecillaccepte=True
+def cecillacceptefunc(ev):
+    # enregistre l'acceptation et affiche le menu
     storage['cecillaccepte']="1"
     document["menu"].style.display="block"
     window.scroll(0,0) #js, scroll en haut
 
-
 try:
-    cecillaccepte=True if storage['cecillaccepte']=="1" else False
-except KeyError:
+#essaie de lire l'acceptation ds local storage et sinon charge la licence etc.
+    assert storage['cecillaccepte']=="1"
+except (KeyError,AssertionError):
     storage['cecillaccepte']="0"
-    cecillaccepte=False
-
-if not cecillaccepte:
     document["menu"].style.display="none"
     link = html.CENTER(html.A(html.BUTTON("↓ Faire défiler la page vers le bouton accepter ↓", Class="w3-button w3-red"),href="#cecillaccepter"))
     document["defile"]<=link
@@ -93,17 +87,15 @@ if not cecillaccepte:
     accepte.bind("click",cecillacceptefunc)
     document["cecillaccepter"]<=accepte
 
-
 def cecilladd(ev):
+    #charge dynamiquement la licence
     document["cecill"].html=open('cecill21fr.html').read()
-    document["evapropos"].unbind("click", cecilladd)
-
+    document["evapropos"].unbind("click", cecilladd) #une fois que c'est chargé la fonction se déréférence toute seule
 
 if window.current_onglet=="apropos": # si on charge d'emblée sur le légal
     cecilladd(None)
 else:
-    document["evapropos"].bind("click", cecilladd) # si on charge d'emblée sur le légal, ça sert à rien de mettre l'ev pcq c'est déjà chargé
-    print("on charge sur autre chose que le légal")
+    document["evapropos"].bind("click", cecilladd) # si on charge pas sur le légal, on ajoute le chargement par le menu
 
 class glob_var:
     nextInput_maxint:dict={}
@@ -115,8 +107,6 @@ def getradiovalue(name):
     for elem in collection:
         if elem.checked:
             return elem.value
-
-
 
 def nextInput(ev,code:str,maxint:int):
     # permet de passer d'un input à l'autre avec entrée pour des float
@@ -467,8 +457,6 @@ def infovtd(ev):
 document[f"infovtd1"].bind("click", infovtd)
 document[f"infovtd2"].bind("click", infovtd)
 
-
-
 # modal
 
 modal=document["modal_id"]
@@ -660,3 +648,21 @@ def calcchuteirm(ev):
 
 formulaire_anime("chuteirm",calcchuteirm)
 
+# nascet
+
+def calcnascet(ev):
+    try:
+        document["nascet_ste"].textContent =f'{round(100*(1-float(document["petitdiam"].value)/float(document["gddiam"].value)))} %'
+    except Exception:
+        document["nascet_ste"].textContent = '-'
+
+formulaire_anime("cstenose",calcnascet) 
+
+#testis
+def calctestis(ev):
+    try:
+        document["testisvol"].textContent ='{:.1f} mL'.format(.00071*float(document["testix"].value)*float(document["testiy"].value)*float(document["testiz"].value))
+    except Exception:
+        document["testisvol"].textContent = '-'
+
+formulaire_anime("testis",calctestis)

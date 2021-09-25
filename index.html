@@ -1,36 +1,7 @@
-<!-- Copyright aldoniel 2021
-
-contact électronique : new issue -> https://github.com/aldoniel/radcalc/issues 
-
+<!-- (C) aldoniel 2021
+contact : new issue -> https://github.com/aldoniel/radcalc/issues 
 Ce logiciel est un programme informatique servant à faciliter des calculs radiologiques.
-
-Ce logiciel est régi par la licence CeCILL soumise au droit français et
-respectant les principes de diffusion des logiciels libres. Vous pouvez
-utiliser, modifier et/ou redistribuer ce programme sous les conditions
-de la licence CeCILL telle que diffusée par le CEA, le CNRS et l'INRIA 
-sur le site "http://www.cecill.info".
-
-En contrepartie de l'accessibilité au code source et des droits de copie,
-de modification et de redistribution accordés par cette licence, il n'est
-offert aux utilisateurs qu'une garantie limitée.  Pour les mêmes raisons,
-seule une responsabilité restreinte pèse sur l'auteur du programme,  le
-titulaire des droits patrimoniaux et les concédants successifs.
-
-A cet égard  l'attention de l'utilisateur est attirée sur les risques
-associés au chargement,  à l'utilisation,  à la modification et/ou au
-développement et à la reproduction du logiciel par l'utilisateur étant 
-donné sa spécificité de logiciel libre, qui peut le rendre complexe à 
-manipuler et qui le réserve donc à des développeurs et des professionnels
-avertis possédant  des  connaissances  informatiques approfondies.  Les
-utilisateurs sont donc invités à charger  et  tester  l'adéquation  du
-logiciel à leurs besoins dans des conditions permettant d'assurer la
-sécurité de leurs systèmes et ou de leurs données et, plus généralement, 
-à l'utiliser et l'exploiter dans les mêmes conditions de sécurité. 
-
-Le fait que vous puissiez accéder à cet en-tête signifie que vous avez 
-pris connaissance de la licence CeCILL, et que vous en avez accepté les
-termes. -->
-
+Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".--> 
 <!DOCTYPE html>
 <html>
 
@@ -79,8 +50,10 @@ termes. -->
                 <button class="w3-button tablink ">Endoc</button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4">
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'washout')">Adénomes</a>
+                    <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'testis')">Volume testiculaire</a>
                 </div>
             </div>
+            <button class="w3-bar-item w3-button tablink w3-green" onclick="openonglet(event,'nascet')">Vasc</button>
             <button class="w3-bar-item w3-button tablink w3-green" id="evapropos" onclick="openonglet(event,'apropos')">?</button>
         </div>
         <!--onglet DFG -->
@@ -508,7 +481,60 @@ termes. -->
                     <div id="cecill"></div>
                     <a id="cecillaccepter"></a>
             </div>
+            <!--onglet nascet -->
+        <div id="nascet" class="w3-container w3-border onglet" style="display:none">
+            <div class="w3-container w3-teal">
+                <h5>Sténose</h5>
+            </div>
+            <p><label class="w3-text-teal"><b>(Petit) Diamètre ; sténose</b></label>
+                <input required class="w3-input w3-border w3-light-grey" icstenose=1 type="number" min=".1" step="any" id="petitdiam" title="Seulement des chiffres S.V.P."></p>
+                <p><label class="w3-text-teal"><b>(Grand) Diamètre normal</b></label>
+                <input required class="w3-input w3-border w3-light-grey" icstenose=2 type="number" min=".1" step="any" id="gddiam" title="Seulement des chiffres S.V.P."></p>
+                <p><span class="w3-tag w3-large w3-teal">Sténose : </span> <span id="nascet_ste">-</span></p>
+                <p><button class="w3-btn w3-indigo" icstenose=3 >Calculer</button></p>
+            <div class="w3-container w3-teal">Mémo</div>
+
+            <table style="text-align: left;" border="0" cellpadding="2" cellspacing="2">
+            <tbody>
+            <tr>
+            <td style="vertical-align: top;"><img src="/img/nascet.svg" width="200"></td>
+            <td style="vertical-align: top;"><ul><li>NASCET= 100*(1-B/A)</li>
+            <li>ECST=100*(1-B/C)</li></ul>
+            </td>
+            </tr>
+            </tbody>
+            </table>
+            <h5>NASCET et recommandations grade A HAS 2018 <a href="https://www.has-sante.fr/upload/docs/application/pdf/2014-09/avc_synthese_des_recommandations.pdf">Réf.</a></h5>
+            <ul><li>Sténose athéroscléreuse symptomatique de la carotide interne extracrânienne</li>
+                <ul><li>Sténose comprise entre 70 et 99 % (critères NASCET) : endartériectomie carotidienne chez les 
+                patients avec un IC non invalidant ou un AIT, de moins de 6 mois</li>
+            <li>Sténose  carotidienne  comprise  entre  50  et  69 % :  endartériectomie  carotidienne  possible  en 
+                prenant  en  considération  certaines  caractéristiques  du  patient  et  de l’accident  ischémique 
+                cérébral.</li>
+            <li>Sténose de la carotide interne < 50 % : pas d’indication chirurgicale.</li></ul>
+            </ul>
         </div>
+        <!--onglet testis -->
+        <div id="testis" class="w3-container w3-border onglet" style="display:none">
+            <div class="w3-container w3-teal">
+                <h5>Volume testiculaire (formule de Lambert)</h5>
+            </div>
+            <label class="w3-text-teal"><b>Dimensions du testicule dans les 3 plans</b></label>
+            <p><label class="w3-text-teal"><b>Diamètre x (mm)</b></label>
+            <input required class="w3-input w3-border w3-light-grey" itestis=1 type="number" min="1" step="any" id="testix" title="Seulement des chiffres S.V.P."></p>
+            <p><label class="w3-text-teal"><b>Diamètre y (mm)</b></label>
+            <input required class="w3-input w3-border w3-light-grey" itestis=2 type="number" min="1" step="any" id="testiy" title="Seulement des chiffres S.V.P."></p>
+            <p><label class="w3-text-teal"><b>Diamètre z (mm)</b></label>
+            <input required class="w3-input w3-border w3-light-grey" itestis=3 type="number" min="1" step="any" id="testiz" title="Seulement des chiffres S.V.P."></p>
+            <p><span class="w3-tag w3-large w3-teal">Volume testiculaire : </span> <span id="testisvol">-</span></p>
+            <p><button class="w3-btn w3-indigo" itestis=4>Calculer</button></p>
+            <div class="w3-container w3-teal">Remarques</div>
+                <ul><li>La littérature est assez confuse sur la manière correcte de calculer le volume testiculaire ainsi que les normes.</li>
+                    <li>La normale souvent avancée est 15-20mL (ex : <a href="https://doi.org/10.1148/rg.2017160125">Réf</a>), hypotrophie en deçà et atrophie si < à 6mL.</li>
+                    <li>Cependant, pour la même normale (!), certains préconisent la formule de l'ellipsoïde (0,52*x*y*z où π/6#0,52) par défaut dans les échographes, tandis que d'autres promeuvent la formule de Lambert : 0,72*x*y*z.</li>
+                    <li>Sur la base de corrélations au volume réel sur spécimen, la formule de Lambert était la plus proche sur deux études et est donc retenue ici. (<a href="https://doi.org/10.1016/j.urology.2006.09.012">Réf1</a> <a href="https://doi.org/10.1016/j.afju.2012.11.004">Réf2</a>).</li>
+                </ul>
+        </div> 
 
         <script>
             // global var
@@ -539,7 +565,7 @@ termes. -->
                 document.getElementById(ongletName).style.display = "block";
                 if (evt!=null){
                     evt.currentTarget.className += " w3-green";
-                    if (ongletName!= "DFG" && ongletName!="apropos"){evt.currentTarget.closest(".w3-dropdown-hover").children[0].className += " w3-green";}
+                    if (ongletName!= "DFG" && ongletName!="apropos" && ongletName!="nascet"){evt.currentTarget.closest(".w3-dropdown-hover").children[0].className += " w3-green";}
                 }
                 //mon code lamentable pour colorer. Je décide de ne pas recolorer à la rouverture car ça complique le code...
             }
@@ -577,3 +603,4 @@ termes. -->
 </body>
 
 </html>
+
