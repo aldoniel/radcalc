@@ -81,9 +81,9 @@ try:
 except (KeyError,AssertionError):
     storage['cecillaccepte']="0"
     document["menu"].style.display="none"
-    link = html.CENTER(html.A(html.BUTTON("↓ Faire défiler la page vers le bouton accepter ↓", Class="w3-button w3-red"),href="#cecillaccepter"))
+    link = html.CENTER(html.A(html.BUTTON("↓ Défiler vers Accepter ↓", Class="w3-button w3-red"),href="#cecillaccepter"))
     document["defile"]<=link
-    accepte = html.CENTER(html.BUTTON("J'accepte la licence CeCILL sus-mentionnée", Class="w3-button w3-red w3-large"))
+    accepte = html.CENTER(html.BUTTON("J'accepte la licence CeCILL", Class="w3-button w3-red w3-large"))
     accepte.bind("click",cecillacceptefunc)
     document["cecillaccepter"]<=accepte
 
