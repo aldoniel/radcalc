@@ -12,7 +12,7 @@
             "target": "emulator",
             "port": 9222,
             "sourceMaps": true,
-            "cwd": "F:\\Documents\\S21\\cordova\\miapp"
+            "cwd": "F:\\Documents\\S21\\cordova\\RadCalc"
         },
         {
             "name": "Run Android on emulator",
@@ -22,7 +22,7 @@
             "target": "emulator",
             "port": 9222,
             "sourceMaps": true,
-            "cwd": "F:\\Documents\\S21\\cordova\\miapp"
+            "cwd": "F:\\Documents\\S21\\cordova\\RadCalc"
         },
         {
             "name": "Attach to running Android on emulator",
@@ -32,7 +32,7 @@
             "target": "emulator",
             "port": 9222,
             "sourceMaps": true,
-            "cwd": "F:\\Documents\\S21\\cordova\\miapp"
+            "cwd": "F:\\Documents\\S21\\cordova\\RadCalc"
         },
         {
             "name": "Run Android on device",
@@ -42,7 +42,7 @@
             "target": "device",
             "port": 9222,
             "sourceMaps": true,
-            "cwd": "F:\\Documents\\S21\\cordova\\miapp"
+            "cwd": "F:\\Documents\\S21\\cordova\\RadCalc"
         },
         {
             "name": "Attach to running Android on device",
@@ -52,7 +52,7 @@
             "target": "device",
             "port": 9222,
             "sourceMaps": true,
-            "cwd": "F:\\Documents\\S21\\cordova\\miapp"
+            "cwd": "F:\\Documents\\S21\\cordova\\RadCalc"
         },
         {
             "name": "Simulate Android in browser",
@@ -63,7 +63,7 @@
             "simulatePort": 8000,
             "livereload": true,
             "sourceMaps": true,
-            "cwd": "F:\\Documents\\S21\\cordova\\miapp"
+            "cwd": "F:\\Documents\\S21\\cordova\\RadCalc"
         }
     ]
 }

@@ -67,7 +67,7 @@ from browser.local_storage import storage
  """ # cette fonction génialement écrite est lente et écrite en js
 
 #window.brython_openonglet = brython_openonglet
-document <= html.H5('Brython Ready! :)')
+#document <= html.H5('Brython Ready! :)')
 
 def cecillacceptefunc(ev):
     # enregistre l'acceptation et affiche le menu
@@ -89,7 +89,19 @@ except (KeyError,AssertionError):
 
 def cecilladd(ev):
     #charge dynamiquement la licence
-    document["cecill"].html=open('cecill21fr.html').read()
+
+
+    def load_script2(req):
+       document["cecill"].html=req.responseText
+    
+    SCRIPT_PATH = 'cecill21fr.html'
+    
+    request = window.XMLHttpRequest.new()
+    request.onload = lambda e:load_script2(request)
+    request.open('GET', SCRIPT_PATH, False)
+    request.send()
+
+    #document["cecill"].html=open('cecill21fr.html').read() # marche sur le navigateur mais pas sous cordova où open plante avec une erreur de 404 et erreur protocole file://
     document["evapropos"].unbind("click", cecilladd) #une fois que c'est chargé la fonction se déréférence toute seule
 
 if window.current_onglet=="apropos": # si on charge d'emblée sur le légal
