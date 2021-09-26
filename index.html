@@ -29,10 +29,10 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
     <!--menu haut -->
     <div class="w3-container" >
         <div class="w3-bar w3-light-green" id="menu" style="display:block">
-            <button class="w3-bar-item w3-button tablink w3-green"  onclick="openonglet(event,'DFG')">DFG</button>
+            <button class="w3-bar-item w3-button tablink w3-green"  onclick="openonglet(event,'DFG')"><img src="img/kidney.svg" height="40" alt="DFG"></button>
            <!-- <button class="w3-bar-item w3-button tablink " onclick="openonglet(event,'Brock')">Poumon</button> -->
             <div class="w3-dropdown-hover">
-                <button class="w3-button tablink ">Poumon</button>
+                <button class="w3-button tablink "><img src="img/lung.svg" height="40" alt="Poumon"></button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4">
                     <a href="#" class="w3-bar-item w3-button tablink" onclick="openonglet(event,'brock')">Nodule en TDM (Brock)</a>
                     <a href="#" class="w3-bar-item w3-button tablink" onclick="openonglet(event,'herder')">Nodule en TEP (Herder)</a>
@@ -41,20 +41,20 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                 </div>
             </div>
             <div class="w3-dropdown-hover">
-                <button class="w3-button tablink ">Onco</button>
+                <button class="w3-button tablink "><img src="img/cancer.svg" width="30" alt="Onco"></button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4">
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'RECIST')">RECIST</a>
                 </div>
             </div>
             <div class="w3-dropdown-hover">
-                <button class="w3-button tablink ">Endoc</button>
+                <button class="w3-button tablink "><span style="color:red;font-size:xx-large;">λ</span></button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4">
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'washout')">Adénomes</a>
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'testis')">Volume testiculaire</a>
                 </div>
             </div>
-            <button class="w3-bar-item w3-button tablink w3-green" onclick="openonglet(event,'nascet')">Vasc</button>
-            <button class="w3-bar-item w3-button tablink w3-green" id="evapropos" onclick="openonglet(event,'apropos')">?</button>
+            <button class="w3-bar-item w3-button tablink w3-green" onclick="openonglet(event,'nascet')"><img src="img/nascet2.svg" height="40" alt="Vasc"></button>
+            <button class="w3-bar-item w3-button tablink w3-green" id="evapropos" onclick="openonglet(event,'apropos')"><span style="color:red;font-size:xx-large;">?</span></button>
         </div>
         <!--onglet DFG -->
         <div id="DFG" class="w3-container w3-border onglet" style="display:none">
@@ -329,7 +329,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                 <h5>RECIST 1.1</h5>
             </div>
             <p><button class="w3-btn w3-red" id="recist_clear">Effacer les valeurs</button></p>
-            <table class="w3-table-all w3-centered" style="width:50%">
+            <table class="w3-table-all w3-centered" style="width:100%">
                 <tr >
                 <th>Lésion</th>
                 <th>Avant</th>
@@ -475,6 +475,8 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                     <li>Il n'y a pas de publicité (ni aucun financement externe.)</li>
                     <li>Le code est un mélange de python via <a href="https://brython.info/" target="_blank">Brython</a>, de <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">W3.CSS</a>, html, javascript.</li>
                     <li>L'application est portée sur android par <a href="https://cordova.apache.org/" target="_blank">Cordova</a>.</li>
+                    <li>Les jolies icônes sont de <a href="https://openmoji.org/">OpenMoji</a></li>
+                    <li>La fonction <a href="https://github.com/anitasv/zoom">Zoom it!</a> est de anitasv</li>
                 </ul>
                 <div class="w3-container w3-teal">
                     <h5>Licence</h5></div>
