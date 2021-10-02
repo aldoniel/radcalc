@@ -14,12 +14,12 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
     <title>Radcalc</title>
     <link rel="stylesheet" href="css/w3.css">
     <script src="js/brython.js"></script>
-    <script src="js/brython_stdlib.js"></script>
+    <script src="js/brython_modules.js"></script>
     <script type="text/javascript">
 
         function startBrython() {
             document.addEventListener('deviceready', brython, false);
-            //brython() // pour tester dans le navigateur, à enlever sur téléphone
+            brython() // pour tester dans le navigateur, à enlever sur téléphone
         }
     </script>
 </head>
@@ -29,7 +29,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
     <!--menu haut -->
     <div class="w3-container" >
         <div class="w3-bar w3-light-green" id="menu" style="display:block">
-            <button class="w3-bar-item w3-button tablink w3-green"  onclick="openonglet(event,'DFG')"><img src="img/kidney.svg" height="40" alt="DFG"></button>
+            <button class="w3-bar-item w3-button tablink w3-green" style="padding:3px 6px;" onclick="openonglet(event,'DFG')"><img src="img/kidney.svg" height="40" alt="DFG"></button>
            <!-- <button class="w3-bar-item w3-button tablink " onclick="openonglet(event,'Brock')">Poumon</button> -->
             <div class="w3-dropdown-hover">
                 <button class="w3-button tablink "><img src="img/lung.svg" height="40" alt="Poumon"></button>
@@ -41,20 +41,20 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                 </div>
             </div>
             <div class="w3-dropdown-hover">
-                <button class="w3-button tablink "><img src="img/cancer.svg" width="30" alt="Onco"></button>
+                <button class="w3-button tablink " style="padding:12px 4px;"><img src="img/cancer.svg" width="30" alt="Onco"></button><!--je ne sais pas trop pk le kc est décallé prblm pb svg mais en forçant le css ça passe-->
                 <div class="w3-dropdown-content w3-bar-block w3-card-4">
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'RECIST')">RECIST</a>
                 </div>
             </div>
             <div class="w3-dropdown-hover">
-                <button class="w3-button tablink "><span style="color:red;font-size:xx-large;">λ</span></button>
+                <button class="w3-button tablink " style="padding:3px 6px;"><span style="color:red;font-size:xx-large;">λ</span></button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4">
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'washout')">Adénomes</a>
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'testis')">Volume testiculaire</a>
                 </div>
             </div>
-            <button class="w3-bar-item w3-button tablink w3-green" onclick="openonglet(event,'nascet')"><img src="img/nascet2.svg" height="40" alt="Vasc"></button>
-            <button class="w3-bar-item w3-button tablink w3-green" id="evapropos" onclick="openonglet(event,'apropos')"><span style="color:red;font-size:xx-large;">?</span></button>
+            <button class="w3-bar-item w3-button tablink w3-green" style="padding:3px 6px;" onclick="openonglet(event,'nascet')"><img src="img/nascet2.svg" height="40" alt="Vasc"></button>
+            <button class="w3-bar-item w3-button tablink w3-green" style="padding:3px 6px;" id="evapropos" onclick="openonglet(event,'apropos')"><span style="color:red;font-size:xx-large;">?</span></button>
         </div>
         <!--onglet DFG -->
         <div id="DFG" class="w3-container w3-border onglet" style="display:none">
@@ -320,7 +320,6 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                      <li>Un VTD entre 30 et 400 jours est suspect.</li>
                 <li>Les nodules ≥8 mm ne doivent être suivis (BTS) que si leur probabilité de malignité est <10% (Brock, Herder).</li>
                 <li>Ce calculateur a été testé contre celui de <a href="https://www.radiology.no/vdt/" target="_blank">Tore Sjøbod</a> et l'application P-Nodule Risk.</li>
-                <li><a href="test.html" >test</a></li>
             </ul>
         </div>
         <!--onglet RECIST -->
@@ -591,7 +590,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
 <script type="text/javascript" src="js/zoom.min.js"> </script>
 <div id="modal_id" class="modal">
     <span class="modal_close">&times;</span>
-    <div width="100%"  style="overflow:scroll;"> <!--y'avait visible, qu'est sans doute bien ss android. sous windows auto donne les ascenseurs -->
+    <div width="100%"  style="overflow:visible;"> <!--y'avait visible, qu'est sans doute bien ss android. sous windows auto donne les ascenseurs et y'avait mis scroll à vittel-->
     <img class="modal-content" id="img01" >
     </div>
   <!--   <script type="text/javascript"> 
