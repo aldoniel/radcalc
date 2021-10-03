@@ -19,7 +19,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
 
         function startBrython() {
             document.addEventListener('deviceready', brython, false);
-            brython() // pour tester dans le navigateur, à enlever sur téléphone
+            //brython() // pour tester dans le navigateur, à enlever sur téléphone
         }
     </script>
 </head>
@@ -31,9 +31,8 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
         <div class="w3-bar w3-light-green" id="menu" style="display:block">
             <table class="tbl_invisibl"  style="width:100%"><tbody><tr>
                 <td><button class="w3-bar-item w3-button tablink w3-green" style="padding:3px 6px;" onclick="openonglet(event,'DFG')"><img src="img/kidney.svg" height="40" alt="DFG"></button></td>
-           <!-- <button class="w3-bar-item w3-button tablink " onclick="openonglet(event,'Brock')">Poumon</button> -->
            <td><div class="w3-dropdown-hover">
-                <button class="w3-button tablink "><img src="img/lung.svg" height="40" alt="Poumon"></button>
+                <button class="w3-button tablink w3-light-green" ><img src="img/lung.svg" height="40" alt="Poumon"></button> <!--.w3-light-green sert à ajouter un fond vert au bouton qui sinon est gris hérité de je ne sais où-->
                 <div class="w3-dropdown-content w3-bar-block w3-card-4">
                     <a href="#" class="w3-bar-item w3-button tablink" onclick="openonglet(event,'brock')">Nodule en TDM (Brock)</a>
                     <a href="#" class="w3-bar-item w3-button tablink" onclick="openonglet(event,'herder')">Nodule en TEP (Herder)</a>
@@ -42,13 +41,13 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                 </div>
             </div></td>
             <td><div class="w3-dropdown-hover">
-                <button class="w3-button tablink " style="padding:12px 4px;"><img src="img/cancer.svg" width="30" alt="Onco"></button><!--je ne sais pas trop pk le kc est décallé prblm pb svg mais en forçant le css ça passe-->
+                <button class="w3-button tablink w3-light-green" style="padding:12px 4px;"><img src="img/cancer.svg" width="30" alt="Onco"></button><!--je ne sais pas trop pk le kc est décallé prblm pb svg mais en forçant le css ça passe-->
                 <div class="w3-dropdown-content w3-bar-block w3-card-4">
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'RECIST')">RECIST</a>
                 </div>
             </div></td>
             <td><div class="w3-dropdown-hover">
-                <button class="w3-button tablink " style="padding:3px 6px;"><span style="color:red;font-size:xx-large;">λ</span></button>
+                <button class="w3-button tablink w3-light-green" style="padding:3px 6px;"><span style="color:red;font-size:xx-large;">λ</span></button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4">
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'washout')">Adénomes</a>
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'testis')">Volume testiculaire</a>
@@ -469,7 +468,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
              <p>En poursuivant l'utilisation, vous acceptez ces condictions sans réserve. Veuillez prendre connaissance de la licence et l'accepter.</p>
              <div id="defile"></div><p></p>
              <div class="w3-container w3-teal">
-                <h5>Informations techniques</h5></div>
+                <h5>À propos : RadCalc 1.0</h5></div>
                 <ul>
                     <li>Les informations sont traitées localement, hors ligne.</li>
                     <li>Il n'y a pas de contenu distant en dehors des hyperliens.</li>
@@ -500,7 +499,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
             <table style="text-align: left;" border="0" cellpadding="2" cellspacing="2">
             <tbody>
             <tr>
-            <td style="vertical-align: top;"><img src="img/nascet.svg" width="200"></td>
+            <td style="vertical-align: top;"><img src="img/nascet.svg" width="150"></td>
             <td style="vertical-align: top;"><ul><li>NASCET= 100*(1-B/A)</li>
             <li>ECST=100*(1-B/C)</li></ul>
             </td>
