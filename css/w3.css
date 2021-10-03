@@ -311,4 +311,15 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
   text-decoration: none;
   cursor: pointer;
 }
+
+.tbl_invisibl table { border:0px;}
+.tbl_invisibl tr { display:flex;}
+.tbl_invisibl td {   
+width: 16.6%;
+  display:flex;
+  flex-grow:1;
+  /* centering the button */
+  align-items:center;
+  justify-content:center;
+ }
 }

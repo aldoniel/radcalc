@@ -29,9 +29,10 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
     <!--menu haut -->
     <div class="w3-container" >
         <div class="w3-bar w3-light-green" id="menu" style="display:block">
-            <button class="w3-bar-item w3-button tablink w3-green" style="padding:3px 6px;" onclick="openonglet(event,'DFG')"><img src="img/kidney.svg" height="40" alt="DFG"></button>
+            <table class="tbl_invisibl"  style="width:100%"><tbody><tr>
+                <td><button class="w3-bar-item w3-button tablink w3-green" style="padding:3px 6px;" onclick="openonglet(event,'DFG')"><img src="img/kidney.svg" height="40" alt="DFG"></button></td>
            <!-- <button class="w3-bar-item w3-button tablink " onclick="openonglet(event,'Brock')">Poumon</button> -->
-            <div class="w3-dropdown-hover">
+           <td><div class="w3-dropdown-hover">
                 <button class="w3-button tablink "><img src="img/lung.svg" height="40" alt="Poumon"></button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4">
                     <a href="#" class="w3-bar-item w3-button tablink" onclick="openonglet(event,'brock')">Nodule en TDM (Brock)</a>
@@ -39,22 +40,23 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                     <a href="#" class="w3-bar-item w3-button tablink" onclick="openonglet(event,'vtd')">Temps de doublement</a>
                     <a href="#" class="w3-bar-item w3-button tablink" onclick="openonglet(event,'algo')">Algorithmes décisionnels</a>
                 </div>
-            </div>
-            <div class="w3-dropdown-hover">
+            </div></td>
+            <td><div class="w3-dropdown-hover">
                 <button class="w3-button tablink " style="padding:12px 4px;"><img src="img/cancer.svg" width="30" alt="Onco"></button><!--je ne sais pas trop pk le kc est décallé prblm pb svg mais en forçant le css ça passe-->
                 <div class="w3-dropdown-content w3-bar-block w3-card-4">
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'RECIST')">RECIST</a>
                 </div>
-            </div>
-            <div class="w3-dropdown-hover">
+            </div></td>
+            <td><div class="w3-dropdown-hover">
                 <button class="w3-button tablink " style="padding:3px 6px;"><span style="color:red;font-size:xx-large;">λ</span></button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4">
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'washout')">Adénomes</a>
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'testis')">Volume testiculaire</a>
                 </div>
-            </div>
-            <button class="w3-bar-item w3-button tablink w3-green" style="padding:3px 6px;" onclick="openonglet(event,'nascet')"><img src="img/nascet2.svg" height="40" alt="Vasc"></button>
-            <button class="w3-bar-item w3-button tablink w3-green" style="padding:3px 6px;" id="evapropos" onclick="openonglet(event,'apropos')"><span style="color:red;font-size:xx-large;">?</span></button>
+            </div></td>
+            <td><button class="w3-bar-item w3-button tablink w3-green" style="padding:3px 6px;" onclick="openonglet(event,'nascet')"><img src="img/nascet2.svg" height="40" alt="Vasc"></button></td>
+            <td><button class="w3-bar-item w3-button tablink w3-green" style="padding:3px 6px;" id="evapropos" onclick="openonglet(event,'apropos')"><span style="color:red;font-size:xx-large;">?</span></button></td>
+            </tr></tbody></table>
         </div>
         <!--onglet DFG -->
         <div id="DFG" class="w3-container w3-border onglet" style="display:none">
