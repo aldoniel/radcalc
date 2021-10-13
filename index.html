@@ -19,7 +19,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
 
         function startBrython() {
             document.addEventListener('deviceready', brython, false);
-            //brython() // pour tester dans le navigateur, à enlever sur téléphone
+            brython() // pour tester dans le navigateur, à enlever sur téléphone
         }
     </script>
 </head>
@@ -120,7 +120,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                 <div class="w3-container w3-teal">
                 <h5>Débit de filtration glomérulaire absolu</h5>
                 </div>
-                <p>Le DFG est habituellement relatif, c'est à dire exprimé en ml/mn/1,73m² (rapporté à sur une surface corporelle normale). Pour les dosages de médicaments à excrétion rénale, le DFG absolu, ajusté à la surface corporelle de l'individu, est recommandé. Cf. <a href="http://www.egfr.se/eGFRfr.html#absolutegfr">réf.</a></p>
+                <p>Le DFG est habituellement relatif, c'est à dire exprimé en ml/mn/1,73m² (rapporté à sur une surface corporelle normale). Pour les dosages de médicaments à excrétion rénale, le DFG absolu, ajusté à la surface corporelle de l'individu, est recommandé. Cf. <a href="http://www.egfr.se/eGFRfr.html#absolutegfr" target="_blank">réf.</a></p>
                 <p><label class="w3-text-teal"><b>DFG relatif en ml/mn/1,73m² ?</b></label>
                 <input required class="w3-input w3-border w3-light-grey" iDFGabs=1 type="number" min="1" step="any" id="DFGrel" title="Seulement des chiffres S.V.P."></p>
                 <p><label class="w3-text-teal"><b>Taille en cm ?</b></label>
@@ -225,7 +225,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                 <p><button class="w3-btn w3-indigo " ibrock=10 id="brock_calc" ipoids=2 >Calculer</button></p>
                 <p><span id="brock_avis"><span></p>
                 <div class="w3-container w3-teal">Notes</div>
-                <ul><li>*Ceci est la probabilité qu'un tel nodule chez un tel patient, sera diagnosticable comme un cancer pendant un suivi standard de 2 à 4 ans. Réf. <button id="infobrock" class="w3-button w3-circle   w3-green">?</button></li>
+                <ul><li>*Ceci est la probabilité qu'un tel nodule chez un tel patient, sera diagnosticable comme un cancer pendant un suivi standard de 2 à 4 ans. <a href="https://www.nejm.org/doi/10.1056/NEJMoa1214726" target="_blank">Réf.</a></li>
                     <li>Expérimentalement, ce calculateur reproduit les valeurs de <a href="https://brocku.ca/lung-cancer-screening-and-risk-prediction/risk-calculators/" target="_blank">celui</a> de l'université de Brock dit « Nodule Malignancy Prediction Calculator (full model) » </li>
                     <li>Les recommandation BTS (British Thoracic Society) datent d'août 2015 et sont utilisées ici à défaut de recommandations françaises (fév. 2021). Réf. <button id="infoBTS" class="w3-button w3-circle   w3-green">?</button></li>
                 </ul>
@@ -276,7 +276,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                 <p><div id="herder_avis"></div></p>
                 <div class="w3-container w3-teal">Notes</div>
                 <ul>
-                    <li>Le modèle Herder <button id="infoherder" class="w3-button w3-circle   w3-green>?</span> ajoute l'intensité de la fixation au TEP-FDG au modèle de la Mayo Clinic. Le modèle d'Herder était un peu plus fiable (+13,6% d'AUC) que le modèle de la Mayo Clinic (et de <a href="https://doi.org/10.1016/j.lungcan.2015.03.018">Brock</a> ).</li>
+                    <li>Le modèle Herder <button id="infoherder" class="w3-button w3-circle   w3-green>?</span> ajoute l'intensité de la fixation au TEP-FDG au modèle de la Mayo Clinic. Le modèle d'Herder était un peu plus fiable (+13,6% d'AUC) que le modèle de la Mayo Clinic (et de <a href="https://doi.org/10.1016/j.lungcan.2015.03.018" target="_blank">Brock</a> ).</li>
                     <li>Plus sur les AUC des modèles <button id="infoAUC" class="w3-button w3-circle   w3-green">?</button></li>
                 </ul>
         </div>
@@ -363,7 +363,8 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                         <p><span class="w3-tag w3-large w3-teal">RECIST</span> <span id="recist_recist">-</span></p>
                         <p><button class="w3-btn w3-indigo " irecist=11 id="recist_calc">Calculer</button></p>
                         <div class="w3-container w3-teal">Mémo (cibles)</div>
-                        <ul><li><b>Réponse complète (RC)</b> : Disparition de toutes les lésions. De plus, tous les ganglions lymphatiques (cible ou non-cible), doivent avoir atteint une dimension < 10 mm dans leur plus petit axe.</li>
+                        <ul><li><b>Cibles</b><ul><li>Mesurables : si ≥ 10mm, ou si ≥ 15 mm de petit axe pour les adénomégalies.</li><li>5 cibles ; max. 2 cibles par organes.</li></ul></li>
+                            <li><b>Réponse complète (RC)</b> : Disparition de toutes les lésions. De plus, tous les ganglions lymphatiques (cible ou non-cible), doivent avoir atteint une dimension < 10 mm dans leur plus petit axe.</li>
                         <ul><li>Attention : les ganglions sélectionnés comme lésions cibles doivent toujours être mesurés (dimension du plus petit axe dans le plan anatomique utilisé pour l’examen BASELINE), même s’ils diminuent en taille durant l’étude et que leur petit axe devient < 10 mm.<li>Dès lors, lorsque des ganglions sont utilisés comme lésion cible, la « somme » des dimensions des lésions n’est pas nécessairement nulle, même en cas de réponse complète, puisqu’un ganglion normal est défini comme ayant un plus petit axe < 10 mm.</li>
                             </ul>
                         <li><b>Réponse partielle (RP)</b> : Diminution d'au moins 30 % de la somme des diamètres des lésions cibles par rapport à la somme initiale des diamètres (Examen BASELINE).</li>
@@ -455,6 +456,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
             <div class="w3-container w3-teal">
                 <h5>Avertissements</h5>
             </div>
+            <div id="defile"></div>
             <p>L'auteur de cette application se présente en tant que programmateur amateur sans autre titre ni prétention.</p>
             <p>
                 Cette application est fournie à titre informatif et sans aucune garantie. Elle s'adresse à un public averti ayant une formation médicale. En aucun cas les informations
@@ -466,17 +468,16 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
              <p>Cette application n'est pas un produit médical professionel.</p>
             <p>Le code source que j'ai rédigé est placé sous la licence CeCILL de droit français, qui respecte les principes de diffusion des logiciels libres (cf infra).</p>
              <p>En poursuivant l'utilisation, vous acceptez ces condictions sans réserve. Veuillez prendre connaissance de la licence et l'accepter.</p>
-             <div id="defile"></div><p></p>
              <div class="w3-container w3-teal">
-                <h5>À propos : RadCalc 1.0</h5></div>
+                <h5>À propos : RadCalc 1.1</h5></div>
                 <ul>
                     <li>Les informations sont traitées localement, hors ligne.</li>
                     <li>Il n'y a pas de contenu distant en dehors des hyperliens.</li>
                     <li>Il n'y a pas de publicité (ni aucun financement externe.)</li>
                     <li>Le code est un mélange de python via <a href="https://brython.info/" target="_blank">Brython</a>, de <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">W3.CSS</a>, html, javascript.</li>
                     <li>L'application est portée sur android par <a href="https://cordova.apache.org/" target="_blank">Cordova</a>.</li>
-                    <li>Les jolies icônes sont de <a href="https://openmoji.org/">OpenMoji</a></li>
-                    <li>La fonction <a href="https://github.com/anitasv/zoom">Zoom it!</a> est de anitasv</li>
+                    <li>Les jolies icônes sont de <a href="https://openmoji.org/" target="_blank">OpenMoji</a></li>
+                    <li>La fonction <a href="https://github.com/anitasv/zoom" target="_blank">Zoom it!</a> est de anitasv</li>
                 </ul>
                 <div class="w3-container w3-teal">
                     <h5>Licence</h5></div>
@@ -506,7 +507,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
             </tr>
             </tbody>
             </table>
-            <h5>NASCET et recommandations grade A HAS 2018 <a href="https://www.has-sante.fr/upload/docs/application/pdf/2014-09/avc_synthese_des_recommandations.pdf">Réf.</a></h5>
+            <h5>NASCET et recommandations grade A HAS 2018 <a href="https://www.has-sante.fr/upload/docs/application/pdf/2014-09/avc_synthese_des_recommandations.pdf" target="_blank">Réf.</a></h5>
             <ul><li>Sténose athéroscléreuse symptomatique de la carotide interne extracrânienne</li>
                 <ul><li>Sténose comprise entre 70 et 99 % (critères NASCET) : endartériectomie carotidienne chez les 
                 patients avec un IC non invalidant ou un AIT, de moins de 6 mois</li>
@@ -532,9 +533,9 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
             <p><button class="w3-btn w3-indigo" itestis=4>Calculer</button></p>
             <div class="w3-container w3-teal">Remarques</div>
                 <ul><li>La littérature est assez confuse sur la manière correcte de calculer le volume testiculaire ainsi que les normes.</li>
-                    <li>La normale souvent avancée est 15-20mL (ex : <a href="https://doi.org/10.1148/rg.2017160125">Réf</a>), hypotrophie en deçà et atrophie si < à 6mL.</li>
+                    <li>La normale souvent avancée est 15-20mL (ex : <a href="https://doi.org/10.1148/rg.2017160125" target="_blank">Réf</a>), hypotrophie en deçà et atrophie si < à 6mL.</li>
                     <li>Cependant, pour la même normale (!), certains préconisent la formule de l'ellipsoïde (0,52*x*y*z où π/6#0,52) par défaut dans les échographes, tandis que d'autres promeuvent la formule de Lambert : 0,72*x*y*z.</li>
-                    <li>Sur la base de corrélations au volume réel sur spécimen, la formule de Lambert était la plus proche sur deux études et est donc retenue ici. (<a href="https://doi.org/10.1016/j.urology.2006.09.012">Réf1</a> <a href="https://doi.org/10.1016/j.afju.2012.11.004">Réf2</a>).</li>
+                    <li>Sur la base de corrélations au volume réel sur spécimen, la formule de Lambert était la plus proche sur deux études et est donc retenue ici. (<a href="https://doi.org/10.1016/j.urology.2006.09.012" target="_blank">Réf1</a> <a href="https://doi.org/10.1016/j.afju.2012.11.004" target="_blank">Réf2</a>).</li>
                 </ul>
         </div> 
 

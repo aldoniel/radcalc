@@ -291,7 +291,7 @@ formulaire_anime("brock",calcbrock)
 def infobrock(ev):
     InfoDialog('&nbsp;', 'McWilliams A, Tammemagi M, Mayo J, Roberts H, Liu G, Soghrati K, Yasufuku K, Martel S, Laberge F. et al. Probability of cancer in pulmonary nodules detected on first screening computed tomography. <a href="https://www.nejm.org/doi/10.1056/NEJMoa1214726" target="_blank">New England Journal of Medicine</a> 2013;369;10.',left=0,ok=True)
 
-document["infobrock"].bind("click", infobrock)
+#document["infobrock"].bind("click", infobrock) 
 
 def infoBTS(ev):
     InfoDialog('&nbsp;', '<a href="https://www.brit-thoracic.org.uk/quality-improvement/guidelines/pulmonary-nodules/" target="_blank">BTS Guidelines for the Investigation and Management of Pulmonary Nodules</a><br><a href="https://radiologyassistant.nl/chest/plumonary-nodules/bts-guideline" target="_blank">Résumé sur Radiology Assistant.</a>',left=0,ok=True)

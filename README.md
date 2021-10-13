@@ -28,11 +28,13 @@ Permet de calculer
 ## Todo
 1. [x] corriger le bug recist
 1. [x] menu recist incohérent
-1. [ ] faire endoc
+1. [ ] finir  endoc
 1. [x] faire vascu
 1. [x] ajouter les avertissements légaux
 1. [*] arranger le sélecteur de date d'android qui est vraiment nul : abandon on fera avec
 1. [ ] arranger le modal : il faut prblm faire une version android et une windows pour faire simple
-1. [ ] publier sur android et internet
+1. [ ] publier sur android
+1. [ ] et sur internet
+1. [ ] ajouter une option de volume ellipsoïde
 1. [ ] essayer de comprendre pk sur android le dropdow menu se replie pas au toucher
 1. [ ] essayer de publier une web app ios
