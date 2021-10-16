@@ -19,7 +19,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
 
         function startBrython() {
             document.addEventListener('deviceready', brython, false);
-            brython() // pour tester dans le navigateur, à enlever sur téléphone
+            //brython() // pour tester dans le navigateur, à enlever sur téléphone
         }
     </script>
 </head>
@@ -90,14 +90,14 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                 <input class="w3-radio" type="radio" name="ethnie" value="1.212" iDFG=4>
                 <label>Africain-Américain</label>
                 </p>
-                <p><span class="w3-tag w3-large w3-teal">MDRD</span> <span id="MDRD">-</span> ml/min/1,73 m<sup>2</sup> de DFG <button  id="infomdrd" class="w3-button w3-circle w3-green">?</button ></p>
-                <p><span class="w3-tag w3-large w3-teal">CKD-EPI</span> <span id="CKD">-</span> ml/min/1,73 m<sup>2</sup> de DFG <button  id="infockd" class="w3-button w3-circle w3-green">?</button ></p>
+                <p><span class="w3-tag w3-large w3-teal">MDRD</span> <span id="MDRD">-</span> ml/min/1,73 m<sup>2</sup> de DFG</p>
+                <p><span class="w3-tag w3-large w3-teal">CKD-EPI</span> <span id="CKD">-</span> ml/min/1,73 m<sup>2</sup> de DFG</p>
                 <p><input id="IDMS"  type="checkbox"> Standardisation IDMS (indispensable pour l'équation du CKD-EPI)</p>
 
                 <label class="w3-text-teal"><b>Poids (kg ; seulement pour Cockcroft) ?</b></label>
                 <input class="w3-input w3-border w3-light-grey" type="number" min="1"  step="any" id=poids ipoids=1 title="Seulement des chiffres S.V.P.">
 
-                <p><span class="w3-tag w3-large w3-teal">Cockcroft</span> <span id=dfgcg>-</span> ml/min de clairance de créatinine <button  id="infococ" class="w3-button w3-circle w3-green">?</button ></p>
+                <p><span class="w3-tag w3-large w3-teal">Cockcroft</span> <span id=dfgcg>-</span> ml/min de clairance de créatinine</p>
                 <p>Remarque : La formule de Cockroft et Gault est conservée pour des raisons historiques (cf infra).</p>    
                 <button class="w3-btn w3-indigo" iDFG=5 id="calcdfg" ipoids=2 >Calculer</button>
                 <p></p>
@@ -114,7 +114,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                 </p>
                 <p><label class="w3-text-teal"><b>Taille en cm ?</b></label>
                 <input required class="w3-input w3-border w3-light-grey" ischwartz=2 type="number" min="1" step="any" id="taillecmsch" title="Seulement des chiffres S.V.P."></p>                    
-                <p><span class="w3-tag w3-large w3-teal">DFG</span> <span id=dfgsch>-</span> ml/min de clairance de créatinine/1,73m² <button  id="infosch" class="w3-button w3-circle w3-green">?</button ></p>
+                <p><span class="w3-tag w3-large w3-teal">DFG</span> <span id=dfgsch>-</span> ml/min de clairance de créatinine/1,73m²</p>
                 <button class="w3-btn w3-indigo" ischwartz=3>Calculer</button>
                 <p></p>
                 <div class="w3-container w3-teal">
@@ -128,9 +128,10 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                 <p><label class="w3-text-teal"><b>poids en kg ?</b></label>
                 <input required class="w3-input w3-border w3-light-grey" iDFGabs=3 type="number" min="1" step="any" id="poidskg" title="Seulement des chiffres S.V.P."></p>
                 
-                <p><span class="w3-tag w3-large w3-teal">DFG absolu</span> <span id=DFGabs>-</span> ml/min de clairance de créatinine <button  id="infoDFGabs" class="w3-button w3-circle w3-green">?</button ></p>    
+                <p><span class="w3-tag w3-large w3-teal">DFG absolu</span> <span id=DFGabs>-</span> ml/min de clairance de créatinine</p>    
                 <p></p>
-                <div class="w3-container w3-teal">Stades d'insuffisance rénale</div>
+                <button type="button" class="collapsible collapsible100 w3-teal">Stades d'insuffisance rénale</button>
+                <div class="collapsecontent">
                 <table class="w3-table-all ">
                     <tr >
                     <th>Stade</th>
@@ -161,19 +162,34 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                                 <td>&lt; 15</td>
                                 <td>Insuffisance rénale chronique terminale</td>
                             </tr></table>
-                            <p>*Avec marqueurs d’atteinte rénale : protéinurie clinique, hématurie, leucocyturie, ou anomalies morphologiques ou histologiques, ou marqueurs de dysfonction tubulaire, persistant plus de trois mois.</p>
-                            <div class="w3-container w3-teal">Recommandations CIRTACI</div>
-                            <p>Selon les fiches <a href="http://www.sfrnet.org/sfr/societe/5-groupes-de-travail/qualite-securite-gestion-des-risques/agents-de-contraste-cirtaci/article.phtml?id=rc%2forg%2fsfrnet%2fhtm%2fArticle%2f2008%2fmie-20080918-000000-11514" target="_blank">CIRTACI</a>, les facteurs d'insuffisance rénale aiguë post-constraste sont :</p>
-                            <ul><li>Liés au patient<ul><li>L'insuffisance rénale aiguë ou chronique.</li><li>La déshydratation marquée.</li></ul></li>
-                            <li>Liés à la procédure<ul><li>Fortes doses de produit de contraste administrés en intra-artériel avec exposition rénale au premier passage.</li><li>Multiples injections de produit de contraste dans les 48 ou 72 heures.<li>Actes interventionnels cardio-vasculaires.</li></ul></li>
-                            </ul>
-                            <p>Les seuils à risque sont :</p>
-                            <ul><li>Risque si DFG < 45 ml/min/1,73 m² en cas de voie artérielle de 1<sup>er</sup> passage</li><li>Risque si DFG < 30 ml/min/1,73 m² sinon (voie veineuse ou artérielle de 2<sup>e</sup> passage.)</li></ul>
-
-                <div class="w3-container w3-teal">Notes</div>
+                            <p>*Avec marqueurs d’atteinte rénale : protéinurie clinique, hématurie, leucocyturie, ou anomalies morphologiques ou histologiques, ou marqueurs de dysfonction tubulaire, persistant plus de trois mois.</p></div>
+                <p></p>
+                <button type="button" class="collapsible collapsible100 w3-teal">Recommandations CIRTACI</button>
+                <div class="collapsecontent">
+                <p>Selon les fiches <a href="http://www.sfrnet.org/sfr/societe/5-groupes-de-travail/qualite-securite-gestion-des-risques/agents-de-contraste-cirtaci/article.phtml?id=rc%2forg%2fsfrnet%2fhtm%2fArticle%2f2008%2fmie-20080918-000000-11514" target="_blank">CIRTACI</a>, les facteurs d'insuffisance rénale aiguë post-constraste sont :</p>
+                <ul><li>Liés au patient<ul><li>L'insuffisance rénale aiguë ou chronique.</li><li>La déshydratation marquée.</li></ul></li>
+                <li>Liés à la procédure<ul><li>Fortes doses de produit de contraste administrés en intra-artériel avec exposition rénale au premier passage.</li><li>Multiples injections de produit de contraste dans les 48 ou 72 heures.<li>Actes interventionnels cardio-vasculaires.</li></ul></li>
+                </ul>
+                <p>Les seuils à risque sont :</p>
+                <ul><li>Risque si DFG < 45 ml/min/1,73 m² en cas de voie artérielle de 1<sup>er</sup> passage</li><li>Risque si DFG < 30 ml/min/1,73 m² sinon (voie veineuse ou artérielle de 2<sup>e</sup> passage.)</li></ul></div>
+                <p></p>
+                <button type="button" class="collapsible collapsible100 w3-teal">Plus sur les formules</button>
+                <div class="collapsecontent">
+                <ul>
+                    <li><b>MDRD :</b> <p>MDRD=186*(creat*.0113)<sup>-1.154</sup>*age<sup>-.203</sup>*ethnie*genre) où ethnie=1.212 pour les Afro-Américain et 1 sinon ; où genre=0.742 pour les femmes et 1 sinon.<p></li>
+                    <li><b>Cockcroft-Gault :</b><p>HAS 2012 : la formule de Cockcroft et Gault estime, non le DFG (en mL/min/1,73 m2), mais la clairance de la créatinine (en mL/min). Formule historique pour l'adaptation des posologies des médicaments.</p><p> MDRD_Cockcroft=round(((140-age)/creat)*poids*k) où k=1.23 pour hommes et 1.04 sinon.</p></li>
+                    <li><b>CKD-EPI :</b><p>HAS 2012 : Estimation du DFG : CKD-EPI est l’équation la plus fiable.</p> <p>Ici, CKD=round( 141*  min(creat/k, 1)^(-0.411 si homme sinon -0.329) * max(creat/k, 1)^-1.209 * 0.993^age * (1 si homme sinon 1.018) * (1.159 si Afro-Américain sinon 1) ) ; k = 0.9 si homme sinon 0.7 ; creat : 113,1179 g/mol pour la conversion en mg/dl.</p></li>
+                    <li><b>équation de Schwartz : </b><p>DFG_Schwartz = 0.413*taillecm/creatmgdl</p><p><a href="https://pubmed.ncbi.nlm.nih.gov/19158356/" target="_blank">Schwartz, article original</a></p><p>Le DFG normal avant 2 ans pourra être consulté sur <a href="http://pedsinreview.aappublications.org/content/pedsinreview/14/2/local/back-matter.pdf" target="_blank">Pediatrics in review</a></p></li>
+                    <li><b>DFG absolu :</b><p>Calcul simple à partir de l'équation de Dubois et Dubois : DFGabs=DFGrel/1.73*0.007184 * taillecm<sup>0.725</sup> * poidskg<sup>0.425</sup></p></li>
+                </ul></div>
+                <p></p>
+                <button type="button" class="collapsible collapsible100 w3-teal">Notes</button>
+                <div class="collapsecontent">
                 <ul><li>Expérimentalement, ce calculateur reproduit à l'arrondi près les valeurs de <a href="https://www.sfndt.org/professionnels/calculateurs/mdrds-ckd-epi-cockcroft" target="_blank">celui</a> de la Société Francophone de Néphrologie Dialyse et Transplantation ; de <a href="http://www.egfr.se/eGFRfr.html#absolutegfr" target="_blank">celui</a> de l'Université de Lund pour le DFG absolu, et
                 de <a href = "https://www.mdcalc.com/revised-schwartz-equation-glomerular-filtration-rate-gfr-2009" target="_blank">celui</a> du site mdcal pour l'équation de Schwartz modifiée.</li>
                     <li>Voir également <a href="https://www.has-sante.fr/upload/docs/application/pdf/2012-10/evaluation_du_debit_de_filtration_glomerulaire_et_du_dosage_de_la_creatininemie_dans_le_diagnostic_de_la_maladie_renale_chronique_chez_ladulte_-_fiche_buts.pdf" target="_blank">Estimer le débit de filtration glomérulaire par l’équation CKD-EPI</a> de l'HAS.</li></ul>
+                </div>
+                <p></p>
             </div>
         </div>
         <!--onglet Brock -->
@@ -227,7 +243,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                 <div class="w3-container w3-teal">Notes</div>
                 <ul><li>*Ceci est la probabilité qu'un tel nodule chez un tel patient, sera diagnosticable comme un cancer pendant un suivi standard de 2 à 4 ans. <a href="https://www.nejm.org/doi/10.1056/NEJMoa1214726" target="_blank">Réf.</a></li>
                     <li>Expérimentalement, ce calculateur reproduit les valeurs de <a href="https://brocku.ca/lung-cancer-screening-and-risk-prediction/risk-calculators/" target="_blank">celui</a> de l'université de Brock dit « Nodule Malignancy Prediction Calculator (full model) » </li>
-                    <li>Les recommandation BTS (British Thoracic Society) datent d'août 2015 et sont utilisées ici à défaut de recommandations françaises (fév. 2021). Réf. <button id="infoBTS" class="w3-button w3-circle   w3-green">?</button></li>
+                    <li>Les recommandation BTS (British Thoracic Society) datent d'août 2015 et sont utilisées ici à défaut de recommandations françaises (oct. 2021). <a href="https://www.brit-thoracic.org.uk/quality-improvement/guidelines/pulmonary-nodules/" target="_blank">Réf.</a></li>
                 </ul>
         </div>
 
@@ -260,7 +276,10 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                 <label>Oui</label>
                 <input class="w3-radio"  type="radio" name="herder_spicule" value="0"  >
                 <label>Non</label>
-                </p><label class="w3-text-teal"><b>Avidité pour le FDG ? </b><button id="infoherder_fixe" class="w3-button w3-circle w3-green">?</button></label>
+                </p><label class="w3-text-teal"><b>Avidité pour le FDG ? </b></label><button type="button" class="w3-button w3-circle w3-green collapsible"></button>
+                <div class="collapsecontent">
+                <ul><li><b>Aucune</b> : fixation indiscernable de celle du parenchyme pulmonaire.</li><li><b>Faible</b> : Fixation ≤ à celle du secteur vasculaire médiastinal.</li><li><b>Modérée</b> : Fixation > à celle du secteur vasculaire médiastinal.</li><li><b>Modérée</b> : Fixation nettement > à celle du secteur vasculaire médiastinal.</li></ul><p>Remarque : de manière surprenante, l'étude Herder ne définit pas les termes de son échelle de fixation. L'échelle donnée ici est celle-proposée par les recommandations BTS à fin de standardisation (grade D).
+                </div>
                 <p><input class="w3-radio"  iherder=7  type="radio" name="herder_fdg" value="0"  >
                 <label>Aucune</label>
                 <input class="w3-radio"  type="radio" name="herder_fdg" value="2.322"  >
@@ -274,11 +293,17 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                 <p><span class="w3-tag w3-large w3-teal">Probabilité de malignité*</span> <span id="herder_proba_kc">-</span> %</p>
                 <p><button class="w3-btn w3-indigo " iherder=8 id="herder_calc" >Calculer</button></p>
                 <p><div id="herder_avis"></div></p>
-                <div class="w3-container w3-teal">Notes</div>
+                <button type="button" class="collapsible collapsible100 w3-teal">Références</button>
+                <div class="collapsecontent">
                 <ul>
-                    <li>Le modèle Herder <button id="infoherder" class="w3-button w3-circle   w3-green>?</span> ajoute l'intensité de la fixation au TEP-FDG au modèle de la Mayo Clinic. Le modèle d'Herder était un peu plus fiable (+13,6% d'AUC) que le modèle de la Mayo Clinic (et de <a href="https://doi.org/10.1016/j.lungcan.2015.03.018" target="_blank">Brock</a> ).</li>
-                    <li>Plus sur les AUC des modèles <button id="infoAUC" class="w3-button w3-circle   w3-green">?</button></li>
-                </ul>
+                    <li>Le modèle de <a href="https://doi.org/10.1378/chest.128.4.2490" target="_blank">Herder</a> ajoute l'intensité de la fixation au TEP-FDG au modèle de la Mayo Clinic. Le modèle d'Herder était un peu plus fiable (+13,6% d'AUC) que le modèle de la Mayo Clinic (et de <a href="https://doi.org/10.1016/j.lungcan.2015.03.018" target="_blank">Brock</a> ). Dans l'étude de Herder, 106 patients avec un seul nodule pulmonaire de moins de < 30 mm furent inclus. Les patients ayant un ATCD de cancer dans les 5 ans précédant la TEP, etc. avaient été exclus.</li>
+                    <li>Plus sur les AUC des modèles : Brock : 0,902 ; IC95%[0,856–0,948] , AUC Herder 0,924, IC95%[0,875–0,974] Risk of malignancy in pulmonary nodules: A validation study of four prediction models, Ali Al-Ameri et al., <a href="https://doi.org/10.1016/j.lungcan.2015.03.018" target="_blank">Chest 2015 </a>
+                        <p>AUC Herder (publication initiale) : AUC 0,92 ; IC 95% [0,87–0.97] Herder GJ et al. Clinical prediction model to characterize pulmonary 
+                        nodules: validation and added value of 18F-fluorodeoxyglucose positron 
+                        emission tomography. <a href="https://doi.org/10.1378/chest.128.4.2490" target="_blank">Chest</a></p>
+                        <p>AUC Brock : 0,96 ; IC95%[0,93–0,98] McWilliams A et al. Probability of cancer in pulmonary nodules detected on first screening CT. <a href="https://doi.org/10.1056/nejmoa1214726" target="_blank">N Engl J Med</a></p></li>
+                </ul></div>
+                <p></p>
         </div>
         <!--onglet vtd -->
         <div id="vtd" class="w3-container w3-border onglet" style="display:none">
@@ -292,11 +317,18 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
             <p><label class="w3-text-teal"><b>Date du 1er scanner ?</b></label>
             <input required class="w3-input w3-border w3-light-grey" ivtd=1 type="date" id="vtd_date1" placeholder="dd-mm-yyyy" value="" title="Date au format AAAA-MM-JJ"></p>
             <p><button class="w3-button w3-white w3-border w3-border-blue w3-round-large" id="vtd_3m" >Il y a 3 mois</button></p>
-            <p><label class="w3-text-teal"><b>Volume du nodule (ex. en mm³) ?</b></label>
+            <p><label class="w3-text-teal"><b>Volume du nodule (en mm³) ?</b></label>
             <input required class="w3-input w3-border w3-light-grey" ivtd=2 type="number" min="0" step="any" id="vtd_vol1" title="Seulement des chiffres S.V.P."></p>
             <p>ou</p>
-            <p><label class="w3-text-teal"><b>Volume approximatif (ex "5" ou "5x6" ou "5-6-7" mm)</b></label> <button id="infovtd1" class="w3-button w3-circle w3-green">?</button>
-                <input required class="w3-input w3-border w3-light-grey" ivtd2=1 type="tel" min="0" step="any" id="vtd_vol1b"></p>
+            <label class="w3-text-teal"><b>Volume approximatif (ex "5" ou "5x6" ou "5-6-7" en mm)</b></label> <button type="button" class="w3-button w3-circle w3-green collapsible"></button>
+            <div class="collapsecontent">
+                <p>Si le champ "Volume du nodule" est rempli, il sera utilisé en priorité.</p>
+<p>Le champ "volume approximatif" admet une valeur en mm (ex pour 5 mm saisir "5" ; pour 5*6 mm saisir "5*6" ; pour 5x6x7 mm saisir "5-6-7". On peut utiliser les caractères * ou - ou x pour séparer les dimensions.).</p>
+<p>Pour info, voici le mode de calcul : Avec une dimension, on peut estimer le volume par X³/2.<br>
+En 2D, par X*Y*((X+Y)/2)/2).<br>
+En 3D, par le volume du prisme X*Y*Z/2.</p>
+            </div>
+                <input required class="w3-input w3-border w3-light-grey" ivtd2=1 type="tel" min="0" step="any" id="vtd_vol1b">
                 <span id="vtd_vol1c"></span>
             <div class="w3-container w3-cyan">
                 <h6>Examen 2<span id="vtd_delta"></span></h6> 
@@ -307,7 +339,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
             <p><label class="w3-text-teal"><b>Volume du nodule (ex. en mm³) ?</b></label>
             <input required class="w3-input w3-border w3-light-grey" ivtd=4 type="number" min="0" step="any" id="vtd_vol2" title="Seulement des chiffres S.V.P."></p>
             <p>ou</p>
-            <p><label class="w3-text-teal"><b>Volume approximatif (ex "5" ou "5x6" ou "5-6-7" mm)</b></label> <button id="infovtd2" class="w3-button w3-circle w3-green">?</button>
+            <label class="w3-text-teal"><b>Volume approximatif (ex "5" ou "5x6" ou "5-6-7" mm)</b></label>
                 <input required class="w3-input w3-border w3-light-grey" ivtd2=2 type="tel" min="0" step="any" id="vtd_vol2b"></p>
                 <span id="vtd_vol2c"></span>
             <p><span class="w3-tag w3-large w3-teal">Temps de doublement</span> <span id="vtd_vdt">-</span></p>
@@ -380,11 +412,15 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
         <!--onglet algo -->
         <div id="algo" class="w3-container w3-border onglet" style="display:none">
             <h2>Algorithmes décisionnels</h2>
-            <p>Prise en charges et suivi des nodules pulmonaires</p>
             <ul>
-                <li><button  type="button" modalbouton  class="w3-button w3-indigo" src="img/bts.svg" alt="BTS 2015">Guidelines BTS 2015</button> prise en charge des nodules pulmonaires. Réf. <button id="infoBTS2" class="w3-button w3-circle   w3-green">?</button></li><br>
+                <li><button  type="button" modalbouton  class="w3-button w3-indigo" src="img/bts.svg" alt="BTS 2015">Guidelines BTS 2015</button> prise en charge des nodules pulmonaires. (<a href="https://radiologyassistant.nl/chest/plumonary-nodules/bts-guideline" target="_blank">Radiology assistant</a>) </li><br>
                 <li><button  type="button" modalbouton  class="w3-button w3-indigo" src="img/solid-nodules2.png" alt="Fleischner 2017 Suivi des nodules solides" >Fleischner 2017 solides</button> fréquence de suivi (sans volumétrie).</li><br>
                 <li><button  type="button" modalbouton  class="w3-button w3-indigo" src="img/subsolid-nodules2.png" alt="Fleischner 2017 Suivi des nodules avec verre-dépoli">Fleischner 2017 avec verre-dépoli</button> fréquence de suivi (sans volumétrie).</li><br>
+            </ul>
+            <p><b>Remarques :</b></p>
+            <ul>
+                <li>Les recommandations Fleischner sont applicables aux nodules de découverte fortuite, âge > 35 ans.</li>
+                <li>Et inapplicables en cas de dépistage, cancer connu, immunodépression.</li>
             </ul>
         </div>
          <!--onglet washout -->
@@ -430,7 +466,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                 <li>Calcul du washout (W.O.) relatif et absolu au scanner</li>
                     <ol type='A'>
                         <li>Si le W.O. absolu est ≥ 60% ou le W.O. relatif ≥ 40% (pour un temps tardif à 15') → en faveur d'un adénome. (Se 89%, Sp 95% et Se 83% Sp 93% respectivement, le W.O. absolu est un rien plus performant. <a href="https://www.ajronline.org/doi/10.2214/ajr.175.5.1751411" target="_blank">cf. réf</a>)</li>
-                        <ul><li>Remarque, les seuils sont respectivement 50 et 40% pour un tardif à 10', mais avec une moindre précision diagnostique. <a href="dx.doi.org/10.1259/bjr.20151018" target="_blank">cf. réf. peu claire</a></li>
+                        <ul><li>Remarque, les seuils sont respectivement 50 et 40% pour un tardif à 10', mais avec une moindre précision diagnostique. <a href="https://dx.doi.org/10.1259/bjr.20151018" target="_blank">Réf.</a></li>
                         <li>Cependant, certains adénomes se lavent précocément. Si le W.O. relatif est > à 40% sur une TDM multiphasique, le diagnostique d'adénome peut être porté avec confiance sans scanner surrénalien dédié.</li></ul>
                         <li>Sinon c'est indéterminé en TDM et il faut calculer la chute de signal en IRM.</li>
                         <ol type='a'>
@@ -520,9 +556,17 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
         <!--onglet testis -->
         <div id="testis" class="w3-container w3-border onglet" style="display:none">
             <div class="w3-container w3-teal">
-                <h5>Volume testiculaire (formule de Lambert)</h5>
+                <h5>Volume testiculaire</h5>
             </div>
+            <p>
+                <input class="w3-radio" type="radio" name="testisformule" checked id="testisformule">
+                <label>formule de Lambert</label>
+
+                <input class="w3-radio" type="radio" name="testisformule">
+                <label>formule de l'ellipsoïde</label>
+            </p>
             <label class="w3-text-teal"><b>Dimensions du testicule dans les 3 plans</b></label>
+            <p><button class="w3-btn w3-red" id="testis_clear">Effacer les valeurs</button></p>
             <p><label class="w3-text-teal"><b>Diamètre x (mm)</b></label>
             <input required class="w3-input w3-border w3-light-grey" itestis=1 type="number" min="1" step="any" id="testix" title="Seulement des chiffres S.V.P."></p>
             <p><label class="w3-text-teal"><b>Diamètre y (mm)</b></label>
@@ -572,6 +616,23 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                 }
                 //mon code lamentable pour colorer. Je décide de ne pas recolorer à la rouverture car ça complique le code...
             }
+
+            function collapsible(){
+                var coll = document.getElementsByClassName("collapsible");
+                var i;
+                for (i = 0; i < coll.length; i++) {
+                coll[i].addEventListener("click", function() {
+                    this.classList.toggle("collapseactive");
+                    var content = this.nextElementSibling;
+                    if (content.style.maxHeight){
+                    content.style.maxHeight = null;
+                    } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    } 
+                });
+                }
+            }
+            collapsible();
         </script>
 <script type="text/python3">
 

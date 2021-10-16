@@ -14,7 +14,7 @@ Permet de calculer
         * [ ] bug : affichage incorrect du modal sur PC (BTS trop grand sort de l'écran : faudrait ajouter un ascenseur)
 * Onco
     * RECIST
-    * [ ] cheson
+    * [ ] lugano lymphomes
 * [ ] Endoc
     * [x] calcul wash-out surrénales
     * [x] volume testicule
@@ -33,8 +33,9 @@ Permet de calculer
 1. [x] ajouter les avertissements légaux
 1. [*] arranger le sélecteur de date d'android qui est vraiment nul : abandon on fera avec
 1. [ ] arranger le modal : il faut prblm faire une version android et une windows pour faire simple
-1. [ ] publier sur android
+1. [x] publier sur android
 1. [ ] et sur internet
-1. [ ] ajouter une option de volume ellipsoïde
+1. [x] ajouter une option de volume ellipsoïde
+1. [ ] comprendre pourquoi sur android l'onglet est mal retenu (voir la gestion onkill de cordova)
 1. [ ] essayer de comprendre pk sur android le dropdow menu se replie pas au toucher
 1. [ ] essayer de publier une web app ios

@@ -160,6 +160,10 @@ def formulaire_anime(code:str,calcfunc,nocalc:bool=False):
     for elem in document.select(f'input[i{code}]'): #sélection de input et [attribut]
         elem.bind("change", calcfunc)
 
+def radio_anime(name:str,calcfunc):
+#name : valeur de name du radio. Sert à animer les boutons radio mal animés par formulaire_anime. Un élément peut recevoir bind 2x mais ça a pas l'air grave.
+    for elem in document.select(f'[name="{name}"]'):
+        elem.bind("change",calcfunc)
 
 #DFG
 
@@ -204,23 +208,9 @@ def calcdfg(ev):
 
 
 formulaire_anime("DFG",calcdfg)
-for item in document.select(f'[name="ucr"]'):
-    item.bind("change",calcdfg)
-
-def infomdrd(ev):
-    InfoDialog("MDRD","ici, MDRD=186*(creat*.0113)<sup>-1.154</sup>*age<sup>-.203</sup>*ethnie*genre) où ethnie=1.212 pour les Afro-Américain et 1 sinon ; où genre=0.742 pour les femmes et 1 sinon.",left=0,ok=True)
-
-document["infomdrd"].bind("click", infomdrd)
-
-def infococ(ev):
-    InfoDialog("Cockcroft-Gault","HAS 2012 : la formule de Cockcroft et Gault estime, non le DFG (en mL/min/1,73 m2), mais la clairance de la créatinine (en mL/min). Formule historique pour l'adaptation des posologies des médicaments. Formule : MDRD=round(((140-age)/creat)*poids*k) où k=1.23 pour hommes et 1.04 sinon.",left=0,ok=True)
-
-document["infococ"].bind("click", infococ)
-
-def infockd(ev):
-    InfoDialog("CKD-EPI","HAS 2012 : Estimation du DFG : CKD-EPI est l’équation la plus fiable. Ici, CKD=round( 141*  min(creat/k, 1)^(-0.411 si homme sinon -0.329) * max(creat/k, 1)^-1.209 * 0.993^age * (1 si homme sinon 1.018) * (1.159 si Afro-Américain sinon 1) ) ; k = 0.9 si homme sinon 0.7 ; creat : 113,1179 g/mol pour la conversion en mg/dl.",left=0,ok=True)
-
-document["infockd"].bind("click", infockd)
+''' old way supprimable si marche for item in document.select(f'[name="ucr"]'):
+    item.bind("change",calcdfg)'''
+radio_anime("ucr",calcdfg)
 
 # modèle de brock
 
@@ -285,20 +275,11 @@ def calcbrock(ev):
 
 formulaire_anime("brock",calcbrock)
 
-#collection[0].select()
-
 
 def infobrock(ev):
     InfoDialog('&nbsp;', 'McWilliams A, Tammemagi M, Mayo J, Roberts H, Liu G, Soghrati K, Yasufuku K, Martel S, Laberge F. et al. Probability of cancer in pulmonary nodules detected on first screening computed tomography. <a href="https://www.nejm.org/doi/10.1056/NEJMoa1214726" target="_blank">New England Journal of Medicine</a> 2013;369;10.',left=0,ok=True)
 
 #document["infobrock"].bind("click", infobrock) 
-
-def infoBTS(ev):
-    InfoDialog('&nbsp;', '<a href="https://www.brit-thoracic.org.uk/quality-improvement/guidelines/pulmonary-nodules/" target="_blank">BTS Guidelines for the Investigation and Management of Pulmonary Nodules</a><br><a href="https://radiologyassistant.nl/chest/plumonary-nodules/bts-guideline" target="_blank">Résumé sur Radiology Assistant.</a>',left=0,ok=True)
-
-document["infoBTS"].bind("click", infoBTS)
-document["infoBTS2"].bind("click", infoBTS)
-
 
 # modèle de herder
 
@@ -341,31 +322,11 @@ def herder_calc(ev):
 
 formulaire_anime("herder",herder_calc)
 
-def infoherder(ev):
-    InfoDialog('&nbsp;', """<p>106 patients avec un seul nodule pulmonaire de moins de 30 mm furent inclus. Les patients ayant un ATCD de cancer dans les 5 ans précédant la TEP, etc. avaient été exclus. Le coefficient de corrélation interobservateur de l'analyse visuelle du résultat TEP était de 0,87. </p><p>Herder GJ et al. Clinical prediction model to characterize pulmonary nodules: validation and added value of 18F-fluorodeoxyglucose positron emission tomography. <a href="https://doi.org/10.1378/chest.128.4.2490" target="_blank">Chest</a></p>""",left=0,ok=True)
-
-document["infoherder"].bind("click", infoherder)
-
-def infoherder_fixe(ev):
-    InfoDialog('&nbsp;', "<ul><li><b>Aucune</b> : fixation indiscernable de celle du parenchyme pulmonaire.</li><li><b>Faible</b> : Fixation ≤ à celle du secteur vasculaire médiastinal.</li><li><b>Modérée</b> : Fixation > à celle du secteur vasculaire médiastinal.</li><li><b>Modérée</b> : Fixation nettement > à celle du secteur vasculaire médiastinal.</li></ul><p>Remarque : de manière surprenante, l'étude Herder ne définit pas les termes de son échelle de fixation. L'échelle donnée ici est celle-proposée par les recommandations BTS à fin de standardisation (grade D).",left=0,ok=True)
-
-document["infoherder_fixe"].bind("click", infoherder_fixe)
-
-def infoAUC(ev):
-    InfoDialog('&nbsp;', """Brock : 0,902 ; IC95%[0,856–0,948] , AUC Herder 0,924, IC95%[0,875–0,974] Risk of malignancy in pulmonary nodules: A validation study of four prediction models, Ali Al-Ameri et al., <a href="https://doi.org/10.1016/j.lungcan.2015.03.018">Chest 2015 </a>
-<p>AUC Herder (publication initiale) : AUC 0,92 ; IC 95% [0,87–0.97] Herder GJ et al. Clinical prediction model to characterize pulmonary 
-nodules: validation and added value of 18F-fluorodeoxyglucose positron 
-emission tomography. <a href="https://doi.org/10.1378/chest.128.4.2490" target="_blank">Chest</a></p>
-<p>AUC Brock : 0,96 ; IC95%[0,93–0,98] McWilliams A et al. Probability of cancer in pulmonary nodules detected on first screening CT. <a href="https://doi.org/10.1056/nejmoa1214726">N Engl J Med</a></p>""",left=0,ok=True)
-
-document["infoAUC"].bind("click", infoAUC)
-
 # VTD
 
 def vtd_approxvol(formule:str)->float:
     #calcule volume à partir de string 5 ou 5x6 ou 5x6x7
     motif:str="*" #ne peut être "" sinon split->Valuerror
-    print("vtd_approxvol1")
     if "-" in formule:
         motif="-"
     elif "x" in formule:
@@ -374,7 +335,6 @@ def vtd_approxvol(formule:str)->float:
         motif=' '
     
     try:
-        print("vtd_approxvol2")
         t:tuple=tuple(map(float,formule.lower().split(motif))) #conversion en tuple de float d'une string au format
         result:float=0
         lt:int=len(t)
@@ -459,16 +419,6 @@ document["vtd_3m"].bind("click", vtd_3m)
 document["vtd_ajd"].bind("click", vtd_calc)
 document["vtd_3m"].bind("click", vtd_calc)
 
-def infovtd(ev):
-    InfoDialog('&nbsp;', """Si le champ "Volume du nodule" est rempli, il sera utilisé en priorité.<br>
-    Le champ "volume approximatif" admet une valeur en mm (ex pour 5 mm saisir "5" ; pour 5*6 mm saisir "5*6" ; pour 5x6x7 mm saisir "5-6-7". On peut utiliser " *-x" comme séparateur.).<br>
-    Avec une dimension, on peut estimer le volume par X³/2.<br>
-    En 2D, par X*Y*((X+Y)/2)/2).<br>
-    En 3D, par le volume du prisme X*Y*Z/2.""",left=0,ok=True)
-
-document[f"infovtd1"].bind("click", infovtd)
-document[f"infovtd2"].bind("click", infovtd)
-
 # modal
 
 modal=document["modal_id"]
@@ -514,11 +464,6 @@ def DFGabs_calc(ev):
 
 formulaire_anime("DFGabs",DFGabs_calc,True)
 
-def infoDFGabs(ev):
-    InfoDialog('&nbsp;',"Calul simple à partir de l'équation de Dubois et Dubois : DFGabs=DFGrel/1.73*0.007184 * taillecm<sup>0.725</sup> * poidskg<sup>0.425</sup>",left=0,ok=True)
-
-document["infoDFGabs"].bind("click", infoDFGabs)
-
 # schwartz
 
 def calcschwartz(ev):
@@ -539,12 +484,6 @@ def calcschwartz(ev):
 formulaire_anime("schwartz",calcschwartz)
 for item in document.select(f'[name="usch"]'):
     item.bind("change",calcschwartz)
-
-
-def infosch(ev):
-    InfoDialog("équation de Schwartz",'<p>DFG = 0.413*taillecm/creatmgdl</p><p><a href="https://pubmed.ncbi.nlm.nih.gov/19158356/ target="_blank">Schwartz, article original</a></p><p>Le DFG normal avant 2 ans pourra être consulté sur <a href="http://pedsinreview.aappublications.org/content/pedsinreview/14/2/local/back-matter.pdf" target="_blank">Pediatrics in review</a></p>',left=0,ok=True)
-
-document["infosch"].bind("click", infosch)
 
 # sauvegarder dans le browser storage le dernier onglet
 def code2sortie(ev):
@@ -673,8 +612,20 @@ formulaire_anime("cstenose",calcnascet)
 #testis
 def calctestis(ev):
     try:
-        document["testisvol"].textContent ='{:.1f} mL'.format(.00071*float(document["testix"].value)*float(document["testiy"].value)*float(document["testiz"].value))
+        if document["testisformule"].checked:
+            document["testisvol"].textContent ='{:.1f} mL'.format(.00071*float(document["testix"].value)*float(document["testiy"].value)*float(document["testiz"].value))
+        else:
+            document["testisvol"].textContent ='{:.1f} mL'.format(Math.PI/6000*float(document["testix"].value)*float(document["testiy"].value)*float(document["testiz"].value))
     except Exception:
         document["testisvol"].textContent = '-'
 
 formulaire_anime("testis",calctestis)
+radio_anime("testisformule",calctestis)
+
+def testis_clear(ev):
+    lirecist:list=document.select('[itestis]')
+    lirecist.pop()
+    for item in lirecist:
+        item.value=""
+
+document["testis_clear"].bind("click", testis_clear)
