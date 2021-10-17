@@ -646,7 +646,7 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
     
     request = window.XMLHttpRequest.new()
     request.onload = lambda e:load_script(request)
-    request.open('GET', SCRIPT_PATH, False) # False == carga síncrona, True == asíncrona (False si vamos a cargar varios scripts que dependen unos de otros)
+    request.open('GET', SCRIPT_PATH, False) # False == chargement synchrone , True == async (faux si interdépendance des scripts)
     request.send()
 </script>
 <!-- The Modal -->
@@ -656,12 +656,6 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
     <div width="100%"  style="overflow:visible;"> <!--y'avait visible, qu'est sans doute bien ss android. sous windows auto donne les ascenseurs et y'avait mis scroll à vittel-->
     <img class="modal-content" id="img01" >
     </div>
-  <!--   <script type="text/javascript"> 
-        var zm = new Zoom(document.getElementById('img01'), {
-            pan: true,
-            rotate: false
-        });
-    </script> -->
     <div id="caption"></div>
   </div>
 </body>

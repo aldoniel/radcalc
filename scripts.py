@@ -64,7 +64,7 @@ from browser.local_storage import storage
     ev.currentTarget.className += " w3-green"
     if nomonglet!="DFG":
         ev.currentTarget.closest(".w3-dropdown-hover").children[0].className += " w3-green"
- """ # cette fonction génialement écrite est lente et écrite en js
+ """ # cette fonction génialement écrite est lente et gardée en js
 
 #window.brython_openonglet = brython_openonglet
 #document <= html.H5('Brython Ready! :)')
@@ -208,9 +208,8 @@ def calcdfg(ev):
 
 
 formulaire_anime("DFG",calcdfg)
-''' old way supprimable si marche for item in document.select(f'[name="ucr"]'):
-    item.bind("change",calcdfg)'''
 radio_anime("ucr",calcdfg)
+document["IDMS"].bind("change",calcdfg)
 
 # modèle de brock
 
@@ -275,11 +274,6 @@ def calcbrock(ev):
 
 formulaire_anime("brock",calcbrock)
 
-
-def infobrock(ev):
-    InfoDialog('&nbsp;', 'McWilliams A, Tammemagi M, Mayo J, Roberts H, Liu G, Soghrati K, Yasufuku K, Martel S, Laberge F. et al. Probability of cancer in pulmonary nodules detected on first screening computed tomography. <a href="https://www.nejm.org/doi/10.1056/NEJMoa1214726" target="_blank">New England Journal of Medicine</a> 2013;369;10.',left=0,ok=True)
-
-#document["infobrock"].bind("click", infobrock) 
 
 # modèle de herder
 
