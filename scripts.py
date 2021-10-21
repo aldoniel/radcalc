@@ -273,6 +273,7 @@ def calcbrock(ev):
         
 
 formulaire_anime("brock",calcbrock)
+document["brock_clear"].bind("click", lambda ev:iclear("ibrock"))
 
 
 # modèle de herder
@@ -315,6 +316,7 @@ def herder_calc(ev):
 
 
 formulaire_anime("herder",herder_calc)
+document["herder_clear"].bind("click", lambda ev:iclear("iherder"))
 
 # VTD
 
@@ -396,6 +398,8 @@ def vtd_calc(ev):
 
 formulaire_anime("vtd",vtd_calc)
 formulaire_anime("vtd2",vtd_calc) # astuce pour découpler les champs volume et volume approx
+document["vtd_clear"].bind("click", lambda ev:iclear("ivtd"))
+document["vtd_clear"].bind("click", lambda ev:iclear("ivtd2"))
 
 def vtd_ajd(ev):
     document["vtd_date2"].value=Date.new().toISOString()[0:10]
@@ -494,20 +498,15 @@ except:
     print("tiens, brython a été plus rapide que js!")
 
 def dernierongletclic(onglet:str):
-    print("onglet cliqué "+onglet)
-    print(lderniersonglets)
     global lderniersonglets
     lderniersonglets.append(onglet)
     
 window.dernierongletclic=dernierongletclic #ajout de la fonction brython au js namespace
-print("onloadmeu meu")
 
 def onBackKeyDown(ev):
+    # ajoute le comportement android normal si presse back
     try:
-        print("onBackKeyDown")
-        print(lderniersonglets)
         del lderniersonglets[-1] #supprime la page actuelle
-        print("goto dernier onglet")
         window.openonglet(NULL,lderniersonglets.pop())
     except IndexError:
         window.navigator.app.exitApp()
@@ -530,7 +529,8 @@ def calcrecist(ev):
         l_B:list=[]
         i:int=0
         lirecist:list=document.select('[irecist]')
-        lirecist.pop() #le dernier item c'est le bouton qui n'a pas de valeur
+        #lirecist.pop()
+        del lirecist[-1]  #le dernier item c'est le bouton qui n'a pas de valeur
         for i in range(1,11):
             item=lirecist.pop()
             if i%2==0:
@@ -560,6 +560,8 @@ def calcrecist(ev):
         document["recist_recist"].textContent ='SPD {:+.1f} % : {}'.format(recist,"progression" if recist>=20 else ("réponse complète" if recist==-100 else "réponse partielle" if recist<=-30 else "maladie stable")) #1 chiffre après , et signé
     except ZeroDivisionError:
         document["recist_recist"].textContent = "division par zéro : il doit y avoir une erreur de saisie de la colone 1..."
+        document["recist_suma"].textContent ="-"
+        document["recist_sumb"].textContent ="-"
     except TypeError as e:
         ermsg:str="erreur de saisie"
         if len(e.args)==1:
@@ -570,15 +572,23 @@ def calcrecist(ev):
 
 formulaire_anime("recist",calcrecist)
 
+'''
 def recist_clear(ev):
-    print("recistclear")
     lirecist:list=document.select('[irecist]')
-    lirecist.pop()
+    #lirecist.pop()
+    del lirecist[-1]
     for item in lirecist:
         item.value=""
+'''
+def iclear(inom:str):
+    champs:list=document.select(f'[{inom}].w3-input')
+    for item in champs:
+        item.value=""
+    radio:list=document.select(f'[{inom}].w3-radio')
+    for item in radio:
+        item.checked=False
 
-document["recist_clear"].bind("click", recist_clear)
-
+document["recist_clear"].bind("click", lambda ev:iclear("irecist"))
 #washout
 
 def calcwashout(ev):
@@ -644,11 +654,4 @@ def calctestis(ev):
 
 formulaire_anime("testis",calctestis)
 radio_anime("testisformule",calctestis)
-
-def testis_clear(ev):
-    lirecist:list=document.select('[itestis]')
-    lirecist.pop()
-    for item in lirecist:
-        item.value=""
-
-document["testis_clear"].bind("click", testis_clear)
+document["testis_clear"].bind("click", lambda ev:iclear("itestis"))

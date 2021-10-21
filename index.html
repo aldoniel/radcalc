@@ -20,7 +20,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
 
         function startBrython() {
             document.addEventListener('deviceready', brython, false); // l'event deviceready est lancé quand le code natif codova a fini de charger (au cas où brython appelle une function javascript de cordova)
-           // brython() // pour tester dans le navigateur, à enlever sur téléphone
+            brython() // pour tester dans le navigateur, à enlever sur téléphone
         }
     </script>
 </head>
@@ -33,7 +33,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
             <table class="tbl_invisibl"  style="width:100%"><tbody><tr>
                 <td><button class="w3-bar-item w3-button tablink w3-green" style="padding:3px 6px;" onclick="openonglet(event,'DFG')"><img src="img/kidney.svg" height="40" alt="DFG"></button></td>
            <td><div class="w3-dropdown-hover">
-                <button class="w3-button tablink w3-light-green" ><img src="img/lung.svg" height="40" alt="Poumon"></button> <!--.w3-light-green sert à ajouter un fond vert au bouton qui sinon est gris hérité de je ne sais où-->
+                <button class="w3-button tablink " style="background-color:#8BC34A";><img src="img/lung.svg" height="40" alt="Poumon" ></button> <!--.w3-light-green sert à ajouter un fond vert au bouton qui sinon est gris hérité de je ne sais où-->
                 <div class="w3-dropdown-content w3-bar-block w3-card-4">
                     <a href="#" class="w3-bar-item w3-button tablink" onclick="openonglet(event,'brock')">Nodule en TDM (Brock)</a>
                     <a href="#" class="w3-bar-item w3-button tablink" onclick="openonglet(event,'herder')">Nodule en TEP (Herder)</a>
@@ -42,13 +42,13 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                 </div>
             </div></td>
             <td><div class="w3-dropdown-hover">
-                <button class="w3-button tablink w3-light-green" style="padding:12px 4px;"><img src="img/cancer.svg" width="30" alt="Onco"></button><!--je ne sais pas trop pk le kc est décallé prblm pb svg mais en forçant le css ça passe-->
+                <button class="w3-button tablink " style="background-color:#8BC34A";padding:12px 4px;"><img src="img/cancer.svg" width="30" alt="Onco"></button><!--je ne sais pas trop pk le kc est décallé prblm pb svg mais en forçant le css ça passe-->
                 <div class="w3-dropdown-content w3-bar-block w3-card-4">
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'RECIST')">RECIST</a>
                 </div>
             </div></td>
             <td><div class="w3-dropdown-hover">
-                <button class="w3-button tablink w3-light-green" style="padding:3px 6px;"><span style="color:red;font-size:xx-large;">λ</span></button>
+                <button class="w3-button tablink" style="background-color:#8BC34A";padding:3px 6px;"><span style="color:red;font-size:xx-large;">λ</span></button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4">
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'washout')">Adénomes</a>
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'testis')">Volume gonadique</a>
@@ -198,6 +198,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
             <div class="w3-container w3-teal">
                 <h5>Probabilité de malignité d'un nodule en TDM (Modèle de Brock)</h5>
             </div>
+            <p><button class="w3-btn w3-red" id="brock_clear">Effacer les valeurs</button></p>
             <p><label class="w3-text-teal"><b>Âge (années)</b></label>
                 <input required class="w3-input w3-border w3-light-grey" ibrock=1 type="number" min="1" step="any" id="brock_age" title="Seulement des chiffres S.V.P."></p>
                 <label class="w3-text-teal"><b>Sexe ?</b></label>
@@ -253,6 +254,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
             <div class="w3-container w3-teal">
                 <h5>Probabilité de malignité d'un nodule en TEP (Modèle de Herder) pour les nodules <u>solides</u></h5>
             </div>
+            <p><button class="w3-btn w3-red" id="herder_clear">Effacer les valeurs</button></p>
             <p><label class="w3-text-teal"><b>Âge ? (années) </b></label>
                 <input required class="w3-input w3-border w3-light-grey" iherder=1 type="number" min="1" step="any" id="herder_age" title="Seulement des chiffres S.V.P."></p>
                 <label class="w3-text-teal"><b>Tabagisme :</b></label>
@@ -311,7 +313,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
             <div class="w3-container w3-teal">
                 <h5>Temps de doublement</h5>
             </div>
-            <br>
+            <p><button class="w3-btn w3-red" id="vtd_clear">Effacer les valeurs</button></p>
             <div class="w3-container w3-cyan">
                 <h6>Examen 1</h6>
             </div>
@@ -489,10 +491,10 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
             <li><a href="http://www.sfendocrino.org/_images/mediatheque/articles/pdf/recommandations/2006%20consensus%20sfe%20incidentalomes%20surrenaliens.pdf" target="_blank">Consensus SFE 2006 incidentalomes surrénaliens</a></li></ul>
         </div>
         <!--onglet apropos -->
+        <p></p>
         <div id="apropos" class="w3-container w3-border onglet" style="display:none">
-            <div class="w3-container w3-teal">
-                <h5>Avertissements</h5>
-            </div>
+            <button type="button" class="collapsible collapseh5 w3-teal">Avertissements</button>
+            <div class="collapsecontent">
             <div id="defile"></div>
             <p>L'auteur de cette application se présente en tant que programmateur amateur sans autre titre ni prétention.</p>
             <p>
@@ -505,8 +507,10 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
              <p>Cette application n'est pas un produit médical professionel.</p>
             <p>Le code source que j'ai rédigé est placé sous la licence CeCILL de droit français, qui respecte les principes de diffusion des logiciels libres (cf infra).</p>
              <p>En poursuivant l'utilisation, vous acceptez ces condictions sans réserve. Veuillez prendre connaissance de la licence et l'accepter.</p>
-             <div class="w3-container w3-teal">
-                <h5>À propos : RadCalc 1.1</h5></div>
+            </div>
+            <p></p>
+            <button type="button" class="collapsible collapseh5 w3-teal">À propos : RadCalc 1.2</button>
+                <div class="collapsecontent"> 
                 <ul>
                     <li>Les informations sont traitées localement, hors ligne.</li>
                     <li>Il n'y a pas de contenu distant en dehors des hyperliens.</li>
@@ -515,11 +519,13 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                     <li>L'application est portée sur android par <a href="https://cordova.apache.org/" target="_blank">Cordova</a>.</li>
                     <li>Les jolies icônes sont de <a href="https://openmoji.org/" target="_blank">OpenMoji</a></li>
                     <li>La fonction <a href="https://github.com/anitasv/zoom" target="_blank">Zoom it!</a> est de anitasv</li>
-                </ul>
-                <div class="w3-container w3-teal">
-                    <h5>Licence</h5></div>
+                </ul></div>
+                <p></p>
+                <button type="button" class="collapsible collapseh5 w3-teal">Licence libre CeCILL</button>
+                <div class="collapsecontent"> 
                     <div id="cecill"></div>
                     <a id="cecillaccepter"></a>
+                </div>
             </div>
             <!--onglet nascet -->
         <div id="nascet" class="w3-container w3-border onglet" style="display:none">

@@ -337,7 +337,7 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 .collapseactive, .collapsible:hover {
   background-color: #555;
 }
-
+.collapseh5{font-family: "Segoe UI",Arial,sans-serif;font-size: 18px;width: 100%;text-align: left;padding: 10.15px;}
 .collapsible:after {
   content: '\02795';
   color: white;
