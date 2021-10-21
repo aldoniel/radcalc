@@ -36,6 +36,7 @@ Permet de calculer
 1. [x] publier sur android
 1. [ ] et sur internet
 1. [x] ajouter une option de volume ellipsoïde
+1. [ ] ajouter surface ovaire, des boutons effacer les champs partout, et un convertisseur d'elipsoïde en lambert
 1. [ ] comprendre pourquoi sur android l'onglet est mal retenu (voir la gestion onkill de cordova)
 1. [ ] essayer de comprendre pk sur android le dropdow menu se replie pas au toucher
 1. [ ] essayer de publier une web app ios

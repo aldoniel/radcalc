@@ -33,15 +33,15 @@ termes. """
 
 # from typing import Callable !! ne pas importer, ça ralentit à mort l'initialisation de brython: plus 4s. Anoter seulement les types élémentaires.
 from browser import document, html,window
-from browser.local_storage import storage
-from browser.widgets.dialog import InfoDialog
+#from browser.widgets.dialog import InfoDialog #infodialog bugue sur android
 #from typing_extensions import TypeVarTuple
 #from math import e as math_e #utiliser le module Math de javascript pour économiser un import
 #from math import log as ln
 from javascript import Math,Number,NULL
 from javascript import Date # on gagne environ un ordre de grandeur en vitesse par rapport à l'objet python
-from browser import  alert # pour les tests
+#from browser import  alert # pour les tests
 from browser.local_storage import storage
+#from browser.session_storage import storage as session_storage #bugue ?
 
 # openonglet
 
@@ -484,9 +484,37 @@ def code2sortie(ev):
     storage['last_onglet'] = window.current_onglet #importation de la variable javascript
     return NULL #return javascript NULL pour enlever la popup de sortie https://stackoverflow.com/questions/13443503/run-javascript-code-on-window-close-or-page-refresh
 
-window.onbeforeunload = code2sortie
+window.onbeforeunload = code2sortie # enregistre la sortie sur navigateur sur android, ce code ne marche jamais (ni en pause, ni au kill)
+document.addEventListener("pause", code2sortie, False) # enregistre l'événement pause d'android via cordova 
 
-#recist
+lderniersonglets:list=[]
+try: 
+    lderniersonglets.append(window.current_onglet) # si js a gangé la course, alors current_onglet a été initialisé et try{dernierongletclic(ongletName);} a échoué donc j'initialise
+except:
+    print("tiens, brython a été plus rapide que js!")
+
+def dernierongletclic(onglet:str):
+    print("onglet cliqué "+onglet)
+    print(lderniersonglets)
+    global lderniersonglets
+    lderniersonglets.append(onglet)
+    
+window.dernierongletclic=dernierongletclic #ajout de la fonction brython au js namespace
+print("onloadmeu meu")
+
+def onBackKeyDown(ev):
+    try:
+        print("onBackKeyDown")
+        print(lderniersonglets)
+        del lderniersonglets[-1] #supprime la page actuelle
+        print("goto dernier onglet")
+        window.openonglet(NULL,lderniersonglets.pop())
+    except IndexError:
+        window.navigator.app.exitApp()
+
+document.addEventListener("backbutton", onBackKeyDown, False)
+
+#recist 
 
 def isnumber(s)->bool:
     try:
@@ -543,6 +571,7 @@ def calcrecist(ev):
 formulaire_anime("recist",calcrecist)
 
 def recist_clear(ev):
+    print("recistclear")
     lirecist:list=document.select('[irecist]')
     lirecist.pop()
     for item in lirecist:

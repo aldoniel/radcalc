@@ -15,11 +15,12 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
     <link rel="stylesheet" href="css/w3.css">
     <script src="js/brython.js"></script>
     <script src="js/brython_modules.js"></script>
+   <!-- <script src="js/brython_stdlib.js"></script>  -->
     <script type="text/javascript">
 
         function startBrython() {
-            document.addEventListener('deviceready', brython, false);
-            //brython() // pour tester dans le navigateur, à enlever sur téléphone
+            document.addEventListener('deviceready', brython, false); // l'event deviceready est lancé quand le code natif codova a fini de charger (au cas où brython appelle une function javascript de cordova)
+           // brython() // pour tester dans le navigateur, à enlever sur téléphone
         }
     </script>
 </head>
@@ -50,7 +51,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                 <button class="w3-button tablink w3-light-green" style="padding:3px 6px;"><span style="color:red;font-size:xx-large;">λ</span></button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4">
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'washout')">Adénomes</a>
-                    <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'testis')">Volume testiculaire</a>
+                    <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'testis')">Volume gonadique</a>
                 </div>
             </div></td>
             <td><button class="w3-bar-item w3-button tablink w3-green" style="padding:3px 6px;" onclick="openonglet(event,'nascet')"><img src="img/nascet2.svg" height="40" alt="Vasc"></button></td>
@@ -556,7 +557,7 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
         <!--onglet testis -->
         <div id="testis" class="w3-container w3-border onglet" style="display:none">
             <div class="w3-container w3-teal">
-                <h5>Volume testiculaire</h5>
+                <h5>Volume gonadique masculin</h5>
             </div>
             <p>
                 <input class="w3-radio" type="radio" name="testisformule" checked id="testisformule">
@@ -565,7 +566,7 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                 <input class="w3-radio" type="radio" name="testisformule">
                 <label>formule de l'ellipsoïde</label>
             </p>
-            <label class="w3-text-teal"><b>Dimensions du testicule dans les 3 plans</b></label>
+            <label class="w3-text-teal"><b>Dimensions de la gonade masculine* dans les 3 plans</b></label>
             <p><button class="w3-btn w3-red" id="testis_clear">Effacer les valeurs</button></p>
             <p><label class="w3-text-teal"><b>Diamètre x (mm)</b></label>
             <input required class="w3-input w3-border w3-light-grey" itestis=1 type="number" min="1" step="any" id="testix" title="Seulement des chiffres S.V.P."></p>
@@ -576,16 +577,17 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
             <p><span class="w3-tag w3-large w3-teal">Volume testiculaire : </span> <span id="testisvol">-</span></p>
             <p><button class="w3-btn w3-indigo" itestis=4>Calculer</button></p>
             <div class="w3-container w3-teal">Remarques</div>
-                <ul><li>La littérature est assez confuse sur la manière correcte de calculer le volume testiculaire ainsi que les normes.</li>
+                <ul><li>La littérature est assez confuse sur la manière correcte de calculer le volume gonadique masculin ainsi que les normes.</li>
                     <li>La normale souvent avancée est 15-20mL (ex : <a href="https://doi.org/10.1148/rg.2017160125" target="_blank">Réf</a>), hypotrophie en deçà et atrophie si < à 6mL.</li>
                     <li>Cependant, pour la même normale (!), certains préconisent la formule de l'ellipsoïde (0,52*x*y*z où π/6#0,52) par défaut dans les échographes, tandis que d'autres promeuvent la formule de Lambert : 0,72*x*y*z.</li>
                     <li>Sur la base de corrélations au volume réel sur spécimen, la formule de Lambert était la plus proche sur deux études et est donc retenue ici. (<a href="https://doi.org/10.1016/j.urology.2006.09.012" target="_blank">Réf1</a> <a href="https://doi.org/10.1016/j.afju.2012.11.004" target="_blank">Réf2</a>).</li>
+                    <li> * (La politique de l'android store ne permet pas de mentionner son nom impudique)
                 </ul>
         </div> 
 
         <script>
             // global var
-            var onglet, tablinks;
+            var onglet, tablinks,jsfirst;
             onglet = document.getElementsByClassName("onglet"); 
             tablinks = document.getElementsByClassName("tablink");
             var current_onglet;
@@ -615,9 +617,11 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                     if (ongletName!= "DFG" && ongletName!="apropos" && ongletName!="nascet"){evt.currentTarget.closest(".w3-dropdown-hover").children[0].className += " w3-green";}
                 }
                 //mon code lamentable pour colorer. Je décide de ne pas recolorer à la rouverture car ça complique le code...
+                try{dernierongletclic(ongletName);}//envoie le nom à brython
+                catch(err){}//c'est moche, mais ça enlève l'erreur au démarrage où js gagne la compèt sur brython
             }
 
-            function collapsible(){
+            function collapsible(){//w3 ; sert à replier les catégories
                 var coll = document.getElementsByClassName("collapsible");
                 var i;
                 for (i = 0; i < coll.length; i++) {
