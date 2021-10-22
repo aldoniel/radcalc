@@ -74,18 +74,22 @@ def cecillacceptefunc(ev):
     storage['cecillaccepte']="1"
     document["menu"].style.display="block"
     window.scroll(0,0) #js, scroll en haut
+    for item in document.select('[licence]'): #crash debug meu je sais pas pourquoi 
+        togcollapse(item) # replier licences
+    
 
-try:
-#essaie de lire l'acceptation ds local storage et sinon charge la licence etc.
-    assert storage['cecillaccepte']=="1"
-except (KeyError,AssertionError):
-    storage['cecillaccepte']="0"
-    document["menu"].style.display="none"
-    link = html.CENTER(html.A(html.BUTTON("↓ Défiler vers Accepter ↓", Class="w3-button w3-red"),href="#cecillaccepter"))
-    document["defile"]<=link
-    accepte = html.CENTER(html.BUTTON("J'accepte la licence CeCILL", Class="w3-button w3-red w3-large"))
-    accepte.bind("click",cecillacceptefunc)
-    document["cecillaccepter"]<=accepte
+
+# collapse
+
+def togcollapse(bouton):
+    bouton.classList.toggle("collapseactive")
+    content = bouton.nextElementSibling
+    if content.style.maxHeight:
+        content.style.maxHeight = NULL
+    else:
+        content.style.maxHeight = str(content.scrollHeight+10) + "px"
+        print(f'python {content.scrollHeight}')
+
 
 def cecilladd(ev):
     #charge dynamiquement la licence
@@ -108,6 +112,21 @@ if window.current_onglet=="apropos": # si on charge d'emblée sur le légal
     cecilladd(None)
 else:
     document["evapropos"].bind("click", cecilladd) # si on charge pas sur le légal, on ajoute le chargement par le menu
+
+try:
+#essaie de lire l'acceptation ds local storage et sinon charge la licence etc.
+    assert storage['cecillaccepte']=="1"
+except (KeyError,AssertionError):
+    storage['cecillaccepte']="0"
+    document["menu"].style.display="none"
+    link = html.CENTER(html.A(html.BUTTON("↓ Défiler vers Accepter ↓", Class="w3-button w3-red"),href="#cecillaccepter"))
+    document["defile"]<=link
+    accepte = html.CENTER(html.BUTTON("J'accepte la licence CeCILL", Class="w3-button w3-red w3-large"))
+    accepte.bind("click",cecillacceptefunc)
+    document["cecillaccepter"]<=accepte
+    for item in document.select('[licence]'): # déplier licences après avoir inséré sinon le contect n'a pas la bonne taille...
+        togcollapse(item)
+
 
 class glob_var:
     nextInput_maxint:dict={}
@@ -655,3 +674,4 @@ def calctestis(ev):
 formulaire_anime("testis",calctestis)
 radio_anime("testisformule",calctestis)
 document["testis_clear"].bind("click", lambda ev:iclear("itestis"))
+

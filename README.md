@@ -37,7 +37,8 @@ Permet de calculer
 1. [ ] et sur internet
 1. [x] ajouter une option de volume ellipsoïde
 1. [ ] ajouter surface ovaire
-1. [x] ajouter des boutons effacer les champs partout, et un convertisseur d'elipsoïde en lambert
+1. [ ] ajouter des boutons effacer les champs partout, 
+1. [x] et un convertisseur d'elipsoïde en lambert
 1. [x] comprendre pourquoi sur android l'onglet est mal retenu (voir la gestion onkill de cordova)
 1. [ ] faire un 1er démarrage plus convivial avec une aide pour cliquer les icônes et plier-déplier les licences
 1. [x] la coloration verte des icônes marche plus pour dropdown !

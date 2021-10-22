@@ -493,7 +493,7 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
         <!--onglet apropos -->
         <p></p>
         <div id="apropos" class="w3-container w3-border onglet" style="display:none">
-            <button type="button" class="collapsible collapseh5 w3-teal">Avertissements</button>
+            <button type="button" licence class="collapsible collapseh5 w3-teal">Avertissements</button>
             <div class="collapsecontent">
             <div id="defile"></div>
             <p>L'auteur de cette application se présente en tant que programmateur amateur sans autre titre ni prétention.</p>
@@ -501,7 +501,7 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                 Cette application est fournie à titre informatif et sans aucune garantie. Elle s'adresse à un public averti ayant une formation médicale. En aucun cas les informations
                  qu'elle apporte ne peuvent se subtituer à une consultation médicale ni réaliser un diagnostique. Bien que j'ai apporté du soin à sa réalisation, 
                 des erreurs peuvent persister. Les différents calculateurs ont été testés manuellement contre d'autres calculateurs déjà publiquement accessibles. 
-                Néanmoins, le code n'a évidemment pas été certifié ni prouvé.
+                Néanmoins, le code n'a évidemment pas été audité.
                  La saisie de l'utilisateur est grossièrement vérifiée, mais une erreur de saisie de votre part pourrait produire un résultat aberrant.
                 Cette application ne se subtitue pas au raisonnement médical et tout résultat devrait être interprété avec un oeil critique.</p>
              <p>Cette application n'est pas un produit médical professionel.</p>
@@ -521,7 +521,7 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                     <li>La fonction <a href="https://github.com/anitasv/zoom" target="_blank">Zoom it!</a> est de anitasv</li>
                 </ul></div>
                 <p></p>
-                <button type="button" class="collapsible collapseh5 w3-teal">Licence libre CeCILL</button>
+                <button type="button" licence class="collapsible collapseh5 w3-teal">Licence libre CeCILL</button>
                 <div class="collapsecontent"> 
                     <div id="cecill"></div>
                     <a id="cecillaccepter"></a>
@@ -638,6 +638,8 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                     content.style.maxHeight = null;
                     } else {
                     content.style.maxHeight = content.scrollHeight + "px";
+                    console.log("js")
+                    console.log(content.scrollHeight)
                     } 
                 });
                 }
