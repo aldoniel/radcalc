@@ -69,6 +69,15 @@ from browser.local_storage import storage
 #window.brython_openonglet = brython_openonglet
 #document <= html.H5('Brython Ready! :)')
 
+def displaynone(ev):
+    #parce que le dropdown se replie pas bien sous android à cause du hover simulé par un 2e clic et pcq en css cacher au clic 
+    print("meu")
+    #ev.currentTarget.style.display="none"
+'''
+for item in document.select('.w3-bar-item'):
+    item.bind("clic",displaynone)
+    print(item)
+'''
 def cecillacceptefunc(ev):
     # enregistre l'acceptation et affiche le menu
     storage['cecillaccepte']="1"
@@ -76,19 +85,24 @@ def cecillacceptefunc(ev):
     window.scroll(0,0) #js, scroll en haut
     for item in document.select('[licence]'): #crash debug meu je sais pas pourquoi 
         togcollapse(item) # replier licences
+    del document["cecillaccepter"]
+    del document["defile"]
+    document["assistance"]<="Les icônes du haut permettent d'accéder aux différents calculateurs. Il est souvent possible de passer à la valeur suivante en appuyant sur entrée."
+    
+
     
 
 
 # collapse
 
 def togcollapse(bouton):
+    #fonction redéfinie à partir du js que je maitrise pas.
     bouton.classList.toggle("collapseactive")
     content = bouton.nextElementSibling
     if content.style.maxHeight:
-        content.style.maxHeight = NULL
+        content.style.maxHeight = None # c'est assez étrange mais c'était null en js, mais NULL plante brython et d'ailleurs cette valeur est mal documentée ?
     else:
-        content.style.maxHeight = str(content.scrollHeight+10) + "px"
-        print(f'python {content.scrollHeight}')
+        content.style.maxHeight = "max-content" # str(content.scrollHeight+10) + "px" # l'expression en js donne un résultat différent et moindre depuis brython ?? mais max content marche
 
 
 def cecilladd(ev):

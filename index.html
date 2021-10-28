@@ -33,8 +33,8 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
             <table class="tbl_invisibl"  style="width:100%"><tbody><tr>
                 <td><button class="w3-bar-item w3-button tablink w3-green" style="padding:3px 6px;" onclick="openonglet(event,'DFG')"><img src="img/kidney.svg" height="40" alt="DFG"></button></td>
            <td><div class="w3-dropdown-hover">
-                <button class="w3-button tablink " style="background-color:#8BC34A";><img src="img/lung.svg" height="40" alt="Poumon" ></button> <!--.w3-light-green sert à ajouter un fond vert au bouton qui sinon est gris hérité de je ne sais où-->
-                <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                <button class="w3-button tablink hoverbutton" style="background-color:#8BC34A";><img src="img/lung.svg" height="40" alt="Poumon" ></button> <!--.w3-light-green sert à ajouter un fond vert au bouton qui sinon est gris hérité de je ne sais où-->
+                <div class="w3-dropdown-content w3-bar-block w3-card-4" style="display:none">
                     <a href="#" class="w3-bar-item w3-button tablink" onclick="openonglet(event,'brock')">Nodule en TDM (Brock)</a>
                     <a href="#" class="w3-bar-item w3-button tablink" onclick="openonglet(event,'herder')">Nodule en TEP (Herder)</a>
                     <a href="#" class="w3-bar-item w3-button tablink" onclick="openonglet(event,'vtd')">Temps de doublement</a>
@@ -42,14 +42,14 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                 </div>
             </div></td>
             <td><div class="w3-dropdown-hover">
-                <button class="w3-button tablink " style="background-color:#8BC34A";padding:12px 4px;"><img src="img/cancer.svg" width="30" alt="Onco"></button><!--je ne sais pas trop pk le kc est décallé prblm pb svg mais en forçant le css ça passe-->
-                <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                <button class="w3-button tablink hoverbutton" style="background-color:#8BC34A";padding:12px 4px;"><img src="img/cancer.svg" width="30" alt="Onco"></button><!--je ne sais pas trop pk le kc est décallé prblm pb svg mais en forçant le css ça passe-->
+                <div class="w3-dropdown-content w3-bar-block w3-card-4" style="display:none">
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'RECIST')">RECIST</a>
                 </div>
             </div></td>
             <td><div class="w3-dropdown-hover">
-                <button class="w3-button tablink" style="background-color:#8BC34A";padding:3px 6px;"><span style="color:red;font-size:xx-large;">λ</span></button>
-                <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                <button class="w3-button tablink hoverbutton" style="background-color:#8BC34A";padding:3px 6px;"><span style="color:red;font-size:xx-large;">λ</span></button>
+                <div class="w3-dropdown-content w3-bar-block w3-card-4" style="display:none">
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'washout')">Adénomes</a>
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'testis')">Volume gonadique</a>
                 </div>
@@ -491,22 +491,22 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
             <li><a href="http://www.sfendocrino.org/_images/mediatheque/articles/pdf/recommandations/2006%20consensus%20sfe%20incidentalomes%20surrenaliens.pdf" target="_blank">Consensus SFE 2006 incidentalomes surrénaliens</a></li></ul>
         </div>
         <!--onglet apropos -->
-        <p></p>
         <div id="apropos" class="w3-container w3-border onglet" style="display:none">
+            <div id="assistance"></div>
             <button type="button" licence class="collapsible collapseh5 w3-teal">Avertissements</button>
             <div class="collapsecontent">
             <div id="defile"></div>
             <p>L'auteur de cette application se présente en tant que programmateur amateur sans autre titre ni prétention.</p>
             <p>
                 Cette application est fournie à titre informatif et sans aucune garantie. Elle s'adresse à un public averti ayant une formation médicale. En aucun cas les informations
-                 qu'elle apporte ne peuvent se subtituer à une consultation médicale ni réaliser un diagnostique. Bien que j'ai apporté du soin à sa réalisation, 
+                qu'elle apporte ne peuvent se subs  tituer à une consultation médicale ni réaliser un diagnostique. Bien que j'ai apporté du soin à sa réalisation, 
                 des erreurs peuvent persister. Les différents calculateurs ont été testés manuellement contre d'autres calculateurs déjà publiquement accessibles. 
                 Néanmoins, le code n'a évidemment pas été audité.
-                 La saisie de l'utilisateur est grossièrement vérifiée, mais une erreur de saisie de votre part pourrait produire un résultat aberrant.
-                Cette application ne se subtitue pas au raisonnement médical et tout résultat devrait être interprété avec un oeil critique.</p>
-             <p>Cette application n'est pas un produit médical professionel.</p>
+                La saisie de l'utilisateur est grossièrement vérifiée, mais une erreur de saisie de votre part pourrait produire un résultat aberrant.
+                Cette application ne se substitue pas au raisonnement médical et tout résultat devrait être interprété avec un oeil critique.</p>
+             <p>Cette application n'est pas un produit médical professionnel.</p>
             <p>Le code source que j'ai rédigé est placé sous la licence CeCILL de droit français, qui respecte les principes de diffusion des logiciels libres (cf infra).</p>
-             <p>En poursuivant l'utilisation, vous acceptez ces condictions sans réserve. Veuillez prendre connaissance de la licence et l'accepter.</p>
+             <p>En poursuivant l'utilisation, vous acceptez ces conditions sans réserve. Veuillez prendre connaissance de la licence et l'accepter.</p>
             </div>
             <p></p>
             <button type="button" class="collapsible collapseh5 w3-teal">À propos : RadCalc 1.2</button>
@@ -593,7 +593,7 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
 
         <script>
             // global var
-            var onglet, tablinks,jsfirst;
+            var onglet, tablinks;
             onglet = document.getElementsByClassName("onglet"); 
             tablinks = document.getElementsByClassName("tablink");
             var current_onglet;
@@ -607,13 +607,34 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
             }
             openonglet(null,current_onglet) //NULL car c'est compliqué de simuler un event
 
+            function hovermenu(){
+                var coll = document.getElementsByClassName("hoverbutton");
+                var i;
+                for (i = 0; i < coll.length; i++) {
+                coll[i].addEventListener("mouseover", function(){
+                    var parent=this.nextElementSibling; //implique que le bouton est toujours suivi de div w3-dropdown-content
+                    if (parent){parent.style.display="block";}
+                });
+                }
+                coll = document.getElementsByClassName("w3-dropdown-hover");
+                for (i = 0; i < coll.length; i++) {
+                    coll[i].addEventListener("mouseleave", function() {
+                        var drop=this.getElementsByClassName("w3-dropdown-content");
+                        if (drop){drop[0].style.display="none";}
+                    });
+                }
+                
+            }
+            hovermenu();
+
             function openonglet(evt, ongletName) {
                 var i;
+                if (evt){
+                    var drop=evt.currentTarget.closest(".w3-dropdown-content")
+                    if (drop){drop.style.display="none";}
+                }
                 document.getElementById(current_onglet).style.display = "none"; //cacher l'onglet actif
                 current_onglet=ongletName;
-                //for (i = 0; i < onglet.length; i++) {
-                //    onglet[i].style.display = "none";//cache le contenu
-                //}
                 for (i = 0; i < tablinks.length; i++) {
                     tablinks[i].className = tablinks[i].className.replace(" w3-green", "");  //décolore le menu
                 }
@@ -638,13 +659,12 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                     content.style.maxHeight = null;
                     } else {
                     content.style.maxHeight = content.scrollHeight + "px";
-                    console.log("js")
-                    console.log(content.scrollHeight)
                     } 
                 });
                 }
             }
             collapsible();
+            
         </script>
 <script type="text/python3">
 
