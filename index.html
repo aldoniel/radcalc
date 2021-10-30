@@ -26,7 +26,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
 
         function startBrython() {
             document.addEventListener('deviceready', brython, false); // l'event deviceready est lancé quand le code natif codova a fini de charger (au cas où brython appelle une function javascript de cordova)
-            brython() // pour tester dans le navigateur, à enlever sur téléphone
+            //brython() // pour tester dans le navigateur, à enlever sur téléphone
         }
     </script>
 </head>
@@ -51,6 +51,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                 <button class="w3-button tablink hoverbutton" style="background-color:#8BC34A";padding:12px 4px;"><img src="img/cancer.svg" width="30" alt="Onco"></button><!--je ne sais pas trop pk le kc est décallé prblm pb svg mais en forçant le css ça passe-->
                 <div class="w3-dropdown-content w3-bar-block w3-card-4" style="display:none">
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'RECIST')">RECIST</a>
+                    <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'lugano')">Lymphomes</a>
                 </div>
             </div></td>
             <td><div class="w3-dropdown-hover">
@@ -417,6 +418,58 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                             <li>Source de cet extrait : <a href="http://www.cepd.fr/" target="_blank">Fiche RECIST de la cohorte des Carcinomes Endocrines Peu Différenciés.</a> Résumé excellent à lire pour les autres critères.</li></ul>
         </div>
         
+        <!--onglet lugano -->
+        <div id="lugano" class="w3-container w3-border onglet" style="display:none">
+            <div class="w3-container w3-teal">
+                <h5>Lymphomes, Lugano</h5>
+            </div>
+            <p><button class="w3-btn w3-red" id="lugano_clear">Effacer les valeurs</button></p>
+            <table class="w3-table-all w3-centered" style="width:100%">
+                <tr >
+                <th>Lésion</th>
+                <th>Avant</th>
+                <th>Aujourd'hui</th></tr>
+                <tr>
+                <td>1</td>
+                            <td><input class="w3-input w3-border" type="number" min="0" irecist=1 title="Seulement des chiffres S.V.P."></td>
+                            <td><input class="w3-input w3-border" type="number" min="0" irecist=2 title="Seulement des chiffres S.V.P."></td>
+                        </tr><tr>
+                <td>2</td>
+                            <td><input class="w3-input w3-border" type="number" min="0" irecist=3 title="Seulement des chiffres S.V.P."></td>
+                            <td><input class="w3-input w3-border" type="number" min="0" irecist=4 title="Seulement des chiffres S.V.P."></td>
+                        </tr><tr>
+                <td>3</td>
+                            <td><input class="w3-input w3-border" type="number" min="0" irecist=5 title="Seulement des chiffres S.V.P."></td>
+                            <td><input class="w3-input w3-border" type="number" min="0" irecist=6 title="Seulement des chiffres S.V.P."></td>
+                        </tr><tr>
+                <td>4</td>
+                            <td><input class="w3-input w3-border" type="number" min="0" irecist=7 title="Seulement des chiffres S.V.P."></td>
+                            <td><input class="w3-input w3-border" type="number" min="0" irecist=8 title="Seulement des chiffres S.V.P."></td>
+                        </tr><tr>
+                <td>5</td>
+                            <td><input class="w3-input w3-border" type="number" min="0" irecist=9 title="Seulement des chiffres S.V.P."></td>
+                            <td><input class="w3-input w3-border" type="number" min="0" irecist=10 title="Seulement des chiffres S.V.P."></td>
+                        </tr><tr>
+                            <td><b>Somme</b></td>
+                            <td><span id="recist_suma">-</span></td>
+                            <td><span id="recist_sumb">-</span></td>            
+                        </tr>
+                </table>
+                        <p><span class="w3-tag w3-large w3-teal">RECIST</span> <span id="recist_recist">-</span></p>
+                        <p><button class="w3-btn w3-indigo " irecist=11 id="recist_calc">Calculer</button></p>
+                        <div class="w3-container w3-teal">Mémo (cibles)</div>
+                        <ul><li><b>Cibles</b><ul><li>Mesurables : si ≥ 10mm, ou si ≥ 15 mm de petit axe pour les adénomégalies.</li><li>5 cibles ; max. 2 cibles par organes.</li></ul></li>
+                            <li><b>Réponse complète (RC)</b> : Disparition de toutes les lésions. De plus, tous les ganglions lymphatiques (cible ou non-cible), doivent avoir atteint une dimension < 10 mm dans leur plus petit axe.</li>
+                        <ul><li>Attention : les ganglions sélectionnés comme lésions cibles doivent toujours être mesurés (dimension du plus petit axe dans le plan anatomique utilisé pour l’examen BASELINE), même s’ils diminuent en taille durant l’étude et que leur petit axe devient < 10 mm.<li>Dès lors, lorsque des ganglions sont utilisés comme lésion cible, la « somme » des dimensions des lésions n’est pas nécessairement nulle, même en cas de réponse complète, puisqu’un ganglion normal est défini comme ayant un plus petit axe < 10 mm.</li>
+                            </ul>
+                        <li><b>Réponse partielle (RP)</b> : Diminution d'au moins 30 % de la somme des diamètres des lésions cibles par rapport à la somme initiale des diamètres (Examen BASELINE).</li>
+                        <li><b>Progression (PD) </b>: Augmentation ≥ 20 % de la somme des diamètres des lésions cibles par rapport à la plus petite somme des diamètres observée durant l’étude (NADIR), y compris la visite de baseline. En plus de cette augmentation relative de 20%, cette somme doit augmenter d’au moins 0,5 cm.
+                            <ul><li>Nota bene : l’apparition d'une ou plusieurs nouvelles lésions est également considérée comme progression.</li>
+                            <li>Attention : s’il existe une progression par rapport au NADIR et une réponse par rapport à l’examen BASELINE, c’est la progression qui prévaut.</li></ul>
+                        </li>
+                        <li><b>Stabilisation (SD)</b> : Ni RP (ou RC), ni PD.</li>
+                            <li>Source de cet extrait : <a href="http://www.cepd.fr/" target="_blank">Fiche RECIST de la cohorte des Carcinomes Endocrines Peu Différenciés.</a> Résumé excellent à lire pour les autres critères.</li></ul>
+        </div>
 
         <!--onglet algo -->
         <div id="algo" class="w3-container w3-border onglet" style="display:none">
