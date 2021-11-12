@@ -2,3 +2,9 @@
 .idea/
 
 .vscode/
+
+.makedocs.py
+
+.makedocsdiff.pkl
+
+.rendocs.au3

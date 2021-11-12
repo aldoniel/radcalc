@@ -572,6 +572,7 @@ def calcrecist(ev):
                 raise TypeError(i) # ex, si un navigateur accepte du texte ds un champ nombre...
 
         suma:float=sum(l_A)
+        print(suma)
         sumb:float=sum(l_B)
         recist:float=round(100/suma*sumb-100,1)
         document["recist_suma"].textContent = suma
