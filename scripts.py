@@ -543,6 +543,19 @@ def isnumber(s)->bool:
 
 
 def calcrecist(ev):
+    sumb_manuel=None #super hackish... sert à désactiver les vérifications de tableau
+    suma_manuel=None
+    recist_warning:str=""
+    try:
+            suma_manuel=float(document["recist_suma_manuel"].value)
+            recist_warning="(somme manuelle en colone 1)"
+    except:
+        pass
+    try:
+        sumb_manuel=float(document["recist_sumb_manuel"].value)
+        recist_warning="(somme manuelle en colone 2)" if not recist_warning else "(somme manuelle en colone 1 & 2)"
+    except:
+        pass
     try:
         l_A:list=[]
         l_B:list=[]
@@ -560,24 +573,39 @@ def calcrecist(ev):
         i=6
         for (a,b) in zip(l_A,l_B):
             i-=1 # en popant la liste je l'ai inversée, du coup le compteur aussi...
-            if (isnumber(a) and isnumber(b)) or (a=='' and b==''):
-                #élimine les lignes à moitié nulles ou contenant du texte
-                if a=='' and b=='': # met à zéro les lignes vides (rq : firefox renvoie '' si on tappe du texte ds le champ nombre)
+            if sumb_manuel or suma_manuel:
+                if a=='':
                     l_A[i-1]=0
+                else:
+                    if isnumber(a):
+                        l_A[i-1]=float(a)
+                    else:
+                        raise TypeError(i)
+                if b=='':
                     l_B[i-1]=0
                 else:
-                    l_A[i-1]=float(a)
-                    l_B[i-1]=float(b)
+                    if isnumber(b):
+                        l_B[i-1]=float(b)
+                    else:
+                        raise TypeError(i)
             else:
-                raise TypeError(i) # ex, si un navigateur accepte du texte ds un champ nombre...
+                if (isnumber(a) and isnumber(b)) or (a=='' and b==''):
+                    #élimine les lignes à moitié nulles ou contenant du texte
+                    if a=='' and b=='': # met à zéro les lignes vides (rq : firefox renvoie '' si on tappe du texte ds le champ nombre)
+                        l_A[i-1]=0
+                        l_B[i-1]=0
+                    else:
+                        l_A[i-1]=float(a)
+                        l_B[i-1]=float(b)
+                else:
+                    raise TypeError(i) # ex, si un navigateur accepte du texte ds un champ nombre...
 
-        suma:float=sum(l_A)
-        print(suma)
-        sumb:float=sum(l_B)
-        recist:float=round(100/suma*sumb-100,1)
+        suma:float=suma_manuel if suma_manuel else sum(l_A)
+        sumb:float=sumb_manuel if sumb_manuel else sum(l_B)
         document["recist_suma"].textContent = suma
         document["recist_sumb"].textContent = sumb
-        document["recist_recist"].textContent ='SPD {:+.1f} % : {}'.format(recist,"progression" if recist>=20 else ("réponse complète" if recist==-100 else "réponse partielle" if recist<=-30 else "maladie stable")) #1 chiffre après , et signé
+        recist:float=round(100/suma*sumb-100,1)
+        document["recist_recist"].textContent ='SPD {:+.1f} % : {} {}'.format(recist,"progression" if recist>=20 and (sumb-suma) >=5 else ("réponse complète" if recist==-100 else "réponse partielle" if recist<=-30 else "maladie stable"),recist_warning) #1 chiffre après , et signé
     except ZeroDivisionError:
         document["recist_recist"].textContent = "division par zéro : il doit y avoir une erreur de saisie de la colone 1..."
         document["recist_suma"].textContent ="-"
@@ -591,15 +619,9 @@ def calcrecist(ev):
         document["recist_recist"].textContent = "erreur générique"
 
 formulaire_anime("recist",calcrecist)
+document["recist_suma_manuel"].bind("change",calcrecist)
+document["recist_sumb_manuel"].bind("change",calcrecist)
 
-'''
-def recist_clear(ev):
-    lirecist:list=document.select('[irecist]')
-    #lirecist.pop()
-    del lirecist[-1]
-    for item in lirecist:
-        item.value=""
-'''
 def iclear(inom:str):
     champs:list=document.select(f'[{inom}].w3-input')
     for item in champs:
@@ -608,7 +630,16 @@ def iclear(inom:str):
     for item in radio:
         item.checked=False
 
+def recistleftoverclear(ev):
+    document["recist_suma"].textContent ="-"
+    document["recist_sumb"].textContent ="-"
+    document["recist_suma_manuel"].value =""
+    document["recist_sumb_manuel"].value =""
+    document["recist_recist"].textContent ='-'
+
 document["recist_clear"].bind("click", lambda ev:iclear("irecist"))
+document["recist_clear"].bind("click", recistleftoverclear)
+
 #washout
 
 def calcwashout(ev):
