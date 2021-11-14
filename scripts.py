@@ -717,6 +717,19 @@ def lugano_pd(formule:str,just_split:bool=False):
             return (0,0)
         else:
             return 0
+    if "+" in formule:#par récursivité je traite
+        splitformule:list=formule.split('+')
+        l_f_split:list=[]
+        l_t_split:list=[]
+        for item in splitformule:
+            l_f_split.append(lugano_pd(item))
+        if just_split==False:
+            return sum(l_f_split)
+        else:
+            for item in splitformule:
+                l_t_split.append(lugano_pd(item,True))
+            return l_t_split[l_f_split.index(max(l_f_split))]#ret le plus gros morceau issu de la frag de la lésion
+
     #calcule volume à partir de string 5 ou 5x6 ou 5x6x7
     motif:str="*" #ne peut être "" sinon split->Valuerror
     if "-" in formule:
@@ -822,14 +835,6 @@ def calclugano(ev):
         document["lugano_suma"].textContent = sumlA
         document["lugano_sumb"].textContent = sumlB
         lugano:float=round(100/suma*sumb-100,1)
-        """for (a,b) in zip(l_A,l_B):
-            if a==0:
-                l_cmp.append(0) #je note 0 pour les croissances infinies
-            else:
-                print(a)
-                print(b)
-                l_cmp.append(100/a*b)"""
-        print(l_cmp)
         lugano_p_justif:list=[]
         lugano_cr:bool=False
         lugano_pr:bool=False
@@ -845,7 +850,6 @@ def calclugano(ev):
                 else:
                     (percent,axesa,axesb)=item
                     if percent>=50:
-                        print(percent)
                         if axesb[1]>15:#si le grand axe de la lésion actuelle est >15mm
                             diff:float=max(axesb[1]-axesa[1],axesb[0]-axesa[0]) #évolution max des axes
                             if (axesb[1]>20 and diff>=10) or (axesb[1]<20 and diff>=5):
@@ -856,17 +860,17 @@ def calclugano(ev):
         if (lilugano_rate[0]!='' and lilugano_rate[1]=='') or (lilugano_rate[0]=='' and lilugano_rate[1]!=''):
             raise TypeError(7)#rate mal saisie
         elif lilugano_rate!=['','']:
-            print(lilugano_rate)
             try:#conversion en float
                 lilugano_rate[0]=float(lilugano_rate[0])
                 lilugano_rate[1]=float(lilugano_rate[1])
                 ratehaut:float=lilugano_rate[0]-lilugano_rate[1]
-                percentevolrate130:float=100/(lilugano_rate[1]-130)*(lilugano_rate[0]-130)-100
                 lugano_ratedefined=True
                 if lilugano_rate[1]<=130 and ratehaut>20:
                     lugano_p_justif.append(f'La rate précédemment "normale" a augmenté de {round(ratehaut)}mm.')
-                elif lilugano_rate[1]>130 and percentevolrate130>50:
-                    lugano_p_justif.append(f'La splénomégalie a augmenté de {round(percentevolrate130)}%.')
+                elif lilugano_rate[1]>130:
+                    percentevolrate130:float=100/(lilugano_rate[1]-130)*(lilugano_rate[0]-130)-100
+                    if percentevolrate130>50:
+                        lugano_p_justif.append(f'La splénomégalie a augmenté de {round(percentevolrate130)}%.')
             except:
                 raise TypeError(7)
         if not lugano_ratedefined:

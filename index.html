@@ -26,7 +26,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
 
         function startBrython() {
             document.addEventListener('deviceready', brython, false); // l'event deviceready est lancé quand le code natif codova a fini de charger (au cas où brython appelle une function javascript de cordova)
-           brython() // pour tester dans le navigateur, à enlever sur téléphone
+           //brython() // pour tester dans le navigateur, à enlever sur téléphone
         }
     </script>
 </head>
@@ -484,31 +484,40 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                         <p><button class="w3-btn w3-indigo " ilugano=15 id="lugano_calc">Calculer</button></p>
                     <div class="w3-container w3-teal">Aide</div>
                     <ul><li>Entrer les deux axe dans une même cellule (ex : 15*10 ou 15-10).</li>
-                        <li><a id="lugano_aide_manuel"></a>Si la somme est entrée en manuel, alors les tailles des cibles de la colonne seront ignorées.</li></ul>
+                        <li><a id="lugano_aide_manuel"></a>Si la somme est entrée en manuel, alors les tailles des cibles de la colonne seront ignorées.</li>
+                        <li>Si une lésion s'est fragmentée, séparer les fragments par "+" (ex : 15*6+16*8).</li></ul>
                         <p></p>
                         <button type="button" class="collapsible collapsible100 w3-teal">Classification d'Ann Arbor modifiée</button>
                 <div class="collapsecontent">
                 <table class="w3-table-all">
                     <tbody>
-                    <tr>
-                    <td rowspan="1" colspan="2"><b>Stade</b></td>
-                    <td><b>Étendue de l'atteinte</b></td></tr>
-                    <tr>
-                    <td>Limité</td>
-                    <td>I</td>
-                    <td>Une adénomégalie ou groupe d'adénomégalies adjacentes</td></tr>
-                    <tr>
-                    <td><br></td>
-                    <td>II</td>
-                    <td>Deux (ou plus) groupes d'adénomégalies <u>du même coté du diaphragme</u></td></tr>
-                    <tr>
-                    <td>Avancé</td>
-                    <td>III</td>
-                    <td>Ganglions <u>de part et d'autre du diaphragme</u><br>Ou<br>Ganglions sus diaphragmatiques avec atteinte splénique</td></tr>
-                    <tr>
-                    <td><br></td>
-                    <td>IV</td>
-                    <td><u>Atteinte extra-ganglionnaire</u> non adjacente à l'atteinte ganglionnaire</td></tr></tbody></table>
+                        <tr>
+                            <td rowspan="1" colspan="2"><b>Stade</b></td>
+                            <td><b>Étendue de l'atteinte</b></td>
+                        </tr>
+                        <tr>
+                            <td>Limité</td>
+                            <td>I</td>
+                            <td>Une adénomégalie ou groupe d'adénomégalies adjacentes</td>
+                        </tr>
+                        <tr>
+                            <td><br></td>
+                            <td>II</td>
+                            <td>Deux (ou plus) groupes d'adénomégalies <u>du même coté du diaphragme</u></td>
+                        </tr>
+                        <tr>
+                            <td>Avancé</td>
+                            <td>III</td>
+                            <td>Ganglions <u>de part et d'autre du diaphragme</u><br>Ou<br>Ganglions sus diaphragmatiques avec atteinte
+                                splénique</td>
+                        </tr>
+                        <tr>
+                            <td><br></td>
+                            <td>IV</td>
+                            <td><u>Atteinte extra-ganglionnaire</u> non adjacente à l'atteinte ganglionnaire</td>
+                        </tr>
+                    </tbody>
+                </table>
                     <p>Considérés comme ganglion</p>
                     <ul>
                     <li>Rate (pour Hodgkin)</li></ul>
@@ -597,8 +606,7 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                     <button type="button" class="collapsible collapsible100 w3-teal">Cibles</button>
                     <div class="collapsecontent">
                     <ul>
-                    <li>Jusqu'à 6 lésions des plus grandes lésions (dans deux plans orthogonaux), représentatives des régions atteintes, en incluant l'atteinte médiastinale et rétropéritonéale (si elle existe).</li></ul>
-                    <ul>
+                    <li>Jusqu'à 6 lésions des plus grandes lésions (dans deux plans orthogonaux), représentatives des régions atteintes, en incluant l'atteinte médiastinale et rétropéritonéale (si elle existe).</li>
                     <li>Les ganglions de grand axe &gt;15mm.</li>
                     <li>Les masses non-ganglionnaires de grand axe &gt; 10 mm (ex. nodule hépatique)</li>
                     <li>Les autres lésions (autres masses, os, épanchements...) sont non-cibles.</li></ul>
@@ -606,8 +614,12 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                     <ul>
                     <li>Par définition, si la hauteur de la rate est &gt; 13cm (donner la taille de la rate).</li>
                     <li>En cas de nodules spléniques.</li></ul>
-                    <p>Critères défavorables du Hodgkin</p>
+                    <p>Cas particuliers</p>
                     <ul>
+                        <li>Si une lésion n'est plus visible, on la compte à 0*0.</li>
+                        <li>Si une lésion est visible mais trop petite pour être mesurée, on la commpte à 5*5mm</li>
+                        <li>Si une lésion s'est fragmentée, on compte la somme des produits des petites lésions.</li>
+                    </ul>
                     </div>
                     <p></p>
                     <button type="button" class="collapsible collapsible100 w3-teal">Critères défavorables du Hodgkin</button>
@@ -652,8 +664,36 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                     <li>envahissement d'au moins 3 sites ganglionnaires (chacun &gt;3cm dans son plus grand diamètre)</li>
                     <li>syndrome compressif</li>
                     <li>épanchement pleural ou péritonéal spécifique (⊕ à la ponction)</li></ul>
+                    </div><p></p>
+                    <button type="button" class="collapsible collapsible100 w3-teal">Réponse radiologique</button>
+                    <div class="collapsecontent">
+                        <ul>
+                            <li><b>Progression</b> (par rapport au Nadir)</li>
+                            <ul>
+                            <li>Nouvelle lésion</li>
+                            <li>ou progression claire d'une lésion non-cible</li>
+                            <li>ou augmentation &gt;50% du produit des diamètres d'une lésion &gt;15mm</li>
+                            <ul>
+                            <li>augmentation ≥5mm si lésion ≤20mm ;&nbsp;
+                            
+                            ≥10mm si lésion &gt;20mm</li></ul>
+                            <li>ou augmentation de la rate</li>
+                            <ul>
+                            <li>de plus de 50% de la hauteur &gt;13cm ou de &gt;2cm si hauteur ≤13cm</li></ul></ul>
+                            <li><b>Réponse partielle</b> (par rapport au Baseline)</li>
+                            <ul>
+                            <li>Si pas de progression</li>
+                            <li>Et si diminution de la SPD ≥50% ET régression de ≥50% de la hauteur de rate &gt;13cm.</li></ul>
+                            <li><b>Réponse complète</b></li>
+                            <ul>
+                            <li>Si critères de PR</li>
+                            <li>et plus de lésion d'organe ET plus d'adénomégalie (grand axe≤15mm ET petit axe ≤10mm)</li></ul>
+                            <li><b>Maladie stable</b> sinon (ni PD, ni PR, ni CR)</li></ul>
                     </div>
-                    <p>Suivi</p>
+                    <p></p>
+                    <div class="w3-container w3-teal">Références</div>
+                    <ul><li>Cours des JFR2021 du CHU de Clermont Ferrand qui m'a beaucoup aidé.</li>
+                    <li><a href="https://dx.doi.org/10.1200/JCO.2013.54.8800" target="_blank">The Lugano Classification, Oncology 2014</a></li></ul>
         </div>
 
         <!--onglet algo -->

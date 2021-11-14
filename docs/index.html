@@ -26,7 +26,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
 
         function startBrython() {
             document.addEventListener('deviceready', brython, false); // l'event deviceready est lancé quand le code natif codova a fini de charger (au cas où brython appelle une function javascript de cordova)
-            brython() // pour tester dans le navigateur, à enlever sur téléphone
+           ////brython() // pour tester dans le navigateur, à enlever sur téléphone
         }
     </script>
 </head>
@@ -330,7 +330,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
             <p><label class="w3-text-teal"><b>Volume du nodule (en mm³) ?</b></label>
             <input required class="w3-input w3-border w3-light-grey" ivtd=2 type="number" min="0" step="any" id="vtd_vol1" title="Seulement des chiffres S.V.P."></p>
             <p>ou</p>
-            <label class="w3-text-teal"><b>Volume approximatif (ex "5" ou "5x6" ou "5-6-7" en mm)</b></label> <button type="button" class="w3-button w3-circle w3-green collapsible"></button>
+            <label class="w3-text-teal"><b>Volume approximatif (ex "5" ou "5*6" ou "5-6-7" en mm)</b></label> <button type="button" class="w3-button w3-circle w3-green collapsible"></button>
             <div class="collapsecontent">
                 <p>Si le champ "Volume du nodule" est rempli, il sera utilisé en priorité.</p>
 <p>Le champ "volume approximatif" admet une valeur en mm (ex pour 5 mm saisir "5" ; pour 5*6 mm saisir "5*6" ; pour 5x6x7 mm saisir "5-6-7". On peut utiliser les caractères * ou - ou x pour séparer les dimensions.).</p>
@@ -397,11 +397,17 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                             <td><input class="w3-input w3-border" type="number" min="0" irecist=9 title="Seulement des chiffres S.V.P."></td>
                             <td><input class="w3-input w3-border" type="number" min="0" irecist=10 title="Seulement des chiffres S.V.P."></td>
                         </tr><tr>
-                            <td><b>Somme</b></td>
+                            <td><b>Somme (<a href="#recist_aide_manuel">manuel</a>)</b></td>
+                            <td><input class="w3-input w3-border" type="number" id="recist_suma_manuel" min="0" title="Seulement des chiffres S.V.P."></td>
+                            <td><input class="w3-input w3-border" type="number" id="recist_sumb_manuel" min="0" title="Seulement des chiffres S.V.P."></td>
+                        </tr>
+                        <tr>
+                            <td><b>Somme (auto)</b></td>
                             <td><span id="recist_suma">-</span></td>
-                            <td><span id="recist_sumb">-</span></td>            
+                            <td><span id="recist_sumb">-</span></td>                             
                         </tr>
                 </table>
+                
                         <p><span class="w3-tag w3-large w3-teal">RECIST</span> <span id="recist_recist">-</span></p>
                         <p><button class="w3-btn w3-indigo " irecist=11 id="recist_calc">Calculer</button></p>
                         <div class="w3-container w3-teal">Mémo (cibles)</div>
@@ -416,6 +422,9 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                         </li>
                         <li><b>Stabilisation (SD)</b> : Ni RP (ou RC), ni PD.</li>
                             <li>Source de cet extrait : <a href="http://www.cepd.fr/" target="_blank">Fiche RECIST de la cohorte des Carcinomes Endocrines Peu Différenciés.</a> Résumé excellent à lire pour les autres critères.</li></ul>
+                        <div class="w3-container w3-teal">Aide</div>
+                        <ul><li><a id="recist_aide_manuel"></a>Si la somme est entrée en manuel, alors les tailles des cibles de la colonne seront ignorées.</li></ul>
+
         </div>
         
         <!--onglet lugano -->
@@ -424,7 +433,267 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                 <h5>Lymphomes, Lugano</h5>
             </div>
             <p><button class="w3-btn w3-red" id="lugano_clear">Effacer les valeurs</button></p>
-            <p> en travaux</p>
+            <table class="w3-table-all w3-centered" style="width:100%">
+                <tr >
+                <th>Lésion (mm)</th>
+                <th>Avant</th>
+                <th>Aujourd'hui</th></tr>
+                <tr>
+                <td>1</td>
+                            <td><input class="w3-input w3-border" type="tel" ilugano=1 ></td>
+                            <td><input class="w3-input w3-border" type="tel" ilugano=2 ></td>
+                        </tr><tr>
+                <td>2</td>
+                            <td><input class="w3-input w3-border" type="tel" ilugano=3></td>
+                            <td><input class="w3-input w3-border" type="tel" ilugano=4></td>
+                        </tr><tr>
+                <td>3</td>
+                            <td><input class="w3-input w3-border" type="tel" ilugano=5></td>
+                            <td><input class="w3-input w3-border" type="tel" ilugano=6></td>
+                        </tr><tr>
+                <td>4</td>
+                            <td><input class="w3-input w3-border" type="tel" ilugano=7></td>
+                            <td><input class="w3-input w3-border" type="tel" ilugano=8></td>
+                        </tr><tr>
+                <td>5</td>
+                            <td><input class="w3-input w3-border" type="tel" ilugano=9></td>
+                            <td><input class="w3-input w3-border" type="tel" ilugano=10></td>
+                        </tr>
+                        <tr>
+                <td>6</td>
+                    <td><input class="w3-input w3-border" type="tel" ilugano=11></td>
+                    <td><input class="w3-input w3-border" type="tel" ilugano=12></td>
+                    </tr>
+                    <tr>
+                <td>Hauteur rate (<b>mm</b>)</td>
+                            <td><input class="w3-input w3-border" type="number" ilugano=13></td>
+                            <td><input class="w3-input w3-border" type="number" ilugano=14></td>
+                        </tr>
+                    <tr>
+                            <td><b>Somme (<a href="#lugano_aide_manuel">manuel</a>)</b></td>
+                            <td><input class="w3-input w3-border" type="number" id="lugano_suma_manuel" min="0" title="Seulement des chiffres S.V.P."></td>
+                            <td><input class="w3-input w3-border" type="number" id="lugano_sumb_manuel" min="0" title="Seulement des chiffres S.V.P."></td>
+                        </tr>
+                        <tr>
+                            <td><b>Somme (auto)</b></td>
+                            <td><span id="lugano_suma">-</span></td>
+                            <td><span id="lugano_sumb">-</span></td>                             
+                        </tr>
+                </table>
+                        <p><span class="w3-tag w3-large w3-teal">Lugano</span> <span id="lugano_lugano">-</span></p>
+                        <p><button class="w3-btn w3-indigo " ilugano=15 id="lugano_calc">Calculer</button></p>
+                    <div class="w3-container w3-teal">Aide</div>
+                    <ul><li>Entrer les deux axe dans une même cellule (ex : 15*10 ou 15-10).</li>
+                        <li><a id="lugano_aide_manuel"></a>Si la somme est entrée en manuel, alors les tailles des cibles de la colonne seront ignorées.</li>
+                        <li>Si une lésion s'est fragmentée, séparer les fragments par "+" (ex : 15*6+16*8).</li></ul>
+                        <p></p>
+                        <button type="button" class="collapsible collapsible100 w3-teal">Classification d'Ann Arbor modifiée</button>
+                <div class="collapsecontent">
+                <table class="w3-table-all">
+                    <tbody>
+                        <tr>
+                            <td rowspan="1" colspan="2"><b>Stade</b></td>
+                            <td><b>Étendue de l'atteinte</b></td>
+                        </tr>
+                        <tr>
+                            <td>Limité</td>
+                            <td>I</td>
+                            <td>Une adénomégalie ou groupe d'adénomégalies adjacentes</td>
+                        </tr>
+                        <tr>
+                            <td><br></td>
+                            <td>II</td>
+                            <td>Deux (ou plus) groupes d'adénomégalies <u>du même coté du diaphragme</u></td>
+                        </tr>
+                        <tr>
+                            <td>Avancé</td>
+                            <td>III</td>
+                            <td>Ganglions <u>de part et d'autre du diaphragme</u><br>Ou<br>Ganglions sus diaphragmatiques avec atteinte
+                                splénique</td>
+                        </tr>
+                        <tr>
+                            <td><br></td>
+                            <td>IV</td>
+                            <td><u>Atteinte extra-ganglionnaire</u> non adjacente à l'atteinte ganglionnaire</td>
+                        </tr>
+                    </tbody>
+                </table>
+                    <p>Considérés comme ganglion</p>
+                    <ul>
+                    <li>Rate (pour Hodgkin)</li></ul>
+                    <ul>
+                    <li>Anneau de Waldeyer</li></ul>
+                    </div><p></p>
+                    <button type="button" class="collapsible collapsible100 w3-teal">Aires ganglionnaires selon le CR normalisé de la SFR</button>
+                    <div class="collapsecontent">
+                    <p>
+                    </p><ul>
+                    <li>
+                    <p><u>Aires ganglionnaires sus diaphragmatiques</u></p>
+                    </li></ul>
+                    <ol>
+                    <ul>
+                    <li>
+                    <p>Aires ganglionnaires périphériques accessibles à la palpation</p>
+                     </li></ul></ol>
+                    <ol>
+                    <ul>
+                    <ul>
+                    <li>
+                    <p>Cervicales</p>
+                       </li><li>
+                    <p>Sus-claviculaires</p>
+                       </li><li>
+                    <p>Axillaires</p>
+                      </li></ul></ul></ol>
+                    <ol>
+                    <ul>
+                    <li>
+                    <p>Aires
+                      ganglionnaires profondes médiastinales </p>
+                     </li></ul></ol>
+                    <ol>
+                    <ul>
+                    <ul>
+                    <li>
+                    <p>Médiastin supérieur</p>
+                       </li><li>
+                    <p>Médiastin antérieur</p>
+                       </li><li>
+                    <p>Médiastin moyen</p>
+                       </li><li>
+                    <p>Hiles</p>
+                       </li><li>
+                    <p>Médiastin postérieur / Espace infra-médiastinal postérieur</p></li>
+                    <li>
+                    <p>Diaphragmatiques / Péricardiques</p></li></ul></ul></ol>
+                    <ul>
+                    <li>
+                    <p><u>Aires ganglionnaires sous-diaphragmatiques</u></p>
+                    </li></ul>
+                    <ol>
+                    <ul>
+                    <li>
+                    <p>Aire ganglionnaire périphérique accessible à la palpation</p></li>
+                    <ul>
+                    <li>
+                    <p>Inguinale</p></li></ul></ul></ol>
+                    <ol>
+                    <ul>
+                    <li>
+                    <p>Aires ganglionnaires profondes abdominales</p>
+                     </li></ul></ol>
+                    <ul>
+                    <ul>
+                    <ul>
+                    <li>
+                    <p>Cœliaque</p>
+                     </li><li>
+                    <p>Hilaire
+                     hépatique</p>
+                     </li><li>
+                    <p>Hilaire splénique</p>
+                     </li><li>
+                    <p>Péripancréatique</p>
+                     </li><li>
+                    <p>Mésentérique</p>
+                     </li><li>
+                    <p>Rétropéritonéale médiane</p></li>
+                    <li>
+                    <p>Iliaque primitive / externe / interne</p></li></ul></ul></ul>
+                    </div>
+                    <p></p>
+                    <button type="button" class="collapsible collapsible100 w3-teal">Cibles</button>
+                    <div class="collapsecontent">
+                    <ul>
+                    <li>Jusqu'à 6 lésions des plus grandes lésions (dans deux plans orthogonaux), représentatives des régions atteintes, en incluant l'atteinte médiastinale et rétropéritonéale (si elle existe).</li>
+                    <li>Les ganglions de grand axe &gt;15mm.</li>
+                    <li>Les masses non-ganglionnaires de grand axe &gt; 10 mm (ex. nodule hépatique)</li>
+                    <li>Les autres lésions (autres masses, os, épanchements...) sont non-cibles.</li></ul>
+                    <p>Atteinte splénique ?</p>
+                    <ul>
+                    <li>Par définition, si la hauteur de la rate est &gt; 13cm (donner la taille de la rate).</li>
+                    <li>En cas de nodules spléniques.</li></ul>
+                    <p>Cas particuliers</p>
+                    <ul>
+                        <li>Si une lésion n'est plus visible, on la compte à 0*0.</li>
+                        <li>Si une lésion est visible mais trop petite pour être mesurée, on la commpte à 5*5mm</li>
+                        <li>Si une lésion s'est fragmentée, on compte la somme des produits des petites lésions.</li>
+                    </ul>
+                    </div>
+                    <p></p>
+                    <button type="button" class="collapsible collapsible100 w3-teal">Critères défavorables du Hodgkin</button>
+                    <div class="collapsecontent">
+                    <ul>
+                    <li>Bulky</li>
+                    <ul>
+                    <li>une adénomégalie isolément (par apposition à un amas de ganglions) &gt;10 cm ou &gt; à 1/3 du diamètre thoracique au scanner (quelque soit le niveau thoracique).</li>
+                    <li>diamètre du médiastin tumoral / thorax &gt; 1/3 en T5-T6 en radio de thorax.</li></ul>
+                    <li>atteinte d'au moins 4 aires ganglionnaires distinctes.</li></ul>
+                    </div>
+                    <p></p>
+                    <button type="button" class="collapsible collapsible100 w3-teal">Lymphomes indolents vs. agressifs</button>
+                    <div class="collapsecontent">
+                    <table class="w3-table-all">
+                    <tbody>
+                    <tr>
+                    <td><b>Indolents</b></td>
+                    <td><b>Agressifs</b></td></tr>
+                    <tr>
+                    <td>L. folliculaires grade 1-2</td>
+                    <td>L. B diffus grandes cellules</td></tr>
+                    <tr>
+                    <td>L. zone marginale</td>
+                    <td>Hodgkin</td></tr>
+                    <tr>
+                    <td>LLC</td>
+                    <td>L. folliculaires grade 3</td></tr>
+                    <tr>
+                    <td>...</td>
+                    <td>L. T</td></tr>
+                    <tr>
+                    <td><br></td>
+                    <td>Burkitt ...</td></tr></tbody></table>
+                    </div>
+                    <p></p>
+                    <button type="button" class="collapsible collapsible100 w3-teal">Quand traiter un lymphome folliculaire ?</button>
+                    <div class="collapsecontent">
+                    <p>(critères d'imagerie du GELF)</p>
+                    <ul>
+                    <li>masse &gt; 7 cm de grand axe</li>
+                    <li>envahissement d'au moins 3 sites ganglionnaires (chacun &gt;3cm dans son plus grand diamètre)</li>
+                    <li>syndrome compressif</li>
+                    <li>épanchement pleural ou péritonéal spécifique (⊕ à la ponction)</li></ul>
+                    </div><p></p>
+                    <button type="button" class="collapsible collapsible100 w3-teal">Réponse radiologique</button>
+                    <div class="collapsecontent">
+                        <ul>
+                            <li><b>Progression</b> (par rapport au Nadir)</li>
+                            <ul>
+                            <li>Nouvelle lésion</li>
+                            <li>ou progression claire d'une lésion non-cible</li>
+                            <li>ou augmentation &gt;50% du produit des diamètres d'une lésion &gt;15mm</li>
+                            <ul>
+                            <li>augmentation ≥5mm si lésion ≤20mm ;&nbsp;
+                            
+                            ≥10mm si lésion &gt;20mm</li></ul>
+                            <li>ou augmentation de la rate</li>
+                            <ul>
+                            <li>de plus de 50% de la hauteur &gt;13cm ou de &gt;2cm si hauteur ≤13cm</li></ul></ul>
+                            <li><b>Réponse partielle</b> (par rapport au Baseline)</li>
+                            <ul>
+                            <li>Si pas de progression</li>
+                            <li>Et si diminution de la SPD ≥50% ET régression de ≥50% de la hauteur de rate &gt;13cm.</li></ul>
+                            <li><b>Réponse complète</b></li>
+                            <ul>
+                            <li>Si critères de PR</li>
+                            <li>et plus de lésion d'organe ET plus d'adénomégalie (grand axe≤15mm ET petit axe ≤10mm)</li></ul>
+                            <li><b>Maladie stable</b> sinon (ni PD, ni PR, ni CR)</li></ul>
+                    </div>
+                    <p></p>
+                    <div class="w3-container w3-teal">Références</div>
+                    <ul><li>Cours des JFR2021 du CHU de Clermont Ferrand qui m'a beaucoup aidé.</li>
+                    <li><a href="https://dx.doi.org/10.1200/JCO.2013.54.8800" target="_blank">The Lugano Classification, Oncology 2014</a></li></ul>
         </div>
 
         <!--onglet algo -->
