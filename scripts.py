@@ -599,11 +599,12 @@ def calcrecist(ev):
                         l_B[i-1]=float(b)
                 else:
                     raise TypeError(i) # ex, si un navigateur accepte du texte ds un champ nombre...
-
-        suma:float=suma_manuel if suma_manuel else sum(l_A)
-        sumb:float=sumb_manuel if sumb_manuel else sum(l_B)
-        document["recist_suma"].textContent = suma
-        document["recist_sumb"].textContent = sumb
+        sumlA:float=sum(l_A)
+        sumlB:float=sum(l_B)
+        suma:float=suma_manuel if suma_manuel else sumlA
+        sumb:float=sumb_manuel if sumb_manuel else sumlB
+        document["recist_suma"].textContent = sumlA
+        document["recist_sumb"].textContent = sumlB
         recist:float=round(100/suma*sumb-100,1)
         document["recist_recist"].textContent ='SPD {:+.1f} % : {} {}'.format(recist,"progression" if recist>=20 and (sumb-suma) >=5 else ("réponse complète" if recist==-100 else "réponse partielle" if recist<=-30 else "maladie stable"),recist_warning) #1 chiffre après , et signé
     except ZeroDivisionError:
@@ -707,3 +708,207 @@ formulaire_anime("testis",calctestis)
 radio_anime("testisformule",calctestis)
 document["testis_clear"].bind("click", lambda ev:iclear("itestis"))
 
+# lugano
+
+def lugano_pd(formule:str,just_split:bool=False):
+    #revoie le produit petit axe * grand axe par défaut et sinon un tuple (petit_axe,grand_axe) si just_split (oui c'est moche)
+    if formule=="0":
+        if just_split:
+            return (0,0)
+        else:
+            return 0
+    #calcule volume à partir de string 5 ou 5x6 ou 5x6x7
+    motif:str="*" #ne peut être "" sinon split->Valuerror
+    if "-" in formule:
+        motif="-"
+    elif "x" in formule:
+        motif="x"
+    elif ' ' in formule:
+        motif=' '
+    try:
+        t:tuple=tuple(map(float,formule.lower().split(motif))) #conversion en tuple de float d'une string au format
+        if len(t)!=2:
+            raise ValueError
+        if not just_split:
+            return t[0]*t[1]
+        else:
+            if t[0]<t[1]:
+                return (t[0],t[1])
+            else:
+                return (t[1],t[0])
+    except ValueError:
+        raise ValueError
+
+def calclugano(ev):
+    sumb_manuel=None #super hackish... sert à désactiver les vérifications de tableau
+    suma_manuel=None
+    lugano_warning:str=""
+    lugano_manuelerr:str="(Somme manuelle en colone {} : Vous devez évaluer manuellement la variation de chaque lésion !)"
+    try:
+            suma_manuel=float(document["lugano_suma_manuel"].value)
+            lugano_warning=lugano_manuelerr.format('"Avant"')
+    except:
+        pass
+    try:
+        sumb_manuel=float(document["lugano_sumb_manuel"].value)
+        lugano_warning=lugano_manuelerr.format('"Aujourd\'hui"') if not lugano_warning else lugano_manuelerr.format('"Avant" et "Aujourd\'hui"')
+    except:
+        pass
+    try:
+        l_A:list=[]
+        l_B:list=[]
+        l_cmp:list=[]
+        i:int=0
+        lilugano:list=document.select('[ilugano]')
+        lilugano_rate:list=[]
+        lugano_ratedefined:bool=False
+        lugano_pasadenomegalie:bool=True
+        del lilugano[-1] #le dernier item c'est le bouton qui n'a pas de valeur 
+        lilugano_rate.append(lilugano.pop())
+        lilugano_rate.append(lilugano.pop())
+        for i in range(1,13):
+            item=lilugano.pop()
+            if i%2==0:
+                l_A.append(item.value)
+            else:
+                l_B.append(item.value)
+        # attention, à ce stade les listes sont non validées et de type string peut être non castable en réel
+        i=7
+        for (a,b) in zip(l_A,l_B):
+            i-=1 # en popant la liste je l'ai inversée, du coup le compteur aussi...
+            if sumb_manuel or suma_manuel:
+                if a=='':
+                    l_A[i-1]=0
+                else:
+                    try:
+                        l_A[i-1]=lugano_pd(a)
+                    except:
+                        raise TypeError(i)
+                if b=='':
+                    l_B[i-1]=0
+                else:
+                    try:
+                        l_B[i-1]=lugano_pd(b)
+                    except:
+                        raise TypeError(i)
+            else:
+                if (a=='' and b=='') or (len(a)>0 and len(b)>0):
+                    #élimine les lignes à moitié nulles
+                    if a=='' and b=='': # met à zéro les lignes vides (rq : firefox renvoie '' si on tappe du texte ds le champ nombre)
+                        l_A[i-1]=0
+                        l_B[i-1]=0
+                        l_cmp.append(None) # vide
+                    else:
+                        try:
+                            l_A[i-1]=lugano_pd(a)
+                            l_B[i-1]=lugano_pd(b)
+                            if l_A[i-1]==0:
+                                l_cmp.append(float("nan")) # /0 (progression)
+                            else:
+                                l_cmp.append((100/l_A[i-1]*l_B[i-1]-100,lugano_pd(a,True),lugano_pd(b,True)))#dégueu, ajoute ( +%,(a_axe1,a_axe2),(b_axe1,b_axe2) )
+                                if lugano_pasadenomegalie:
+                                    petit,grand=lugano_pd(b,True)
+                                    if petit>10 or grand >15:
+                                        lugano_pasadenomegalie=False
+
+                        except:
+                            raise TypeError(i)
+                else:
+                    raise TypeError(i) # ex, si un navigateur accepte du texte ds un champ nombre
+        sumlA:float=sum(l_A)
+        sumlB:float=sum(l_B)
+        suma:float=suma_manuel if suma_manuel else sumlA
+        sumb:float=sumb_manuel if sumb_manuel else sumlB
+        document["lugano_suma"].textContent = sumlA
+        document["lugano_sumb"].textContent = sumlB
+        lugano:float=round(100/suma*sumb-100,1)
+        """for (a,b) in zip(l_A,l_B):
+            if a==0:
+                l_cmp.append(0) #je note 0 pour les croissances infinies
+            else:
+                print(a)
+                print(b)
+                l_cmp.append(100/a*b)"""
+        print(l_cmp)
+        lugano_p_justif:list=[]
+        lugano_cr:bool=False
+        lugano_pr:bool=False
+        i=7 #6+1
+        for item in l_cmp:
+            i-=1
+            if item==None:
+                continue
+            else:
+                if not (type(item) is tuple) and Number.isNaN(item):#c'est laid et ça m'apprendra à faire des listes composites car isnan accepte des réels slm
+                    lugano_p_justif.append(f"La lésion {i} est apparue.")
+                    continue
+                else:
+                    (percent,axesa,axesb)=item
+                    if percent>=50:
+                        print(percent)
+                        if axesb[1]>15:#si le grand axe de la lésion actuelle est >15mm
+                            diff:float=max(axesb[1]-axesa[1],axesb[0]-axesa[0]) #évolution max des axes
+                            if (axesb[1]>20 and diff>=10) or (axesb[1]<20 and diff>=5):
+                                lugano_p_justif.append(f"La lésion {i} a augmenté de {round(percent)}%.")
+        #conversion de lilugano_rate en liste de str(float)
+        lilugano_rate[0]=lilugano_rate[0].value
+        lilugano_rate[1]=lilugano_rate[1].value
+        if (lilugano_rate[0]!='' and lilugano_rate[1]=='') or (lilugano_rate[0]=='' and lilugano_rate[1]!=''):
+            raise TypeError(7)#rate mal saisie
+        elif lilugano_rate!=['','']:
+            print(lilugano_rate)
+            try:#conversion en float
+                lilugano_rate[0]=float(lilugano_rate[0])
+                lilugano_rate[1]=float(lilugano_rate[1])
+                ratehaut:float=lilugano_rate[0]-lilugano_rate[1]
+                percentevolrate130:float=100/(lilugano_rate[1]-130)*(lilugano_rate[0]-130)-100
+                lugano_ratedefined=True
+                if lilugano_rate[1]<=130 and ratehaut>20:
+                    lugano_p_justif.append(f'La rate précédemment "normale" a augmenté de {round(ratehaut)}mm.')
+                elif lilugano_rate[1]>130 and percentevolrate130>50:
+                    lugano_p_justif.append(f'La splénomégalie a augmenté de {round(percentevolrate130)}%.')
+            except:
+                raise TypeError(7)
+        if not lugano_ratedefined:
+            lugano_warning+=" Il manque les mesures de la rate."
+        if not lugano_p_justif:
+            if lugano<=-50 and lugano_ratedefined and percentevolrate130<=-50:
+                lugano_pr=True
+                if lilugano_rate[0]<=130 and lugano_pasadenomegalie:
+                    lugano_cr=True
+
+        lugano_avis:str=f"Progression : {' '.join(reversed(lugano_p_justif))}" if lugano_p_justif else "Réponse complète (si les non-cibles ont aussi disparu)" if lugano_cr else "Réponse partielle" if lugano_pr else "Maladie stable" if lugano_warning=="" else ""
+        document["lugano_lugano"].textContent ='SPD {:+.1f} %. {} {}'.format(lugano,lugano_avis,lugano_warning) #1 chiffre après , et signé
+    except ZeroDivisionError as e:
+        document["lugano_lugano"].textContent = "division par zéro : il doit y avoir une erreur de saisie de la colone 1 "
+        document["lugano_suma"].textContent ="-"
+        document["lugano_sumb"].textContent ="-"
+    except TypeError as e:
+        ermsg:str="erreur de saisie"
+        if len(e.args)==1:
+            ermsg=f"{ermsg} ligne {e.args[0]}"
+        document["lugano_lugano"].textContent = ermsg
+    except Exception:
+        document["lugano_lugano"].textContent = "erreur générique"
+
+formulaire_anime("lugano",calclugano)
+document["lugano_suma_manuel"].bind("change",calclugano)
+document["lugano_sumb_manuel"].bind("change",calclugano)
+
+def iclear(inom:str):
+    champs:list=document.select(f'[{inom}].w3-input')
+    for item in champs:
+        item.value=""
+    radio:list=document.select(f'[{inom}].w3-radio')
+    for item in radio:
+        item.checked=False
+
+def luganoleftoverclear(ev):
+    document["lugano_suma"].textContent ="-"
+    document["lugano_sumb"].textContent ="-"
+    document["lugano_suma_manuel"].value =""
+    document["lugano_sumb_manuel"].value =""
+    document["lugano_lugano"].textContent ='-'
+
+document["lugano_clear"].bind("click", lambda ev:iclear("ilugano"))
+document["lugano_clear"].bind("click", luganoleftoverclear)
