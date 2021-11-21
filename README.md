@@ -13,27 +13,32 @@ Permet de calculer
         * Fleischner 2017
 * Onco
     * RECIST
-    * [ ] lugano lymphomes
-* [ ] Endoc
-    * [x] calcul wash-out surrénales
-    * [x] volume testicule
+    * lugano lymphomes
+* Endoc
+    * calcul wash-out surrénales
+    * volume testicule
     * [ ] mémo tirads, lirads...
-* [x] Vasculaire
-    * [x] % sténose
+* Vasculaire
+    * % sténose
 
 ## Versions utilisables (Release)
 * Sur l'android store, voir [RadCalc par Aldoniel](https://play.google.com/store/apps/details?id=io.aldoniel.radcalc)
 * Sur tous navigateurs (PC, téléphones) [version en ligne](https://aldoniel.github.io/radcalc/)
 
+Pour iOS(c), il faut ouvrir la version navigateur dans Safari, puis dans le menu du bas, toucher "partager" (l'icône boîte avec une flèche haute), puis glisser vers le haut ("swipe" haut), puis défiler dans la liste jusqu'à "Ajouter à l'écran d'accueil".
+
+Sur Chrome, un menu ajouter à l'écran d'accueil s'affiche à la 1ère ouverture, et est sinon présent dans les options générales de la page web en haut à droite.
+
 ## Licence
 * Ce code est placé sous droit français et licence CeCILL 2.1 (voir cecill21fr.html).
 
 ## Todo
-1. [ ] essayer de publier une web app ios
+1. [x] essayer de publier une web app ios
 1. [ ] bug : affichage incorrect du modal sur PC (BTS trop grand sort de l'écran : faudrait ajouter un ascenseur)
 1. [ ] finir  endoc
 1. [ ] arranger le modal : il faut prblm faire une version android et une windows pour faire simple
 1. [ ] ajouter surface ovaire
+1. [ ] ajouter un convertisseur de volume élipsoïde en lambert
 1. [ ] ajouter des boutons effacer les champs partout, 
 1. [ ] arranger le padding du menu top qui est n'importe quoi
 1. [x] corriger le bug recist
