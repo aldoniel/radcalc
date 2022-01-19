@@ -27,7 +27,9 @@ Permet de calculer
 
 Pour iOS(c), il faut ouvrir la version navigateur dans Safari, puis dans le menu du bas, toucher "partager" (l'icône boîte avec une flèche haute), puis glisser vers le haut ("swipe" haut), puis défiler dans la liste jusqu'à "Ajouter à l'écran d'accueil".
 
-Sur Chrome, un menu ajouter à l'écran d'accueil s'affiche à la 1ère ouverture, et est sinon présent dans les options générales de la page web en haut à droite.
+Sur Chrome, le menu ajouter à l'écran d'accueil est présent dans les options générales de la page web en haut à droite.
+
+Il faut ensuite ouvrir l'application une fois depuis son icône sur l'écran d'accueil du téléphone et elle devrait ensuite fonctionner en mode hors ligne.
 
 ## Licence
 * Ce code est placé sous droit français et licence CeCILL 2.1 (voir cecill21fr.html).
