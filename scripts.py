@@ -916,3 +916,40 @@ def luganoleftoverclear(ev):
 
 document["lugano_clear"].bind("click", lambda ev:iclear("ilugano"))
 document["lugano_clear"].bind("click", luganoleftoverclear)
+
+# mesa
+
+def calcmesa(ev):
+    try:
+        mesarace:float =float(getradiovalue("mesarace"))
+        mesaPAS:float=float(document["mesaPAS"].value)
+        mesa_sexe:float =float(getradiovalue("mesa_sexe"))
+        mesa_age:float=float(document["mesa_age"].value)
+        mesacholest:float=float(document["mesacholest"].value)
+        mesaHDL:float=float(document["mesaHDL"].value)
+        mesatttHTA:float =float(getradiovalue("mesatttHTA"))
+        mesatttlipides:float =float(getradiovalue("mesatttlipides"))
+        mesadiab:float =float(getradiovalue("mesadiab"))
+        mesasmoker:float =float(getradiovalue("mesasmoker"))
+        mesafamIDM:float =float(getradiovalue("mesafamIDM"))
+
+        mesaterms:float = (mesa_age * 0.0455) + (mesa_sexe * 0.7496) + (-0.2111 if mesarace==1 else -0.5055 if mesarace==2 else -0.19 if mesarace==3 else 0) \
+        + (mesadiab * 0.5168) + (mesasmoker * 0.4732) + (mesacholest * 0.0053) - (mesaHDL * 0.0140) + (mesatttlipides * 0.2473) + (mesaPAS * 0.0085) \
+        + (mesatttHTA * 0.3381) + (mesafamIDM * 0.4522) 
+        year10:float= 100 * (1 - pow(0.99963,Math.E**(mesaterms)))
+
+        document["mesa10"].textContent = year10
+        try:
+            mesa_aga:float=float(document["mesa_aga"].value)
+            mesaterms:float = (mesa_age * 0.0172) + (mesa_sexe * 0.4079) + (0.0353 if mesarace==1 else -0.3475 if mesarace==2 else -0.0222 if mesarace==3 else 0) \
+            + (mesadiab * 0.3892) + (mesasmoker * 0.3717) + (mesacholest * 0.0043) - (mesaHDL * 0.0114) + (mesatttlipides * 0.1206) + (mesaPAS * 0.0066) \
+            + (mesatttHTA * 0.2278) + (mesafamIDM * 0.3239) + (Math.LN2(mesa_aga + 1) * 0.2743)
+            year10calci:float= 100 * (1 - pow(0.99963,Math.E**(mesaterms)))
+            document["mesa10calci"].textContent = year10calci
+        except Exception:
+            document["mesa10calci"].textContent = "-"
+    except Exception:
+        document["mesa10"].textContent = '-'
+        document["mesa10calci"].textContent = "-"
+
+formulaire_anime("mesa",calcmesa)

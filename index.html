@@ -63,8 +63,27 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'testis')">Volume gonadique</a>
                 </div>
             </div></td>
-            <td><button class="w3-bar-item w3-button tablink w3-green" style="padding:3px 6px;" onclick="openonglet(event,'nascet')"><img src="img/nascet2.svg" height="40" alt="Vasc"></button></td>
-            <td><button class="w3-bar-item w3-button tablink w3-green" style="padding:3px 6px;" id="evapropos" onclick="openonglet(event,'apropos')"><span style="color:red;font-size:xx-large;">?</span></button></td>
+            
+            <!--<td><button class="w3-bar-item w3-button tablink w3-green" style="padding:3px 6px;" onclick="openonglet(event,'nascet')"><img src="img/coeur.svg" height="40" alt="Vasculaire"></button></td>-->
+            <td><div class="w3-dropdown-hover">
+                <button class="w3-button tablink hoverbutton" style="background-color:#8BC34A";padding:3px 6px;"><img src="img/coeur.svg" height="40" alt="Vasculaire"></button>
+                <div class="w3-dropdown-content w3-bar-block w3-card-4" style="display:none">
+                    <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'nascet')">Sténose</a>
+                    <a href="#" class="w3-bar-item w3-button tablink" id="evapropos" onclick="openonglet(event,'mesa')">Score coronarien MESA</a>
+                </div>
+            </div></td>
+
+            <td><div class="w3-dropdown-hover">
+                <button class="w3-button tablink hoverbutton" style="background-color:#8BC34A";padding:3px 6px;"><img src="img/Chaos_star.svg" height="40" alt="Divers"></button>
+                <div class="w3-dropdown-content w3-bar-block w3-card-4" style="display:none">
+                    <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'volume')">Volume générique</a>
+                    <a href="#" class="w3-bar-item w3-button tablink" id="evapropos" onclick="openonglet(event,'apropos')">À propos</a>
+                </div>
+            </div></td>
+
+           <!-- <td><button class="w3-bar-item w3-button tablink w3-green" style="padding:3px 6px;" id="evapropos" onclick="openonglet(event,'apropos')"><span style="color:red;font-size:xx-large;">?</span></button></td> -->
+
+
             </tr></tbody></table>
         </div>
         <!--onglet DFG -->
@@ -803,7 +822,7 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                     <li>Il n'y a pas de publicité (ni aucun financement externe.)</li>
                     <li>Le code est un mélange de python via <a href="https://brython.info/" target="_blank">Brython</a>, de <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">W3.CSS</a>, html, javascript.</li>
                     <li>L'application est portée sur android par <a href="https://cordova.apache.org/" target="_blank">Cordova</a>.</li>
-                    <li>Les jolies icônes sont de <a href="https://openmoji.org/" target="_blank">OpenMoji</a></li>
+                    <li>Les jolies icônes sont de <a href="https://openmoji.org/" target="_blank">OpenMoji</a>, le sigle du chaos qui sert à caser les onglets divers est de Fibonacci sous licence GFDL</li>
                     <li>La fonction <a href="https://github.com/anitasv/zoom" target="_blank">Zoom it!</a> est de anitasv</li>
                 </ul></div>
                 <p></p>
@@ -873,7 +892,71 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                     <li>La normale souvent avancée est 15-20mL (ex : <a href="https://doi.org/10.1148/rg.2017160125" target="_blank">Réf</a>), hypotrophie en deçà et atrophie si < à 6mL.</li>
                     <li>Cependant, pour la même normale (!), certains préconisent la formule de l'ellipsoïde (0,52*x*y*z où π/6#0,52) par défaut dans les échographes, tandis que d'autres promeuvent la formule de Lambert : 0,72*x*y*z.</li>
                     <li>Sur la base de corrélations au volume réel sur spécimen, la formule de Lambert était la plus proche sur deux études et est donc retenue ici. (<a href="https://doi.org/10.1016/j.urology.2006.09.012" target="_blank">Réf1</a> <a href="https://doi.org/10.1016/j.afju.2012.11.004" target="_blank">Réf2</a>).</li>
-                    <li> * (La politique de l'android store ne permet pas de mentionner son nom impudique)
+                    <li> * (La politique de l'android store ne permet pas de mentionner son nom impudique)</li>
+                </ul>
+        </div> 
+
+        <!--onglet mesa -->
+        <div id="mesa" class="w3-container w3-border onglet" style="display:none">
+            <div class="w3-container w3-teal">
+                <h5>Risque cardio-vasculaires à 10 ans, MESA 2015</h5>
+            </div>
+            <label class="w3-text-teal"><b>Groupe éthnique ?</b></label>
+            <p><input class="w3-radio"  imesa=1  type="radio" name="mesarace" value="1"  >
+            <label>Noir ou Afro-Américain</label>
+            <input class="w3-radio"  type="radio" name="mesarace" value="2"  >
+            <label>Chino-Américain</label>
+            <input class="w3-radio"  type="radio" name="mesarace" value="3"  >
+            <label>Hispano-Américain</label>
+            <input class="w3-radio"  type="radio" name="mesarace" value="4"  >
+            <label>Blanc non-hispanique</label>
+            </p><label class="w3-text-teal"><b>Sexe ?</b></label>
+            <p><input class="w3-radio"  imesa=2  type="radio" name="mesa_sexe" value="1"  >
+            <label>Homme</label>
+            <input class="w3-radio"  type="radio" name="mesa_sexe" value="0"  >
+            <label>Femme</label>
+            </p><p><label class="w3-text-teal"><b>Âge (45-84) ?</b></label>
+            <input required class="w3-input w3-border w3-light-grey" imesa=3 type="number" min="45" max="84" step="any" id="mesa_age" title="Seulement des chiffres S.V.P."></p>
+            <p><label class="w3-text-teal"><b>Cholestérol total (mg/dL) ?</b></label>
+            <input required class="w3-input w3-border w3-light-grey" imesa=4 type="number" min="100" max="600" step="any" id="mesacholest" title="Seulement des chiffres S.V.P."></p>
+            <p><label class="w3-text-teal"><b>Cholestérol HDL (mg/dL) ?</b></label>
+            <input required class="w3-input w3-border w3-light-grey" imesa=5 type="number" min="10" max="200" step="any" id="mesaHDL" title="Seulement des chiffres S.V.P."></p>
+            <p><label class="w3-text-teal"><b>Pression systolique (mmHg) ?</b></label>
+            <input required class="w3-input w3-border w3-light-grey" imesa=6 type="number" min="90" max="300" step="any" id="mesaPAS" title="Seulement des chiffres S.V.P."></p>
+            <label class="w3-text-teal"><b>Traitement anti-hypertenseur ?</b></label>
+            <p><input class="w3-radio"  imesa=7  type="radio" name="mesatttHTA" value="1"  >
+            <label>Oui</label>
+            <input class="w3-radio"  type="radio" name="mesatttHTA" value="0"  >
+            <label>Non</label>
+            </p><label class="w3-text-teal"><b>Traitement hypolipémiant ?</b></label>
+            <p><input class="w3-radio"  imesa=8  type="radio" name="mesatttlipides" value="1"  >
+            <label>Oui</label>
+            <input class="w3-radio"  type="radio" name="mesatttlipides" value="0"  >
+            <label>Non</label>
+            </p><label class="w3-text-teal"><b>Diabète ?</b></label>
+            <p><input class="w3-radio"  imesa=9  type="radio" name="mesadiab" value="1"  >
+            <label>Oui</label>
+            <input class="w3-radio"  type="radio" name="mesadiab" value="0"  >
+            <label>Non</label>
+            </p><label class="w3-text-teal"><b>Fumeur actif ?</b></label>
+            <p><input class="w3-radio"  imesa=10  type="radio" name="mesasmoker" value="1"  >
+            <label>Oui</label>
+            <input class="w3-radio"  type="radio" name="mesasmoker" value="0"  >
+            <label>Non</label>
+            </p><label class="w3-text-teal"><b>ATCD familial d'IDM ?</b></label>
+            <p><input class="w3-radio"  imesa=11  type="radio" name="mesafamIDM" value="1"  >
+            <label>Oui</label>
+            <input class="w3-radio"  type="radio" name="mesafamIDM" value="0"  >
+            <label>Non</label>
+            </p><p><label class="w3-text-teal"><b>Score calcique d'Agatston ?</b></label>
+            <input required class="w3-input w3-border w3-light-grey" imesa=12 type="number" min="1" step="any" id="mesa_aga" title="Seulement des chiffres S.V.P."></p>
+
+            <p><span class="w3-tag w3-large w3-teal">Risque à 10 ans d'accident coronarien (hors score calcique): </span> <span id="mesa10">-</span></p>
+            <p><span class="w3-tag w3-large w3-teal">Risque à 10 ans d'accident coronarien (avec score calcique): </span> <span id="mesa10calci">-</span></p>
+            <p><button class="w3-btn w3-indigo" imesa=12>Calculer</button></p>
+            <div class="w3-container w3-teal">Remarques</div>
+                <ul><li>blah</li>
+                    <li>Dans l'étude <a href="https://doi.org/10.1016/j.jacc.2015.08.035" target="_blank">MESA</a>, la prise d'un traitement est un facteur de risque... C'est un lien statistique non-causal lié au risque plus élevé de la population traitée.</li>
                 </ul>
         </div> 
 
