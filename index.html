@@ -18,6 +18,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
 	<meta name="mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 	<link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="apple-touch-icon.png">
 	<meta name="apple-mobile-web-app-title" content="RadCalc">
 	<link rel="manifest" href="radcalc.webmanifest">
 
@@ -76,13 +77,11 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
             <td><div class="w3-dropdown-hover">
                 <button class="w3-button tablink hoverbutton" style="background-color:#8BC34A";padding:3px 6px;"><img src="img/Chaos_star.svg" height="40" alt="Divers"></button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4" style="display:none">
-                    <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'volume')">Volume générique</a>
+                    <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'volume')">Volume ellipsoïde</a>
+                    <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'surface')">IMC ; Surface corporelle</a>
                     <a href="#" class="w3-bar-item w3-button tablink" id="evapropos" onclick="openonglet(event,'apropos')">À propos</a>
                 </div>
             </div></td>
-
-           <!-- <td><button class="w3-bar-item w3-button tablink w3-green" style="padding:3px 6px;" id="evapropos" onclick="openonglet(event,'apropos')"><span style="color:red;font-size:xx-large;">?</span></button></td> -->
-
 
             </tr></tbody></table>
         </div>
@@ -91,7 +90,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
             <div class="w3-container w3-teal">
                 <h5>Débit de Filtration Glomérulaire (DFG) estimé de l'adulte</h5>
             </div>
-
+            <p><button class="w3-btn w3-red" id="DFG_clear">Effacer les valeurs</button></p>
             <div class="w3-container">
                 <label class="w3-text-teal"><b>Créatinine ?</b></label>
                 <input required class="w3-input w3-border w3-light-grey" iDFG=1 type="number" min="1" step="any" id="creat" title="Seulement des chiffres S.V.P.">
@@ -837,6 +836,7 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
             <div class="w3-container w3-teal">
                 <h5>Sténose</h5>
             </div>
+            <p><button class="w3-btn w3-red" id="nascet_clear">Effacer les valeurs</button></p>
             <p><label class="w3-text-teal"><b>(Petit) Diamètre ; sténose</b></label>
                 <input required class="w3-input w3-border w3-light-grey" icstenose=1 type="number" min=".1" step="any" id="petitdiam" title="Seulement des chiffres S.V.P."></p>
                 <p><label class="w3-text-teal"><b>(Grand) Diamètre normal</b></label>
@@ -894,29 +894,41 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                     <li>Sur la base de corrélations au volume réel sur spécimen, la formule de Lambert était la plus proche sur deux études et est donc retenue ici. (<a href="https://doi.org/10.1016/j.urology.2006.09.012" target="_blank">Réf1</a> <a href="https://doi.org/10.1016/j.afju.2012.11.004" target="_blank">Réf2</a>).</li>
                     <li> * (La politique de l'android store ne permet pas de mentionner son nom impudique)</li>
                 </ul>
+            <div class="w3-container w3-teal">
+                <h5>Conversion volume ellipsoïde → Lambert</h5>
+            </div>
+            <p>Pour convertir le volume en général calculé par les échographes.</p>
+            <input required class="w3-input w3-border w3-light-grey" itestisconv=1 type="number" min="1" step="any" id="testisellip" title="Seulement des chiffres S.V.P."></p>
+            <p><span class="w3-tag w3-large w3-teal">Volume Lambert : </span> <span id="testislamb">-</span></p>
+            <p><button class="w3-btn w3-indigo" itestisconv=2>Calculer</button></p>
+            <div class="w3-container w3-teal">
+                <h5>Volume ovarien</h5>
+            </div>
+            <p>meu</p>
         </div> 
 
         <!--onglet mesa -->
         <div id="mesa" class="w3-container w3-border onglet" style="display:none">
             <div class="w3-container w3-teal">
-                <h5>Risque cardio-vasculaires à 10 ans, MESA 2015</h5>
+                <h5>Risque d'accident coronarien à 10 ans, MESA 2015</h5>
             </div>
+            <p><button class="w3-btn w3-red" id="mesa_clear">Effacer les valeurs</button></p>
             <label class="w3-text-teal"><b>Groupe éthnique ?</b></label>
             <p><input class="w3-radio"  imesa=1  type="radio" name="mesarace" value="1"  >
             <label>Noir ou Afro-Américain</label>
-            <input class="w3-radio"  type="radio" name="mesarace" value="2"  >
+            <input class="w3-radio" imesa=1 type="radio" name="mesarace" value="2"  >
             <label>Chino-Américain</label>
-            <input class="w3-radio"  type="radio" name="mesarace" value="3"  >
+            <input class="w3-radio" imesa=1 type="radio" name="mesarace" value="3"  >
             <label>Hispano-Américain</label>
-            <input class="w3-radio"  type="radio" name="mesarace" value="4"  >
+            <input class="w3-radio" imesa=1 type="radio" name="mesarace" value="4"  >
             <label>Blanc non-hispanique</label>
             </p><label class="w3-text-teal"><b>Sexe ?</b></label>
             <p><input class="w3-radio"  imesa=2  type="radio" name="mesa_sexe" value="1"  >
             <label>Homme</label>
-            <input class="w3-radio"  type="radio" name="mesa_sexe" value="0"  >
+            <input class="w3-radio" imesa=2 type="radio" name="mesa_sexe" value="0"  >
             <label>Femme</label>
-            </p><p><label class="w3-text-teal"><b>Âge (45-84) ?</b></label>
-            <input required class="w3-input w3-border w3-light-grey" imesa=3 type="number" min="45" max="84" step="any" id="mesa_age" title="Seulement des chiffres S.V.P."></p>
+            </p><p><label class="w3-text-teal"><b>Âge (45-85) ?</b></label>
+            <input required class="w3-input w3-border w3-light-grey" imesa=3 type="number" min="45" max="85" step="any" id="mesa_age" title="Seulement des chiffres S.V.P."></p>
             <p><label class="w3-text-teal"><b>Cholestérol total (mg/dL) ?</b></label>
             <input required class="w3-input w3-border w3-light-grey" imesa=4 type="number" min="100" max="600" step="any" id="mesacholest" title="Seulement des chiffres S.V.P."></p>
             <p><label class="w3-text-teal"><b>Cholestérol HDL (mg/dL) ?</b></label>
@@ -926,37 +938,82 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
             <label class="w3-text-teal"><b>Traitement anti-hypertenseur ?</b></label>
             <p><input class="w3-radio"  imesa=7  type="radio" name="mesatttHTA" value="1"  >
             <label>Oui</label>
-            <input class="w3-radio"  type="radio" name="mesatttHTA" value="0"  >
+            <input class="w3-radio" imesa=7 type="radio" name="mesatttHTA" value="0"  >
             <label>Non</label>
             </p><label class="w3-text-teal"><b>Traitement hypolipémiant ?</b></label>
             <p><input class="w3-radio"  imesa=8  type="radio" name="mesatttlipides" value="1"  >
             <label>Oui</label>
-            <input class="w3-radio"  type="radio" name="mesatttlipides" value="0"  >
+            <input class="w3-radio" imesa=8 type="radio" name="mesatttlipides" value="0"  >
             <label>Non</label>
             </p><label class="w3-text-teal"><b>Diabète ?</b></label>
             <p><input class="w3-radio"  imesa=9  type="radio" name="mesadiab" value="1"  >
             <label>Oui</label>
-            <input class="w3-radio"  type="radio" name="mesadiab" value="0"  >
+            <input class="w3-radio" imesa=9 type="radio" name="mesadiab" value="0"  >
             <label>Non</label>
             </p><label class="w3-text-teal"><b>Fumeur actif ?</b></label>
             <p><input class="w3-radio"  imesa=10  type="radio" name="mesasmoker" value="1"  >
             <label>Oui</label>
-            <input class="w3-radio"  type="radio" name="mesasmoker" value="0"  >
+            <input class="w3-radio" imesa=10 type="radio" name="mesasmoker" value="0"  >
             <label>Non</label>
-            </p><label class="w3-text-teal"><b>ATCD familial d'IDM ?</b></label>
+            </p><label class="w3-text-teal"><b>ATCD familial d'IDM au 1er degré ?</b></label>
             <p><input class="w3-radio"  imesa=11  type="radio" name="mesafamIDM" value="1"  >
             <label>Oui</label>
-            <input class="w3-radio"  type="radio" name="mesafamIDM" value="0"  >
+            <input class="w3-radio" imesa=11 type="radio" name="mesafamIDM" value="0"  >
             <label>Non</label>
             </p><p><label class="w3-text-teal"><b>Score calcique d'Agatston ?</b></label>
-            <input required class="w3-input w3-border w3-light-grey" imesa=12 type="number" min="1" step="any" id="mesa_aga" title="Seulement des chiffres S.V.P."></p>
+            <input required class="w3-input w3-border w3-light-grey" imesa=12 type="number" min="0" step="any" id="mesa_aga" title="Seulement des chiffres S.V.P."></p>
 
             <p><span class="w3-tag w3-large w3-teal">Risque à 10 ans d'accident coronarien (hors score calcique): </span> <span id="mesa10">-</span></p>
             <p><span class="w3-tag w3-large w3-teal">Risque à 10 ans d'accident coronarien (avec score calcique): </span> <span id="mesa10calci">-</span></p>
-            <p><button class="w3-btn w3-indigo" imesa=12>Calculer</button></p>
+            <p><button class="w3-btn w3-indigo" imesa=13>Calculer</button></p>
             <div class="w3-container w3-teal">Remarques</div>
-                <ul><li>blah</li>
-                    <li>Dans l'étude <a href="https://doi.org/10.1016/j.jacc.2015.08.035" target="_blank">MESA</a>, la prise d'un traitement est un facteur de risque... C'est un lien statistique non-causal lié au risque plus élevé de la population traitée.</li>
+                <ul><li>Ici, la prise d'un traitement est un facteur de risque dans l'équation... C'est un lien statistique non-causal lié au risque plus élevé de la population traitée. (<a href="https://doi.org/10.1016/j.jacc.2015.08.035" target="_blank">Réf. MESA</a>)</li>
+                    <li>Ce calculateur a été testé contre celui de <a href="https://www.mesa-nhlbi.org/MESACHDRisk/MesaRiskScore/RiskScore.aspx" target="_blank">référence.</a> </li>
+                    <li><a href="https://www.mesa-nhlbi.org/calcium/input.aspx" target="_blank">Lien vers le calculateur de percentile MESA </a>pour le score calcique (algorithme non publié, non reproductible ici).</li>
+                </ul>
+        </div> 
+
+        <!--onglet volume -->
+        <div id="volume" class="w3-container w3-border onglet" style="display:none">
+            <div class="w3-container w3-teal">
+                <h5>Volume ellipsoïde</h5>
+            </div>
+            <label class="w3-text-teal"><b>Dimensions dans les 3 plans</b></label>
+            <p><button class="w3-btn w3-red" id="vol_clear">Effacer les valeurs</button></p>
+            <p><label class="w3-text-teal"><b>Diamètre x (mm)</b></label>
+            <input required class="w3-input w3-border w3-light-grey" ivol=1 type="number" min="0" step="any" id="volx" title="Seulement des chiffres S.V.P."></p>
+            <p><label class="w3-text-teal"><b>Diamètre y (mm)</b></label>
+            <input required class="w3-input w3-border w3-light-grey" ivol=2 type="number" min="0" step="any" id="voly" title="Seulement des chiffres S.V.P."></p>
+            <p><label class="w3-text-teal"><b>Diamètre z (mm)</b></label>
+            <input required class="w3-input w3-border w3-light-grey" ivol=3 type="number" min="0" step="any" id="volz" title="Seulement des chiffres S.V.P."></p>
+            <p><span class="w3-tag w3-large w3-teal">Volume : </span> <span id="volvol">-</span></p>
+            <p><button class="w3-btn w3-indigo" ivol=4>Calculer</button></p>
+            <div class="w3-container w3-teal">Remarques</div>
+                <ul><li>La formule utilisée est x*y*z*π/6000 (mm -> mL) que l'on approxime en général par x*y*z/2000 ou mieux par x*y*z*0,52/1000.</li>
+                    <li>L'approximation est correcte pour ce qui se rapproche de la forme d'une sphère ou d'un oeuf.</li>
+                </ul>
+        </div> 
+
+        <!--onglet surface -->
+
+        <div id="surface" class="w3-container w3-border onglet" style="display:none">
+            <div class="w3-container w3-teal">
+                <h5>IMC et surface corporelle</h5>
+            </div>
+            <p><button class="w3-btn w3-red" id="surface_clear">Effacer les valeurs</button></p>
+            <p><label class="w3-text-teal"><b>Poids (kg) ?</b></label>
+                <input required class="w3-input w3-border w3-light-grey" isurface=1 type="number" min="1" max="700" step="any" id="surface_kg" title="Seulement des chiffres S.V.P."></p>
+                <p><label class="w3-text-teal"><b>Taille (cm) ?</b></label>
+                <input required class="w3-input w3-border w3-light-grey" isurface=2 type="number" min="30" max="280" step="any" id="surface_cm" title="Seulement des chiffres S.V.P."></p>
+                <p><span class="w3-tag w3-large w3-teal">Surface : </span> <span id="surface_bsa">-</span></p>
+                <p><span class="w3-tag w3-large w3-teal">IMC : </span> <span id="surface_imc">-</span></p>
+            <p><button class="w3-btn w3-indigo" isurface=3>Calculer</button></p>
+            <div class="w3-container w3-teal">Remarques</div>
+                <ul><li>Le choix de l'équation de la surface corporelle est délicat car il en existe un grand nombre, certaines a priori plus précises que d'autres, sans que la différence 
+                    entre les meilleures soit cliniquement très significative (car les meilleures formules donnent des résultats voisins qui se perdent dans l'arrondi, alors même que la surface corporelle donne une impression de rigueur scientifique tout en ignorant les 
+                    variants enzymatiques, rénaux, vasculaires etc.). La formule de Mosteller, établie en 1987, est une approximation de la formule de Gehan and George (obtenue en 1970 par mesure directe sur 401 individus). Elle a l'avantage
+                unique de donner le même résultat si on inverse le poids et la taille par erreur [Mosteller = (taille_cm * poids_kg /3600)<sup>0,5</sup>] tout en restant précise, valable chez l'enfant, simple. Elle est 
+            recommandée par <a href="https://www.cancercareontario.ca/sites/ccocancercare/files/assets/CCOBodyCalculation.pdf" target="_blank">l'Action Cancer Ontario.</a></li>
                 </ul>
         </div> 
 
@@ -1010,7 +1067,7 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                 document.getElementById(ongletName).style.display = "block";
                 if (evt!=null){
                     evt.currentTarget.className += " w3-green";
-                    if (ongletName!= "DFG" && ongletName!="apropos" && ongletName!="nascet"){evt.currentTarget.closest(".w3-dropdown-hover").children[0].className += " w3-green";}
+                    if (ongletName!= "DFG"){evt.currentTarget.closest(".w3-dropdown-hover").children[0].className += " w3-green";}
                 }
                 //mon code lamentable pour colorer. Je décide de ne pas recolorer à la rouverture car ça complique le code...
                 try{dernierongletclic(ongletName);}//envoie le nom à brython

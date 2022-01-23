@@ -225,10 +225,19 @@ def calcdfg(ev):
     except:
         document["dfgcg"].textContent =err
 
+"""def DFGleftoverclear(ev):
+    radio:list=document.select('[name="ucr"]')
+    for item in radio:
+        item.checked=False
+document["DFG_clear"].bind("click", DFGleftoverclear) # bon, en fait c'est chiant à recliquer à chaque fois...
+"""
 
 formulaire_anime("DFG",calcdfg)
 radio_anime("ucr",calcdfg)
 document["IDMS"].bind("change",calcdfg)
+document["DFG_clear"].bind("click", lambda ev:iclear("iDFG"))
+
+
 
 # modèle de brock
 
@@ -693,6 +702,7 @@ def calcnascet(ev):
         document["nascet_ste"].textContent = '-'
 
 formulaire_anime("cstenose",calcnascet) 
+document["nascet_clear"].bind("click", lambda ev:iclear("icstenose"))
 
 #testis
 def calctestis(ev):
@@ -707,6 +717,20 @@ def calctestis(ev):
 formulaire_anime("testis",calctestis)
 radio_anime("testisformule",calctestis)
 document["testis_clear"].bind("click", lambda ev:iclear("itestis"))
+
+def calctestisvol(ev):
+    print("online")
+    try:
+        document["testislamb"].textContent ='{:.1f}'.format(float(document["testisellip"].value)*4.32/Math.PI)
+    except ZeroDivisionError:
+        document["testislamb"].textContent = '-'
+
+formulaire_anime("testisconv",calctestisvol)
+
+def testislambclear(ev):
+    # mini clear au toucher, ne peut être mis en lambda...
+    document["testisellip"].value=''
+document["testisellip"].bind("click", testislambclear)
 
 # lugano
 
@@ -918,7 +942,6 @@ document["lugano_clear"].bind("click", lambda ev:iclear("ilugano"))
 document["lugano_clear"].bind("click", luganoleftoverclear)
 
 # mesa
-
 def calcmesa(ev):
     try:
         mesarace:float =float(getradiovalue("mesarace"))
@@ -938,14 +961,14 @@ def calcmesa(ev):
         + (mesatttHTA * 0.3381) + (mesafamIDM * 0.4522) 
         year10:float= 100 * (1 - pow(0.99963,Math.E**(mesaterms)))
 
-        document["mesa10"].textContent = year10
+        document["mesa10"].textContent = '{:.1f}%'.format(year10)
         try:
             mesa_aga:float=float(document["mesa_aga"].value)
             mesaterms:float = (mesa_age * 0.0172) + (mesa_sexe * 0.4079) + (0.0353 if mesarace==1 else -0.3475 if mesarace==2 else -0.0222 if mesarace==3 else 0) \
             + (mesadiab * 0.3892) + (mesasmoker * 0.3717) + (mesacholest * 0.0043) - (mesaHDL * 0.0114) + (mesatttlipides * 0.1206) + (mesaPAS * 0.0066) \
-            + (mesatttHTA * 0.2278) + (mesafamIDM * 0.3239) + (Math.LN2(mesa_aga + 1) * 0.2743)
-            year10calci:float= 100 * (1 - pow(0.99963,Math.E**(mesaterms)))
-            document["mesa10calci"].textContent = year10calci
+            + (mesatttHTA * 0.2278) + (mesafamIDM * 0.3239) + (Math.log(mesa_aga + 1) * 0.2743)
+            year10calci:float= 100 * (1 - pow(0.99833,Math.E**(mesaterms)))
+            document["mesa10calci"].textContent = '{:.1f}%'.format(year10calci)
         except Exception:
             document["mesa10calci"].textContent = "-"
     except Exception:
@@ -953,3 +976,34 @@ def calcmesa(ev):
         document["mesa10calci"].textContent = "-"
 
 formulaire_anime("mesa",calcmesa)
+document["mesa_clear"].bind("click", lambda ev:iclear("imesa"))
+
+#vol
+def calcvol(ev):
+    try:
+        volml:float=Math.PI/6000*float(document["volx"].value)*float(document["voly"].value)*float(document["volz"].value)
+        if volml<1000:
+            document["volvol"].textContent ='{:.1f} mL'.format(volml)
+        else:
+            document["volvol"].textContent ='{:.2f} L'.format(volml/1000)
+    except Exception:
+        document["volvol"].textContent = '-'
+
+formulaire_anime("vol",calcvol)
+document["vol_clear"].bind("click", lambda ev:iclear("ivol"))
+
+#surface
+
+def calcsurface(ev):
+    try:
+        surface_kg:float=float(document["surface_kg"].value)
+        surface_cm:float=float(document["surface_cm"].value)
+
+        document["surface_bsa"].textContent ='{:.2f} m²'.format((surface_cm*surface_kg/3600)**.5)
+        document["surface_imc"].textContent ='{:.1f} kg/m²'.format((surface_kg/((surface_cm/100)**2)))
+
+    except ZeroDivisionError:
+        document["volvol"].textContent = '-'
+
+formulaire_anime("surface",calcsurface)
+document["surface_clear"].bind("click", lambda ev:iclear("isurface"))
