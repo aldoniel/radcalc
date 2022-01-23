@@ -40,7 +40,15 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
     <div class="w3-container" >
         <div class="w3-bar w3-light-green" id="menu" style="display:block">
             <table class="tbl_invisibl"  style="width:100%"><tbody><tr>
-                <td><button class="w3-bar-item w3-button tablink w3-green" style="padding:3px 6px;" onclick="openonglet(event,'DFG')"><img src="img/kidney.svg" height="40" alt="DFG"></button></td>
+            <td><div class="w3-dropdown-hover">
+                <button class="w3-button tablink hoverbutton" style="background-color:#8BC34A";padding:3px 6px;"><img src="img/Chaos_star.svg" height="40" alt="Divers"></button>
+                <div class="w3-dropdown-content w3-bar-block w3-card-4" style="display:none">
+                    <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'volume')">Volume ellipsoïde</a>
+                    <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'surface')">IMC ; Surface corporelle</a>
+                    <a href="#" class="w3-bar-item w3-button tablink" id="evapropos" onclick="openonglet(event,'apropos')">À propos</a>
+                </div>
+            </div></td>
+
            <td><div class="w3-dropdown-hover">
                 <button class="w3-button tablink hoverbutton" style="background-color:#8BC34A";><img src="img/lung.svg" height="40" alt="Poumon" ></button> <!--.w3-light-green sert à ajouter un fond vert au bouton qui sinon est gris hérité de je ne sais où-->
                 <div class="w3-dropdown-content w3-bar-block w3-card-4" style="display:none">
@@ -73,15 +81,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                     <a href="#" class="w3-bar-item w3-button tablink" onclick="openonglet(event,'mesa')">Score coronarien MESA</a>
                 </div>
             </div></td>
-
-            <td><div class="w3-dropdown-hover">
-                <button class="w3-button tablink hoverbutton" style="background-color:#8BC34A";padding:3px 6px;"><img src="img/Chaos_star.svg" height="40" alt="Divers"></button>
-                <div class="w3-dropdown-content w3-bar-block w3-card-4" style="display:none">
-                    <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'volume')">Volume ellipsoïde</a>
-                    <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'surface')">IMC ; Surface corporelle</a>
-                    <a href="#" class="w3-bar-item w3-button tablink" id="evapropos" onclick="openonglet(event,'apropos')">À propos</a>
-                </div>
-            </div></td>
+            <td><button class="w3-bar-item w3-button tablink w3-green" style="padding:3px 6px;" onclick="openonglet(event,'DFG')"><img src="img/kidney.svg" height="40" alt="DFG"></button></td>
 
             </tr></tbody></table>
         </div>
@@ -905,7 +905,7 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
             <div class="w3-container w3-teal">
                 <h5>Volume ovarien</h5>
             </div>
-            <p>meu</p>
+            <p></p>
         </div> 
 
         <!--onglet mesa -->

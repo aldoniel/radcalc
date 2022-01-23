@@ -614,7 +614,7 @@ def calcrecist(ev):
         document["recist_sumb"].textContent = sumlB
         recist:float=round(100/suma*sumb-100,1)
         document["recist_recist"].textContent ='SPD {:+.1f} % : {} {}'.format(recist,"progression" if recist>=20 and (sumb-suma) >=5 else ("réponse complète" if recist==-100 else "réponse partielle" if recist<=-30 else "maladie stable"),recist_warning) #1 chiffre après , et signé
-    except Exception:
+    except ZeroDivisionError:
         document["recist_recist"].textContent = "division par zéro : il doit y avoir une erreur de saisie de la colone 1..."
         document["recist_suma"].textContent ="-"
         document["recist_sumb"].textContent ="-"
