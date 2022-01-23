@@ -165,7 +165,6 @@ def formulaire_anime(code:str,calcfunc,nocalc:bool=False):
     #met l'événement nextinput si keypress sur les éléments dont le nom est i+nomducalcul (section)=n
     #met l'événement de calcul sur tous les input si event change
     collection=document.select(f'[i{code}]')
-    #print(collection)
     lencollection:int=len(collection)
     if nocalc:
         for elem in collection: #le dernier élément est le bouton calc
@@ -295,7 +294,6 @@ def calcbrock(ev):
             brock_comment+=" Une morphologie suspecte du nodule (taille de la portion solide ; indentation pleurale ; aspect en bulles) doit faire discuter un traitement."
         document["brock_avis"].textContent=brock_comment
     except:# Exception as err:
-        #print(err.args)
         document["brock_proba_kc"].textContent="-"
         document["brock_avis"].textContent="-"
         
@@ -616,7 +614,7 @@ def calcrecist(ev):
         document["recist_sumb"].textContent = sumlB
         recist:float=round(100/suma*sumb-100,1)
         document["recist_recist"].textContent ='SPD {:+.1f} % : {} {}'.format(recist,"progression" if recist>=20 and (sumb-suma) >=5 else ("réponse complète" if recist==-100 else "réponse partielle" if recist<=-30 else "maladie stable"),recist_warning) #1 chiffre après , et signé
-    except ZeroDivisionError:
+    except Exception:
         document["recist_recist"].textContent = "division par zéro : il doit y avoir une erreur de saisie de la colone 1..."
         document["recist_suma"].textContent ="-"
         document["recist_sumb"].textContent ="-"
@@ -669,6 +667,8 @@ def calcwashout(ev):
         document["washout_absolu"].textContent = "-"
 
 formulaire_anime("washout",calcwashout)
+document["washout_clear"].bind("click", lambda ev:iclear("iwashout"))
+document["washout_clear"].bind("click", lambda ev:iclear("ichuteirm"))
 
 # chuteirm
 
@@ -719,10 +719,9 @@ radio_anime("testisformule",calctestis)
 document["testis_clear"].bind("click", lambda ev:iclear("itestis"))
 
 def calctestisvol(ev):
-    print("online")
     try:
         document["testislamb"].textContent ='{:.1f}'.format(float(document["testisellip"].value)*4.32/Math.PI)
-    except ZeroDivisionError:
+    except Exception:
         document["testislamb"].textContent = '-'
 
 formulaire_anime("testisconv",calctestisvol)
@@ -1002,7 +1001,7 @@ def calcsurface(ev):
         document["surface_bsa"].textContent ='{:.2f} m²'.format((surface_cm*surface_kg/3600)**.5)
         document["surface_imc"].textContent ='{:.1f} kg/m²'.format((surface_kg/((surface_cm/100)**2)))
 
-    except ZeroDivisionError:
+    except Exception:
         document["volvol"].textContent = '-'
 
 formulaire_anime("surface",calcsurface)

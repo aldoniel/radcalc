@@ -165,7 +165,6 @@ def formulaire_anime(code:str,calcfunc,nocalc:bool=False):
     #met l'événement nextinput si keypress sur les éléments dont le nom est i+nomducalcul (section)=n
     #met l'événement de calcul sur tous les input si event change
     collection=document.select(f'[i{code}]')
-    #print(collection)
     lencollection:int=len(collection)
     if nocalc:
         for elem in collection: #le dernier élément est le bouton calc
@@ -225,10 +224,19 @@ def calcdfg(ev):
     except:
         document["dfgcg"].textContent =err
 
+"""def DFGleftoverclear(ev):
+    radio:list=document.select('[name="ucr"]')
+    for item in radio:
+        item.checked=False
+document["DFG_clear"].bind("click", DFGleftoverclear) # bon, en fait c'est chiant à recliquer à chaque fois...
+"""
 
 formulaire_anime("DFG",calcdfg)
 radio_anime("ucr",calcdfg)
 document["IDMS"].bind("change",calcdfg)
+document["DFG_clear"].bind("click", lambda ev:iclear("iDFG"))
+
+
 
 # modèle de brock
 
@@ -286,7 +294,6 @@ def calcbrock(ev):
             brock_comment+=" Une morphologie suspecte du nodule (taille de la portion solide ; indentation pleurale ; aspect en bulles) doit faire discuter un traitement."
         document["brock_avis"].textContent=brock_comment
     except:# Exception as err:
-        #print(err.args)
         document["brock_proba_kc"].textContent="-"
         document["brock_avis"].textContent="-"
         
@@ -607,7 +614,7 @@ def calcrecist(ev):
         document["recist_sumb"].textContent = sumlB
         recist:float=round(100/suma*sumb-100,1)
         document["recist_recist"].textContent ='SPD {:+.1f} % : {} {}'.format(recist,"progression" if recist>=20 and (sumb-suma) >=5 else ("réponse complète" if recist==-100 else "réponse partielle" if recist<=-30 else "maladie stable"),recist_warning) #1 chiffre après , et signé
-    except ZeroDivisionError:
+    except Exception:
         document["recist_recist"].textContent = "division par zéro : il doit y avoir une erreur de saisie de la colone 1..."
         document["recist_suma"].textContent ="-"
         document["recist_sumb"].textContent ="-"
@@ -660,6 +667,8 @@ def calcwashout(ev):
         document["washout_absolu"].textContent = "-"
 
 formulaire_anime("washout",calcwashout)
+document["washout_clear"].bind("click", lambda ev:iclear("iwashout"))
+document["washout_clear"].bind("click", lambda ev:iclear("ichuteirm"))
 
 # chuteirm
 
@@ -693,6 +702,7 @@ def calcnascet(ev):
         document["nascet_ste"].textContent = '-'
 
 formulaire_anime("cstenose",calcnascet) 
+document["nascet_clear"].bind("click", lambda ev:iclear("icstenose"))
 
 #testis
 def calctestis(ev):
@@ -707,6 +717,19 @@ def calctestis(ev):
 formulaire_anime("testis",calctestis)
 radio_anime("testisformule",calctestis)
 document["testis_clear"].bind("click", lambda ev:iclear("itestis"))
+
+def calctestisvol(ev):
+    try:
+        document["testislamb"].textContent ='{:.1f}'.format(float(document["testisellip"].value)*4.32/Math.PI)
+    except Exception:
+        document["testislamb"].textContent = '-'
+
+formulaire_anime("testisconv",calctestisvol)
+
+def testislambclear(ev):
+    # mini clear au toucher, ne peut être mis en lambda...
+    document["testisellip"].value=''
+document["testisellip"].bind("click", testislambclear)
 
 # lugano
 
@@ -916,3 +939,70 @@ def luganoleftoverclear(ev):
 
 document["lugano_clear"].bind("click", lambda ev:iclear("ilugano"))
 document["lugano_clear"].bind("click", luganoleftoverclear)
+
+# mesa
+def calcmesa(ev):
+    try:
+        mesarace:float =float(getradiovalue("mesarace"))
+        mesaPAS:float=float(document["mesaPAS"].value)
+        mesa_sexe:float =float(getradiovalue("mesa_sexe"))
+        mesa_age:float=float(document["mesa_age"].value)
+        mesacholest:float=float(document["mesacholest"].value)
+        mesaHDL:float=float(document["mesaHDL"].value)
+        mesatttHTA:float =float(getradiovalue("mesatttHTA"))
+        mesatttlipides:float =float(getradiovalue("mesatttlipides"))
+        mesadiab:float =float(getradiovalue("mesadiab"))
+        mesasmoker:float =float(getradiovalue("mesasmoker"))
+        mesafamIDM:float =float(getradiovalue("mesafamIDM"))
+
+        mesaterms:float = (mesa_age * 0.0455) + (mesa_sexe * 0.7496) + (-0.2111 if mesarace==1 else -0.5055 if mesarace==2 else -0.19 if mesarace==3 else 0) \
+        + (mesadiab * 0.5168) + (mesasmoker * 0.4732) + (mesacholest * 0.0053) - (mesaHDL * 0.0140) + (mesatttlipides * 0.2473) + (mesaPAS * 0.0085) \
+        + (mesatttHTA * 0.3381) + (mesafamIDM * 0.4522) 
+        year10:float= 100 * (1 - pow(0.99963,Math.E**(mesaterms)))
+
+        document["mesa10"].textContent = '{:.1f}%'.format(year10)
+        try:
+            mesa_aga:float=float(document["mesa_aga"].value)
+            mesaterms:float = (mesa_age * 0.0172) + (mesa_sexe * 0.4079) + (0.0353 if mesarace==1 else -0.3475 if mesarace==2 else -0.0222 if mesarace==3 else 0) \
+            + (mesadiab * 0.3892) + (mesasmoker * 0.3717) + (mesacholest * 0.0043) - (mesaHDL * 0.0114) + (mesatttlipides * 0.1206) + (mesaPAS * 0.0066) \
+            + (mesatttHTA * 0.2278) + (mesafamIDM * 0.3239) + (Math.log(mesa_aga + 1) * 0.2743)
+            year10calci:float= 100 * (1 - pow(0.99833,Math.E**(mesaterms)))
+            document["mesa10calci"].textContent = '{:.1f}%'.format(year10calci)
+        except Exception:
+            document["mesa10calci"].textContent = "-"
+    except Exception:
+        document["mesa10"].textContent = '-'
+        document["mesa10calci"].textContent = "-"
+
+formulaire_anime("mesa",calcmesa)
+document["mesa_clear"].bind("click", lambda ev:iclear("imesa"))
+
+#vol
+def calcvol(ev):
+    try:
+        volml:float=Math.PI/6000*float(document["volx"].value)*float(document["voly"].value)*float(document["volz"].value)
+        if volml<1000:
+            document["volvol"].textContent ='{:.1f} mL'.format(volml)
+        else:
+            document["volvol"].textContent ='{:.2f} L'.format(volml/1000)
+    except Exception:
+        document["volvol"].textContent = '-'
+
+formulaire_anime("vol",calcvol)
+document["vol_clear"].bind("click", lambda ev:iclear("ivol"))
+
+#surface
+
+def calcsurface(ev):
+    try:
+        surface_kg:float=float(document["surface_kg"].value)
+        surface_cm:float=float(document["surface_cm"].value)
+
+        document["surface_bsa"].textContent ='{:.2f} m²'.format((surface_cm*surface_kg/3600)**.5)
+        document["surface_imc"].textContent ='{:.1f} kg/m²'.format((surface_kg/((surface_cm/100)**2)))
+
+    except Exception:
+        document["volvol"].textContent = '-'
+
+formulaire_anime("surface",calcsurface)
+document["surface_clear"].bind("click", lambda ev:iclear("isurface"))

@@ -20,6 +20,10 @@ Permet de calculer
     * [ ] mémo tirads, lirads...
 * Vasculaire
     * % sténose
+    * score d'accident coronarien MESA à 10 ans
+* Divers
+    * Volume ellipsoïde
+    * IMC ; surface corporelle
 
 ## Versions utilisables (Release)
 * Sur l'android store, voir [RadCalc par Aldoniel](https://play.google.com/store/apps/details?id=io.aldoniel.radcalc)
@@ -35,13 +39,14 @@ Il faut ensuite ouvrir l'application une fois depuis son icône sur l'écran d'a
 * Ce code est placé sous droit français et licence CeCILL 2.1 (voir cecill21fr.html).
 
 ## Todo
+1. [ ] se motiver pour étudier un auto adaptateur d'injection d'iode même si la SFR est pas intéressée...
 1. [x] essayer de publier une web app ios
 1. [ ] bug : affichage incorrect du modal sur PC (BTS trop grand sort de l'écran : faudrait ajouter un ascenseur)
 1. [ ] finir  endoc
 1. [ ] arranger le modal : il faut prblm faire une version android et une windows pour faire simple
 1. [ ] ajouter surface ovaire
-1. [ ] ajouter un convertisseur de volume élipsoïde en lambert
-1. [ ] ajouter des boutons effacer les champs partout, 
+1. [x] ajouter un convertisseur de volume élipsoïde en lambert
+1. [x] ajouter des boutons effacer les champs partout, 
 1. [ ] arranger le padding du menu top qui est n'importe quoi
 1. [x] corriger le bug recist
 1. [x] menu recist incohérent

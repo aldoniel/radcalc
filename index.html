@@ -29,7 +29,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
 
         function startBrython() {
             document.addEventListener('deviceready', brython, false); // l'event deviceready est lancé quand le code natif codova a fini de charger (au cas où brython appelle une function javascript de cordova)
-           brython() // pour tester dans le navigateur, à enlever sur téléphone
+           //brython() // pour tester dans le navigateur, à enlever sur téléphone
         }
     </script>
 </head>
@@ -40,7 +40,15 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
     <div class="w3-container" >
         <div class="w3-bar w3-light-green" id="menu" style="display:block">
             <table class="tbl_invisibl"  style="width:100%"><tbody><tr>
-                <td><button class="w3-bar-item w3-button tablink w3-green" style="padding:3px 6px;" onclick="openonglet(event,'DFG')"><img src="img/kidney.svg" height="40" alt="DFG"></button></td>
+            <td><div class="w3-dropdown-hover">
+                <button class="w3-button tablink hoverbutton" style="background-color:#8BC34A";padding:3px 6px;"><img src="img/Chaos_star.svg" height="40" alt="Divers"></button>
+                <div class="w3-dropdown-content w3-bar-block w3-card-4" style="display:none">
+                    <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'volume')">Volume ellipsoïde</a>
+                    <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'surface')">IMC ; Surface corporelle</a>
+                    <a href="#" class="w3-bar-item w3-button tablink" id="evapropos" onclick="openonglet(event,'apropos')">À propos</a>
+                </div>
+            </div></td>
+
            <td><div class="w3-dropdown-hover">
                 <button class="w3-button tablink hoverbutton" style="background-color:#8BC34A";><img src="img/lung.svg" height="40" alt="Poumon" ></button> <!--.w3-light-green sert à ajouter un fond vert au bouton qui sinon est gris hérité de je ne sais où-->
                 <div class="w3-dropdown-content w3-bar-block w3-card-4" style="display:none">
@@ -70,18 +78,10 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                 <button class="w3-button tablink hoverbutton" style="background-color:#8BC34A";padding:3px 6px;"><img src="img/coeur.svg" height="40" alt="Vasculaire"></button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4" style="display:none">
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'nascet')">Sténose</a>
-                    <a href="#" class="w3-bar-item w3-button tablink" id="evapropos" onclick="openonglet(event,'mesa')">Score coronarien MESA</a>
+                    <a href="#" class="w3-bar-item w3-button tablink" onclick="openonglet(event,'mesa')">Score coronarien MESA</a>
                 </div>
             </div></td>
-
-            <td><div class="w3-dropdown-hover">
-                <button class="w3-button tablink hoverbutton" style="background-color:#8BC34A";padding:3px 6px;"><img src="img/Chaos_star.svg" height="40" alt="Divers"></button>
-                <div class="w3-dropdown-content w3-bar-block w3-card-4" style="display:none">
-                    <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'volume')">Volume ellipsoïde</a>
-                    <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'surface')">IMC ; Surface corporelle</a>
-                    <a href="#" class="w3-bar-item w3-button tablink" id="evapropos" onclick="openonglet(event,'apropos')">À propos</a>
-                </div>
-            </div></td>
+            <td><button class="w3-bar-item w3-button tablink w3-green" style="padding:3px 6px;" onclick="openonglet(event,'DFG')"><img src="img/kidney.svg" height="40" alt="DFG"></button></td>
 
             </tr></tbody></table>
         </div>
@@ -735,6 +735,7 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
             <div class="w3-container w3-teal">
                 <h5>Calcul du washout surrénalien (lavage) en scanner</h5>
             </div>
+            <p><button class="w3-btn w3-red" id="washout_clear">Effacer les valeurs</button></p>
             <p><label class="w3-text-teal"><b>Densité sans injection</b></label>
                 <input required class="w3-input w3-border w3-light-grey" iwashout=1 type="number" min="-115" step="any" id="uh0" title="Seulement des chiffres S.V.P."></p>
             <p><label class="w3-text-teal"><b>Densité au temps précoce à 60" (60-90" pic de rehaussement supposé)</b></label>
@@ -813,7 +814,7 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
              <p>En poursuivant l'utilisation, vous acceptez ces conditions sans réserve. Veuillez prendre connaissance de la licence et l'accepter.</p>
             </div>
             <p></p>
-            <button type="button" class="collapsible collapseh5 w3-teal">À propos : RadCalc 1.3</button>
+            <button type="button" class="collapsible collapseh5 w3-teal">À propos : RadCalc 1.4</button>
                 <div class="collapsecontent"> 
                 <ul>
                     <li>Les informations sont traitées localement, hors ligne.</li>
