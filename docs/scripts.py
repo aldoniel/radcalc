@@ -1006,3 +1006,16 @@ def calcsurface(ev):
 
 formulaire_anime("surface",calcsurface)
 document["surface_clear"].bind("click", lambda ev:iclear("isurface"))
+
+#ovr
+def calcovr(ev):
+    try:
+        ovrx:float=float(document["ovrx"].value)
+        ovry:float=float(document["ovry"].value)
+        document["ovr_surf"].textContent ='{:.1f} cm²'.format(ovrx*ovry*.008)
+
+    except Exception:
+        document["ovr_surf"].textContent = '-'
+
+formulaire_anime("ovr",calcovr)
+document["ovr_clear"].bind("click", lambda ev:iclear("iovr"))

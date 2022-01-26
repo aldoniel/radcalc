@@ -16,7 +16,7 @@ Permet de calculer
     * lugano lymphomes
 * Endoc
     * calcul wash-out surrénales
-    * volume testicule
+    * volume testicule ; volume surface ovaire
     * [ ] mémo tirads, lirads...
 * Vasculaire
     * % sténose
@@ -42,9 +42,9 @@ Il faut ensuite ouvrir l'application une fois depuis son icône sur l'écran d'a
 1. [ ] se motiver pour étudier un auto adaptateur d'injection d'iode même si la SFR est pas intéressée...
 1. [x] essayer de publier une web app ios
 1. [ ] bug : affichage incorrect du modal sur PC (BTS trop grand sort de l'écran : faudrait ajouter un ascenseur)
-1. [ ] finir  endoc
+1. [ ] ajouter un mémo de tirads
 1. [ ] arranger le modal : il faut prblm faire une version android et une windows pour faire simple
-1. [ ] ajouter surface ovaire
+1. [x] ajouter surface ovaire
 1. [x] ajouter un convertisseur de volume élipsoïde en lambert
 1. [x] ajouter des boutons effacer les champs partout, 
 1. [ ] arranger le padding du menu top qui est n'importe quoi

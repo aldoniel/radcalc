@@ -29,7 +29,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
 
         function startBrython() {
             document.addEventListener('deviceready', brython, false); // l'event deviceready est lancé quand le code natif codova a fini de charger (au cas où brython appelle une function javascript de cordova)
-           //brython() // pour tester dans le navigateur, à enlever sur téléphone
+            //brython() // pour tester dans le navigateur, à enlever sur téléphone
         }
     </script>
 </head>
@@ -814,7 +814,7 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
              <p>En poursuivant l'utilisation, vous acceptez ces conditions sans réserve. Veuillez prendre connaissance de la licence et l'accepter.</p>
             </div>
             <p></p>
-            <button type="button" class="collapsible collapseh5 w3-teal">À propos : RadCalc 1.4</button>
+            <button type="button" class="collapsible collapseh5 w3-teal">À propos : RadCalc 1.5</button>
                 <div class="collapsecontent"> 
                 <ul>
                     <li>Les informations sont traitées localement, hors ligne.</li>
@@ -869,16 +869,16 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
         <!--onglet testis -->
         <div id="testis" class="w3-container w3-border onglet" style="display:none">
             <div class="w3-container w3-teal">
-                <h5>Volume gonadique masculin</h5>
+                <h5>Volume gonadique</h5>
             </div>
             <p>
                 <input class="w3-radio" type="radio" name="testisformule" checked id="testisformule">
-                <label>formule de Lambert</label>
+                <label>formule de Lambert (gonade masculine)</label>
 
                 <input class="w3-radio" type="radio" name="testisformule">
-                <label>formule de l'ellipsoïde</label>
+                <label>formule de l'ellipsoïde (ovaire)</label>
             </p>
-            <label class="w3-text-teal"><b>Dimensions de la gonade masculine* dans les 3 plans</b></label>
+            <label class="w3-text-teal"><b>Dimensions de la gonade dans les 3 plans</b></label>
             <p><button class="w3-btn w3-red" id="testis_clear">Effacer les valeurs</button></p>
             <p><label class="w3-text-teal"><b>Diamètre x (mm)</b></label>
             <input required class="w3-input w3-border w3-light-grey" itestis=1 type="number" min="1" step="any" id="testix" title="Seulement des chiffres S.V.P."></p>
@@ -886,15 +886,21 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
             <input required class="w3-input w3-border w3-light-grey" itestis=2 type="number" min="1" step="any" id="testiy" title="Seulement des chiffres S.V.P."></p>
             <p><label class="w3-text-teal"><b>Diamètre z (mm)</b></label>
             <input required class="w3-input w3-border w3-light-grey" itestis=3 type="number" min="1" step="any" id="testiz" title="Seulement des chiffres S.V.P."></p>
-            <p><span class="w3-tag w3-large w3-teal">Volume testiculaire : </span> <span id="testisvol">-</span></p>
+            <p><span class="w3-tag w3-large w3-teal">Volume : </span> <span id="testisvol">-</span></p>
             <p><button class="w3-btn w3-indigo" itestis=4>Calculer</button></p>
-            <div class="w3-container w3-teal">Remarques</div>
-                <ul><li>La littérature est assez confuse sur la manière correcte de calculer le volume gonadique masculin ainsi que les normes.</li>
-                    <li>La normale souvent avancée est 15-20mL (ex : <a href="https://doi.org/10.1148/rg.2017160125" target="_blank">Réf</a>), hypotrophie en deçà et atrophie si < à 6mL.</li>
+            <button type="button" class="collapsible collapsible100 w3-teal">Remarques</button>
+            <div class="collapsecontent">
+            <div class="w3-container w3-teal"></div>
+                <ul><li>La littérature est assez confuse sur la manière correcte de calculer le volume gonadique masculin* ainsi que les normes.</li>
+                    <ul>
+                    <li>La normale souvent avancée est 15-20mL (ex : <a href="https://doi.org/10.1148/rg.2017160125" target="_blank">Réf</a>) et atrophie si < à 6mL. La société française d'endocrinologie donne une normale >12mL à l'orchidomètre.</li>
                     <li>Cependant, pour la même normale (!), certains préconisent la formule de l'ellipsoïde (0,52*x*y*z où π/6#0,52) par défaut dans les échographes, tandis que d'autres promeuvent la formule de Lambert : 0,72*x*y*z.</li>
                     <li>Sur la base de corrélations au volume réel sur spécimen, la formule de Lambert était la plus proche sur deux études et est donc retenue ici. (<a href="https://doi.org/10.1016/j.urology.2006.09.012" target="_blank">Réf1</a> <a href="https://doi.org/10.1016/j.afju.2012.11.004" target="_blank">Réf2</a>).</li>
-                    <li> * (La politique de l'android store ne permet pas de mentionner son nom impudique)</li>
+                    <li> * (La politique de chasteté de l'android store ne permet pas de mentionner son nom impudique)</li></ul>
+                    <li>Le volume ovarien se calcule par la formule de l'ellipsoïde (cf. supra ou onglet en haut à gauche volume ellipsoïde), qui est normalement déjà dans l'échographe.</li>
+                    <ul><li>La société française d'endocrinologie donne une normale d'un ovaire à 4-11 mL chez la femme adulte jusqu'à 35 ans</li></ul>
                 </ul>
+            </div><p></p>
             <div class="w3-container w3-teal">
                 <h5>Conversion volume ellipsoïde → Lambert</h5>
             </div>
@@ -903,9 +909,20 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
             <p><span class="w3-tag w3-large w3-teal">Volume Lambert : </span> <span id="testislamb">-</span></p>
             <p><button class="w3-btn w3-indigo" itestisconv=2>Calculer</button></p>
             <div class="w3-container w3-teal">
-                <h5>Volume ovarien</h5>
+                <h5>Surface ovarienne</h5>
             </div>
-            <p></p>
+            <label class="w3-text-teal"><b>Deux axes sur la plus grande coupe.</b></label>
+            <p><button class="w3-btn w3-red" id="ovr_clear">Effacer les valeurs</button></p>
+            <p><label class="w3-text-teal"><b>Diamètre x (mm)</b></label>
+            <input required class="w3-input w3-border w3-light-grey" iovr=1 type="number" min="1" step="any" id="ovrx" title="Seulement des chiffres S.V.P."></p>
+            <p><label class="w3-text-teal"><b>Diamètre y (mm)</b></label>
+            <input required class="w3-input w3-border w3-light-grey" iovr=2 type="number" min="1" step="any" id="ovry" title="Seulement des chiffres S.V.P."></p>
+            <p><span class="w3-tag w3-large w3-teal">Surface : </span> <span id="ovr_surf">-</span></p>
+            <p><button class="w3-btn w3-indigo" iovr=3>Calculer</button></p>
+            <div class="w3-container w3-teal">Remarques</div>
+                <ul><li>La société française d'endocrinologie donne une normale d'un ovaire à 2,5-5,5 cm² chez la femme adulte jusqu'à 35 ans.</li>
+                    <li>Surface = x*y*0.008 (en mm → cm²)</li>
+                </ul>
         </div> 
 
         <!--onglet mesa -->
