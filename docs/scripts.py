@@ -69,20 +69,26 @@ from browser.local_storage import storage
 #window.brython_openonglet = brython_openonglet
 #document <= html.H5('Brython Ready! :)')
 
+class glob_var:
+    nextInput_maxint:dict={}
+    assistancetxt:str="Les icônes du haut permettent d'accéder aux différents calculateurs. Il est souvent possible de passer à la valeur suivante en appuyant sur entrée."
+    modalcustom:bool=False
+
 
 def cecillacceptefunc(ev):
     # enregistre l'acceptation et affiche le menu
     storage['cecillaccepte']="1"
     document["menu"].style.display="block"
     window.scroll(0,0) #js, scroll en haut
-    for item in document.select('[licence]'): #crash debug meu je sais pas pourquoi 
+    for item in document.select('[licence]'): #crash debug je sais pas pourquoi 
         togcollapse(item) # replier licences
     del document["cecillaccepter"]
     del document["defile"]
-    document["assistance"]<="Les icônes du haut permettent d'accéder aux différents calculateurs. Il est souvent possible de passer à la valeur suivante en appuyant sur entrée."
+    document["assistance"]<=glob_var.assistancetxt
+    del glob_var.assistancetxt
 
 def togcollapse(bouton):
-    #fonction redéfinie à partir du js que je maitrise pas.
+    #fonction redéfinie à partir du js que je maitrise pas, sert à déplier les collapsible
     bouton.classList.toggle("collapseactive")
     content = bouton.nextElementSibling
     if content.style.maxHeight:
@@ -113,23 +119,28 @@ if window.current_onglet=="apropos": # si on charge d'emblée sur le légal
 else:
     document["evapropos"].bind("click", cecilladd) # si on charge pas sur le légal, on ajoute le chargement par le menu
 
-try:
-#essaie de lire l'acceptation ds local storage et sinon charge la licence etc.
-    assert storage['cecillaccepte']=="1"
-except (KeyError,AssertionError):
-    storage['cecillaccepte']="0"
-    document["menu"].style.display="none"
-    link = html.CENTER(html.A(html.BUTTON("↓ Défiler vers Accepter ↓", Class="w3-button w3-red"),href="#cecillaccepter"))
-    document["defile"]<=link
-    accepte = html.CENTER(html.BUTTON("J'accepte la licence CeCILL", Class="w3-button w3-red w3-large"))
-    accepte.bind("click",cecillacceptefunc)
-    document["cecillaccepter"]<=accepte
-    for item in document.select('[licence]'): # déplier licences après avoir inséré sinon le contect n'a pas la bonne taille...
-        togcollapse(item)
-
-
-class glob_var:
-    nextInput_maxint:dict={}
+if not window.versionweb:#variable javascript ; vieux hack pour désactiver la licence en ligne
+    try:
+    #essaie de lire l'acceptation ds local storage et sinon charge la licence etc.
+        assert storage['cecillaccepte']=="1"
+    except (KeyError,AssertionError):
+        storage['cecillaccepte']="0"
+        document["menu"].style.display="none"
+        link = html.CENTER(html.A(html.BUTTON("↓ Défiler vers Accepter ↓", Class="w3-button w3-red"),href="#cecillaccepter"))
+        document["defile"]<=link
+        accepte = html.CENTER(html.BUTTON("J'accepte la licence CeCILL", Class="w3-button w3-red w3-large"))
+        accepte.bind("click",cecillacceptefunc)
+        document["cecillaccepter"]<=accepte
+        for item in document.select('[licence]'): # déplier licences après avoir inséré sinon le contect n'a pas la bonne taille...
+            togcollapse(item)
+else:
+    try:
+        assert storage['cecillaccepte']=="1"
+    except (KeyError,AssertionError):
+        # cas du 1er lancement : afficher au moins l'avertissement
+        document["assistance"]<=glob_var.assistancetxt
+        togcollapse(document["aproposbout"])
+        storage['cecillaccepte']="1"
 
 # fonctions communes
 
@@ -182,6 +193,12 @@ def radio_anime(name:str,calcfunc):
 #name : valeur de name du radio. Sert à animer les boutons radio mal animés par formulaire_anime. Un élément peut recevoir bind 2x mais ça a pas l'air grave.
     for elem in document.select(f'[name="{name}"]'):
         elem.bind("change",calcfunc)
+
+def caesar()->None:
+    # un chiffre top secret antispam
+    crl:str="".join([chr(entier) for entier in [ord(char)-3 for char in "dogrqlhoC|dkrr1iu"]])
+    document["contact"].html = "<a href=mailto:"+crl+">"+crl+"</a>"
+caesar()
 
 #DFG
 
@@ -455,12 +472,29 @@ def modal_show(ev):
     zm = window.Zoom.new(document["img01"], {'pan': True, 'rotate': False })
     modal.style.display = "block"
     modalImg.src = ev.target.getAttribute("src")
+    width=ev.target.getAttribute("width")
+    if width: #hack pour forcer une taille en pixels
+        modalImg.classList.toggle("modal-content") #enlever l'attribut with 100%
+        modalImg.classList.toggle("modal-content-custom")
+        modalImg.removeAttribute("width")
+        modalImg.setAttribute ("width",width)
+        glob_var.modalcustom=True
+    height=ev.target.getAttribute("height")
+    if height:
+        modalImg.setAttribute ("height",height)
     modal_captionText.innerHTML = ev.target.getAttribute("alt")
 
 def modal_hide(ev):
     global zm
-    del zm #la biblio de zoom lie des événements, faut les libérer.
+    #del zm #la biblio de zoom lie des événements, faut les libérer.
+    zm=None #comme ça je peux tester zm pour pas cher
     modal.style.display = "none"
+    if glob_var.modalcustom: #restaurer le modal à son état basal
+        modalImg.removeAttribute ("height")
+        modalImg.removeAttribute ("width")
+        modalImg.classList.toggle("modal-content")
+        modalImg.classList.toggle("modal-content-custom")
+        glob_var.modalcustom=False
 
 
 collection=document.select("[modalbouton]")
@@ -531,11 +565,14 @@ window.dernierongletclic=dernierongletclic #ajout de la fonction brython au js n
 
 def onBackKeyDown(ev):
     # ajoute le comportement android normal si presse back
-    try:
-        del lderniersonglets[-1] #supprime la page actuelle
-        window.openonglet(NULL,lderniersonglets.pop())
-    except IndexError:
-        window.navigator.app.exitApp()
+    if zm: #si modal visible #debug, tester si marche
+        modal_hide(None)
+    else:
+        try:
+            del lderniersonglets[-1] #supprime la page actuelle
+            window.openonglet(NULL,lderniersonglets.pop())
+        except IndexError:
+            window.navigator.app.exitApp()
 
 document.addEventListener("backbutton", onBackKeyDown, False)
 
@@ -548,6 +585,18 @@ def isnumber(s)->bool:
     except ValueError:
         return False
 
+def recist_switch(ev):
+    # inverse les listes avant et après (c'est peut être plus élégant que calcrecist mais comme ce dernier marche...)
+    lirecist:list=document.select('[irecist]')
+    del lirecist[-1]  #le dernier item c'est le bouton qui n'a pas de valeur
+    c:str=""
+    for a,b in zip(lirecist[::2],lirecist[1::2]):
+        c=b.value
+        b.value=a.value
+        a.value=c
+    calcrecist(None)
+
+document["recist_inverse"].bind("click", recist_switch)
 
 def calcrecist(ev):
     sumb_manuel=None #super hackish... sert à désactiver les vérifications de tableau
@@ -703,6 +752,25 @@ def calcnascet(ev):
 
 formulaire_anime("cstenose",calcnascet) 
 document["nascet_clear"].bind("click", lambda ev:iclear("icstenose"))
+
+
+def calcecstnascet(ev):
+    document["ECSTNASCET"].textContent ='{:.1f}'.format(float(document["ecstconv"].value)*2-100)
+    try:
+        a:float=float(document["ecstconv"].value)*2-100
+        a= round(a) if a >0 else 0
+        document["ECSTNASCET"].textContent =f'{a}'
+    except Exception:
+        document["ECSTNASCET"].textContent = '-'
+
+formulaire_anime("ecstconv",calcecstnascet)
+
+def ecstnascetclear(ev):
+    # mini clear au toucher, ne peut être mis en lambda...
+    document["ecstconv"].value=''
+document["ecstconv"].bind("click", ecstnascetclear)
+
+
 
 #testis
 def calctestis(ev):
