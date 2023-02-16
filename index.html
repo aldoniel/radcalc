@@ -29,12 +29,13 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
 
         function startBrython() {
             document.addEventListener('deviceready', brython, false); // l'event deviceready est lancé quand le code natif codova a fini de charger (au cas où brython appelle une function javascript de cordova)
-            //brython() // pour tester dans le navigateur, à enlever sur téléphone
+            brython() // pour tester dans le navigateur, à enlever sur téléphone
         }
+        var versionweb=true; //idem. global
     </script>
 </head>
 
-<body onload="startBrython()"><!--;openonglet(event,'algo') //debug">-->
+<body onload="startBrython()"><!--;openonglet(null,'RECIST') //debug">-->
     <script type="text/javascript" src="cordova.js"></script>
     <!--menu haut -->
     <div class="w3-container" >
@@ -70,6 +71,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                 <div class="w3-dropdown-content w3-bar-block w3-card-4" style="display:none">
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'washout')">Adénomes</a>
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'testis')">Volume gonadique</a>
+                    <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'tirads')">Mémo EU-TIRADS</a>
                 </div>
             </div></td>
             
@@ -380,6 +382,7 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                     <li>Ces recommandations (BTS) sont pour les <b>nodules solides.</b></li>
                     <li>Selon les <a href="https://www.brit-thoracic.org.uk/quality-improvement/guidelines/pulmonary-nodules/" target="_blank">recommandations BTS</a>, le temps de doublement est idéalement à utiliser avec la volumétrie (mesure automatisée du volume), afin de contrôler les nodules à 1 an pour les nodules de 5-6mm et à 3 mois pour les nodules ≥6mm. Il faut évidemment utiliser le même algorithme, le même scanner idéalement,
                      ne pas mesurer un ganglion intra-pulmonaire..., etc.</li>
+                     <li>La BTS conseille (grade C), de considérer comme significative, une croissance volumique ≥25%.</li>
                      <li>Un VTD entre 30 et 400 jours est suspect.</li>
                 <li>Les nodules ≥8 mm ne doivent être suivis (BTS) que si leur probabilité de malignité est <10% (Brock, Herder).</li>
                 <li>Ce calculateur a été testé contre celui de <a href="https://www.radiology.no/vdt/" target="_blank">Tore Sjøbod</a> et l'application P-Nodule Risk.</li>
@@ -390,7 +393,8 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
             <div class="w3-container w3-teal">
                 <h5>RECIST 1.1</h5>
             </div>
-            <p><button class="w3-btn w3-red" id="recist_clear">Effacer les valeurs</button></p>
+            <p><button class="w3-btn w3-left w3-red" id="recist_clear">Effacer les valeurs</button>
+                <button class="w3-btn w3-right w3-red" id="recist_inverse">⇔ Inverser</button></p>
             <table class="w3-table-all w3-centered" style="width:100%">
                 <tr >
                 <th>Lésion</th>
@@ -512,8 +516,8 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                 <table class="w3-table-all">
                     <tbody>
                         <tr>
-                            <td rowspan="1" colspan="2"><b>Stade</b></td>
-                            <td><b>Étendue de l'atteinte</b></td>
+                            <th rowspan="1" colspan="2">Stade</th>
+                            <th>Étendue de l'atteinte</th>
                         </tr>
                         <tr>
                             <td>Limité</td>
@@ -798,13 +802,13 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
         <!--onglet apropos -->
         <div id="apropos" class="w3-container w3-border onglet" style="display:none">
             <div id="assistance"></div>
-            <button type="button" licence class="collapsible collapseh5 w3-teal">Avertissements</button>
+            <button type="button" licence class="collapsible collapseh5 w3-teal" id="aproposbout">Avertissements</button>
             <div class="collapsecontent">
             <div id="defile"></div>
             <p>L'auteur de cette application se présente en tant que programmateur amateur sans autre titre ni prétention.</p>
             <p>
                 Cette application est fournie à titre informatif et sans aucune garantie. Elle s'adresse à un public averti ayant une formation médicale. En aucun cas les informations
-                qu'elle apporte ne peuvent se subs  tituer à une consultation médicale ni réaliser un diagnostique. Bien que j'ai apporté du soin à sa réalisation, 
+                qu'elle apporte ne peuvent se substituer à une consultation médicale ni réaliser un diagnostic. Bien que j'ai apporté du soin à sa réalisation, 
                 des erreurs peuvent persister. Les différents calculateurs ont été testés manuellement contre d'autres calculateurs déjà publiquement accessibles. 
                 Néanmoins, le code n'a évidemment pas été audité.
                 La saisie de l'utilisateur est grossièrement vérifiée, mais une erreur de saisie de votre part pourrait produire un résultat aberrant.
@@ -814,7 +818,25 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
              <p>En poursuivant l'utilisation, vous acceptez ces conditions sans réserve. Veuillez prendre connaissance de la licence et l'accepter.</p>
             </div>
             <p></p>
-            <button type="button" class="collapsible collapseh5 w3-teal">À propos : RadCalc 1.5</button>
+            <button type="button" class="collapsible collapseh5 w3-teal">Installation sur iPhone et Android, PC</button>
+                <div class="collapsecontent"> 
+                    <ul>
+                        <li>Sur Android, dans l'App Store, installer Radcalc (Auteur Aldoniel). <a href="https://play.google.com/store/apps/details?id=io.aldoniel.radcalc" target="_blank">Lien direct si besoin.</a> <ul><li><button  type="button" modalbouton  class="w3-button w3-indigo" src="img/qrplaystore.png" alt="QR code vers le Play Store Android" width="300px" height="300px">QRcode Android</button></li></ul></li>
+                        <li>Sur tous navigateurs (PC, téléphones) <a href="https://aldoniel.github.io/radcalc/" target="_blank">version en ligne</a></li>
+                        <ul>
+                        <li><button  type="button" modalbouton  class="w3-button w3-indigo" src="img/qrweb.png" alt="QR code vers la version Web / iOS" width="300px" height="300px">QRcode Web / iOS</button></li>
+                        <li>Pour iOS(c), il faut ouvrir la version navigateur dans Safari, puis dans
+                         le menu du bas, toucher "partager" (l'icône boîte avec une flèche 
+                        haute), puis glisser vers le haut ("swipe" haut), puis défiler dans la 
+                        liste jusqu'à "Ajouter à l'écran d'accueil".</li>
+                        <li>Il faut ensuite ouvrir l'application une fois depuis son icône sur 
+                        l'écran d'accueil du téléphone et elle devrait ensuite fonctionner en 
+                        mode hors ligne.</li>
+                        <li>Sur Chrome sous Android, le menu ajouter à l'écran d'accueil est présent dans les options générales de la page web en haut à droite. (Installation en tant qu'application web progressive).</li></ul>
+                    </ul>
+                </div>
+                <p></p>
+            <button type="button" class="collapsible collapseh5 w3-teal">À propos : RadCalc 1.6</button>
                 <div class="collapsecontent"> 
                 <ul>
                     <li>Les informations sont traitées localement, hors ligne.</li>
@@ -824,6 +846,7 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                     <li>L'application est portée sur android par <a href="https://cordova.apache.org/" target="_blank">Cordova</a>.</li>
                     <li>Les jolies icônes sont de <a href="https://openmoji.org/" target="_blank">OpenMoji</a>, le sigle du chaos qui sert à caser les onglets divers est de Fibonacci sous licence GFDL</li>
                     <li>La fonction <a href="https://github.com/anitasv/zoom" target="_blank">Zoom it!</a> est de anitasv</li>
+                    <li>Vous pouvez me contacter à <span id="contact">-</span></li>
                 </ul></div>
                 <p></p>
                 <button type="button" licence class="collapsible collapseh5 w3-teal">Licence libre CeCILL</button>
@@ -844,14 +867,59 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                 <input required class="w3-input w3-border w3-light-grey" icstenose=2 type="number" min=".1" step="any" id="gddiam" title="Seulement des chiffres S.V.P."></p>
                 <p><span class="w3-tag w3-large w3-teal">Sténose : </span> <span id="nascet_ste">-</span></p>
                 <p><button class="w3-btn w3-indigo" icstenose=3 >Calculer</button></p>
-            <div class="w3-container w3-teal">Mémo</div>
+            <div class="w3-container w3-teal">
+                <h5>Équivalence % ECST → NASCET</h5>
+            </div><br>
+            <label class="w3-text-teal"><b>ECST</b></label><input required class="w3-input w3-border w3-light-grey" iecstconv=1 type="number" min="1" step="any" id="ecstconv" title="Seulement des chiffres S.V.P."></p>
+            <p><span class="w3-tag w3-large w3-teal">NASCET : </span> <span id="ECSTNASCET">-</span></p>
+            <p><button class="w3-btn w3-indigo" iecstconv=2>Calculer</button></p>
+            <button type="button" class="collapsible collapsible100 w3-teal">Remarques</button>
+                <div class="collapsecontent">
+                <ul><li>Il ne s'agit pas d'une conversion, mais d'une approximation basée sur l'hypothèse communément admise que le diamètre du bulbe vaut deux fois celui de l'ACI en aval (cas le plus fréquent, mais pas forcément adapté à l'anatomie du patient).</li>
+                <li>On en déduit grâce à une brillante résolution d'équation que Nascet = 2*ECST-100 (en ignorant les valeurs négatives).</li></ul>
+                </div>
+            <br><div class="w3-container w3-teal">Mémo</div>
 
             <table style="text-align: left;" border="0" cellpadding="2" cellspacing="2">
             <tbody>
             <tr>
-            <td style="vertical-align: top;"><img src="img/nascet.svg" width="150"></td>
-            <td style="vertical-align: top;"><ul><li>NASCET= 100*(1-B/A)</li>
-            <li>ECST=100*(1-B/C)</li></ul>
+            <td style="vertical-align: top;"><img src="img/nascet.svg" width="150"><ul><li>NASCET= 100*(1-B/A)</li>
+                <li>ECST=100*(1-B/C)</li></ul></td>
+            <td style="vertical-align: top;">
+            <table class="w3-table-all w3-small">
+                <tr>
+                        <th>ECST</th>
+                        <th>NASCET</th>
+                    </tr>
+                    <tr>
+                        <td>50</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>60</td>
+                        <td>20</td>
+                    </tr>
+                    <tr>
+                        <td>70</td>
+                        <td>40</td>
+                    </tr>
+                    <tr>
+                        <td>80</td>
+                        <td>60</td>
+                    </tr>
+                    <tr>
+                        <td>85</td>
+                        <td>70</td>
+                    </tr>
+                    <tr>
+                        <td>90</td>
+                        <td>80</td>
+                    </tr>
+                    <tr>
+                        <td>95</td>
+                        <td>90</td>
+                    </tr>
+                </table>
             </td>
             </tr>
             </tbody>
@@ -874,7 +942,7 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
             <p>
                 <input class="w3-radio" type="radio" name="testisformule" checked id="testisformule">
                 <label>formule de Lambert (gonade masculine)</label>
-
+                <br>
                 <input class="w3-radio" type="radio" name="testisformule">
                 <label>formule de l'ellipsoïde (ovaire)</label>
             </p>
@@ -924,6 +992,41 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                     <li>Surface = x*y*0.008 (en mm → cm²)</li>
                 </ul>
         </div> 
+
+        <!-- onglet tirads-->
+        <div id="tirads" class="w3-container w3-border onglet" style="display:none">
+            <div class="w3-container w3-teal">
+                <h5>EU-TIRADS 2017</h5>
+            </div>
+            <div  class="w3-responsive">
+            <table table class="w3-table-all ">
+                <tbody>
+                <tr>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th></tr>
+                <tr>
+                <td>anéchogène ou entièrement spongiforme</td>
+                <td>entièrement isoéchogène ou hyperéchogène</td>
+                <td>modérément hypoéchogène</td>
+                <td>forme non ovale<br>ou contours irréguliers<br>ou microcalcifications<br>ou hypoéchogénicité marquée</td></tr>
+                <tr>
+                <th rowspan="1" colspan="4" class="w3-center">Indication des cytoponctions</th></tr>
+                <tr>
+                <td>si compressif et &gt;20mm</td>
+                <td>&gt;20mm</td>
+                <td>&gt;15mm</td>
+                <td>&gt;10mm ou ≤10 et  
+                <ul>
+                <li>augmentation de taille </li>
+                <li>bilan d'une métastase</li>
+                <li>bilan d'une adénopathie*</li>
+                <li>juxta-capsulaire ≤2mm</li>
+                <li>...</li></ul></td></tr></tbody></table></div>
+                <p>*la ponction du ganglion avec dosage in situ de thyroglobuline doit être systématique</p>
+                <p>Source http://ti-rads.com</p>
+        </div>
 
         <!--onglet mesa -->
         <div id="mesa" class="w3-container w3-border onglet" style="display:none">
@@ -1129,7 +1232,7 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
 <script type="text/javascript" src="js/zoom.min.js"> </script>
 <div id="modal_id" class="modal">
     <span class="modal_close">&times;</span>
-    <div width="100%"  style="overflow:visible;"> <!--y'avait visible, qu'est sans doute bien ss android. sous windows auto donne les ascenseurs et y'avait mis scroll à vittel-->
+    <div style="overflow:visible;"> <!--y'avait visible, qu'est sans doute bien ss android. sous windows auto donne les ascenseurs et y'avait mis scroll à vittel ; cet attribut semble abandonné ne fait plus rien-->
     <img class="modal-content" id="img01" >
     </div>
     <div id="caption"></div>

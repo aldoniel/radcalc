@@ -260,10 +260,18 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 .modal-content {
   margin: auto;
   display: block;
-  width: 100%; 
-  max-width: 1000px;
+  width: 100%; /*ceci fait que le contenu du modal est étiré à 100% de l'écran c'est indisp sur téléphone sinon l'image déborde. sur pc c'est nul */
+  height: auto;
+  max-width: 1000px;/*étrangement, en % ça overflow... */
+  max-height: 800px;
 }
-
+.modal-content-custom {
+  margin: auto;
+  display: block;
+  /*width: 100%;*/ /*class si on force une image en pixels... */
+  max-width: 1000px;/*étrangement, en % ça overflow... */
+  max-height: 800px;
+}
 /* Caption of Modal Image */
 #caption {
   margin: auto;
@@ -277,7 +285,7 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 }
 
 /* Add Animation */
-.modal-content, #caption {  
+.modal-content-custom,.modal-content, #caption {  
   -webkit-animation-name: zoom;
   -webkit-animation-duration: 0.6s;
   animation-name: zoom;

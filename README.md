@@ -40,10 +40,16 @@ Il faut ensuite ouvrir l'application une fois depuis son icône sur l'écran d'a
 
 ## Todo
 1. [ ] se motiver pour étudier un auto adaptateur d'injection d'iode même si la SFR est pas intéressée...
+1. [ ] ​Lugano erreur pas réponse car oublie de verif si réponse complète si persiste ganglion  petits non cibles revoir critère rc ​et mettre % rate
 1. [x] essayer de publier une web app ios
-1. [ ] bug : affichage incorrect du modal sur PC (BTS trop grand sort de l'écran : faudrait ajouter un ascenseur)
-1. [ ] ajouter un mémo de tirads
-1. [ ] arranger le modal : il faut prblm faire une version android et une windows pour faire simple
+1. [x] ajouter inverser avant et après dans le recist
+1. [x] ajouter un mémo de tirads
+1. [x] remettre dans les notes le seuil de significative du volume (nodule)
+1. [x] ajouter dans l'app tuto install / ios + QR code lien et un contact
+1. [x] désactiver la licence en ligne
+​1. [x] ajouter tableau ecst nascet
+1. [ ] arranger le modal : il faut prblm faire une version android et une windows pour faire simple. Echec. J'ai mis un vieux hack avec une taille fixe pour PC dans le css max-height: 800px; qui passe sur un écran "normal" et c'est pas lié au css, j'ai idem en png quoique je fasse (en pire car le hack déforme.). On peut tenter de faire une version à la carte par image en récupérant plus d'attributs (fait sur les QR avec récup de height width)
+1. [x] ajouter le support de la touche retour au modal
 1. [x] ajouter surface ovaire
 1. [x] ajouter un convertisseur de volume élipsoïde en lambert
 1. [x] ajouter des boutons effacer les champs partout, 
@@ -61,4 +67,3 @@ Il faut ensuite ouvrir l'application une fois depuis son icône sur l'écran d'a
 1. [x] faire un 1er démarrage plus convivial avec une aide pour cliquer les icônes et plier-déplier les licences
 1. [x] la coloration verte des icônes marche plus pour dropdown !
 1. [x] essayer de comprendre pk sur android le dropdow menu se replie pas au toucher
-
