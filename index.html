@@ -454,7 +454,7 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
         <!--onglet lugano -->
         <div id="lugano" class="w3-container w3-border onglet" style="display:none">
             <div class="w3-container w3-teal">
-                <h5>Lymphomes, Lugano</h5>
+                <h5>Lymphomes, Lugano 2014</h5>
             </div>
             <p><button class="w3-btn w3-red" id="lugano_clear">Effacer les valeurs</button></p>
             <table class="w3-table-all w3-centered" style="width:100%">
@@ -513,7 +513,7 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                         <p></p>
                         <button type="button" class="collapsible collapsible100 w3-teal">Classification d'Ann Arbor modifiée</button>
                 <div class="collapsecontent">
-                <table class="w3-table-all">
+                <table class="w3-table-all w3-mobile">
                     <tbody>
                         <tr>
                             <th rowspan="1" colspan="2">Stade</th>
@@ -528,6 +528,11 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                             <td><br></td>
                             <td>II</td>
                             <td>Deux (ou plus) groupes d'adénomégalies <u>du même coté du diaphragme</u></td>
+                        </tr>
+                        <tr>
+                            <td>(Limité ou avancé)</td>
+                            <td>II bulky</td>
+                            <td>Stade 2 avec les crières bulky</u></td>
                         </tr>
                         <tr>
                             <td>Avancé</td>
@@ -703,16 +708,18 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                             ≥10mm si lésion &gt;20mm</li></ul>
                             <li>ou augmentation de la rate</li>
                             <ul>
-                            <li>de plus de 50% de la hauteur &gt;13cm ou de &gt;2cm si hauteur ≤13cm</li></ul></ul>
+                            <li>de plus de 50% de la hauteur &gt;13cm* ou de &gt;2cm si hauteur ≤13cm</li></ul></ul>
                             <li><b>Réponse partielle</b> (par rapport au Baseline)</li>
                             <ul>
                             <li>Si pas de progression</li>
-                            <li>Et si diminution de la SPD ≥50% ET régression de ≥50% de la hauteur de rate &gt;13cm.</li></ul>
+                            <li>Et si diminution de la SPD ≥50% ET régression de ≥50% de la hauteur de rate &gt;13cm*.</li></ul>
                             <li><b>Réponse complète</b></li>
                             <ul>
                             <li>Si critères de PR</li>
-                            <li>et plus de lésion d'organe ET plus d'adénomégalie (grand axe≤15mm ET petit axe ≤10mm)</li></ul>
+                            <li>et plus de lésion d'organe ET plus d'adénomégalie (grand axe≤15mm ET petit axe ≤10mm)</li>
+                            <li>et plus de splénomégalie (rate <13cm)</li></ul>
                             <li><b>Maladie stable</b> sinon (ni PD, ni PR, ni CR)</li></ul>
+                            * Remarque : La publication de Lugano (2014) ne précise pas de seuil de significativité pour les variations de 50% de la hauteur de rate au-dessus de 13cm. Sans seuil, 131mm->132mm (+100%) => PD alors que c'est SD. Je prends un seuil minimal de 1cm en interprétant assez largement la phrase "1.0 cm for lesions > 2 cm" dans la définition de PD.
                     </div>
                     <p></p>
                     <div class="w3-container w3-teal">Références</div>
@@ -832,7 +839,7 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                         <li>Il faut ensuite ouvrir l'application une fois depuis son icône sur 
                         l'écran d'accueil du téléphone et elle devrait ensuite fonctionner en 
                         mode hors ligne.</li>
-                        <li>Sur Chrome sous Android, le menu ajouter à l'écran d'accueil est présent dans les options générales de la page web en haut à droite. (Installation en tant qu'application web progressive).</li></ul>
+                        <li>Sur Chrome sous Android, le menu "Installer l'application" est présent dans les options générales de la page web en haut à droite. (Installation en tant qu'application web progressive).</li></ul>
                     </ul>
                 </div>
                 <p></p>
@@ -868,10 +875,10 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                 <p><span class="w3-tag w3-large w3-teal">Sténose : </span> <span id="nascet_ste">-</span></p>
                 <p><button class="w3-btn w3-indigo" icstenose=3 >Calculer</button></p>
             <div class="w3-container w3-teal">
-                <h5>Équivalence % ECST → NASCET</h5>
+                <h5>Équivalence ECST → NASCET</h5>
             </div><br>
-            <label class="w3-text-teal"><b>ECST</b></label><input required class="w3-input w3-border w3-light-grey" iecstconv=1 type="number" min="1" step="any" id="ecstconv" title="Seulement des chiffres S.V.P."></p>
-            <p><span class="w3-tag w3-large w3-teal">NASCET : </span> <span id="ECSTNASCET">-</span></p>
+            <label class="w3-text-teal"><b>% ECST</b></label><input required class="w3-input w3-border w3-light-grey" iecstconv=1 type="number" min="1" step="any" id="ecstconv" title="Seulement des chiffres S.V.P."></p>
+            <p><span class="w3-tag w3-large w3-teal">% NASCET : </span> <span id="ECSTNASCET">-</span></p>
             <p><button class="w3-btn w3-indigo" iecstconv=2>Calculer</button></p>
             <button type="button" class="collapsible collapsible100 w3-teal">Remarques</button>
                 <div class="collapsecontent">
@@ -998,8 +1005,8 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
             <div class="w3-container w3-teal">
                 <h5>EU-TIRADS 2017</h5>
             </div>
-            <div  class="w3-responsive">
-            <table table class="w3-table-all ">
+            <div  class="w3-responsive" >
+            <table table class="w3-table-all w3-mobile"> <!--w3-mobile semble ok pr l'overflow des table-->
                 <tbody>
                 <tr>
                 <th>2</th>

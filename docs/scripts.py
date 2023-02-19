@@ -844,6 +844,7 @@ def lugano_pd(formule:str,just_split:bool=False):
         raise ValueError
 
 def calclugano(ev):
+    #cette fonction est illisible, faudrait couper, peut être avec des objets clairs qu'on initialise... et faire des if else fermés.
     sumb_manuel=None #super hackish... sert à désactiver les vérifications de tableau
     suma_manuel=None
     lugano_warning:str=""
@@ -868,7 +869,7 @@ def calclugano(ev):
         lugano_ratedefined:bool=False
         lugano_pasadenomegalie:bool=True
         del lilugano[-1] #le dernier item c'est le bouton qui n'a pas de valeur 
-        lilugano_rate.append(lilugano.pop())
+        lilugano_rate.append(lilugano.pop()) #la liste est inversée le 0 c'est le nouveau et le 1 c'est l'ancien
         lilugano_rate.append(lilugano.pop())
         for i in range(1,13):
             item=lilugano.pop()
@@ -948,31 +949,34 @@ def calclugano(ev):
         #conversion de lilugano_rate en liste de str(float)
         lilugano_rate[0]=lilugano_rate[0].value
         lilugano_rate[1]=lilugano_rate[1].value
+        percentevolrate130:float=0 #faut initialiser parce que sera pas forcément affectée après
+        absdiffrate:float=0
         if (lilugano_rate[0]!='' and lilugano_rate[1]=='') or (lilugano_rate[0]=='' and lilugano_rate[1]!=''):
             raise TypeError(7)#rate mal saisie
         elif lilugano_rate!=['','']:
             try:#conversion en float
                 lilugano_rate[0]=float(lilugano_rate[0])
                 lilugano_rate[1]=float(lilugano_rate[1])
-                ratehaut:float=lilugano_rate[0]-lilugano_rate[1]
+                absdiffrate=lilugano_rate[0]-lilugano_rate[1]
                 lugano_ratedefined=True
-                if lilugano_rate[1]<=130 and ratehaut>20:
-                    lugano_p_justif.append(f'La rate précédemment "normale" a augmenté de {round(ratehaut)}mm.')
+                if lilugano_rate[1]<=130 and absdiffrate>20:
+                    lugano_p_justif.append(f'La rate précédemment "normale" a augmenté de {round(absdiffrate)}mm.')
                 elif lilugano_rate[1]>130:
-                    percentevolrate130:float=100/(lilugano_rate[1]-130)*(lilugano_rate[0]-130)-100
-                    if percentevolrate130>50:
+                    percentevolrate130=100/(lilugano_rate[1]-130)*(lilugano_rate[0]-130)-100
+                    if percentevolrate130>50 and absdiffrate>=10:#je comprends de la progression qu'une lésion >2cm doit augm de +1cm
                         lugano_p_justif.append(f'La splénomégalie a augmenté de {round(percentevolrate130)}%.')
             except:
                 raise TypeError(7)
         if not lugano_ratedefined:
             lugano_warning+=" Il manque les mesures de la rate."
         if not lugano_p_justif:
-            if lugano<=-50 and lugano_ratedefined and percentevolrate130<=-50:
+            if lugano<=-50 and lugano_ratedefined and (lilugano_rate[0]<130 or (percentevolrate130<=-50 and absdiffrate>=10)): #et régression de la rate >13cm, SI elle est >13cm... et 'SI la régression est d'1cm (critère que j'ai inventé)'
                 lugano_pr=True
                 if lilugano_rate[0]<=130 and lugano_pasadenomegalie:
                     lugano_cr=True
 
-        lugano_avis:str=f"Progression : {' '.join(reversed(lugano_p_justif))}" if lugano_p_justif else "Réponse complète (si les non-cibles ont aussi disparu)" if lugano_cr else "Réponse partielle" if lugano_pr else "Maladie stable" if lugano_warning=="" else ""
+        lugano_avis:str=f"Progression : {' '.join(reversed(lugano_p_justif))}" if lugano_p_justif else "Réponse complète (si les non-cibles ont aussi disparu)." if lugano_cr else "Réponse partielle." if lugano_pr else "Maladie stable." if lugano_warning=="" else ""
+        lugano_avis+=(" Splénomégalie." if lilugano_rate[0]>130 else "" ) + (" Adénomégalie(s)." if lugano_pasadenomegalie==False else "")
         document["lugano_lugano"].textContent ='SPD {:+.1f} %. {} {}'.format(lugano,lugano_avis,lugano_warning) #1 chiffre après , et signé
     except ZeroDivisionError as e:
         document["lugano_lugano"].textContent = "division par zéro : il doit y avoir une erreur de saisie de la colone 1 "
@@ -983,20 +987,12 @@ def calclugano(ev):
         if len(e.args)==1:
             ermsg=f"{ermsg} ligne {e.args[0]}"
         document["lugano_lugano"].textContent = ermsg
-    except Exception:
-        document["lugano_lugano"].textContent = "erreur générique"
+    except Exception:#Exception:
+        document["lugano_lugano"].textContent = "erreur générique : merci de m'envoyer une capture des données saisies..."
 
 formulaire_anime("lugano",calclugano)
 document["lugano_suma_manuel"].bind("change",calclugano)
 document["lugano_sumb_manuel"].bind("change",calclugano)
-
-def iclear(inom:str):
-    champs:list=document.select(f'[{inom}].w3-input')
-    for item in champs:
-        item.value=""
-    radio:list=document.select(f'[{inom}].w3-radio')
-    for item in radio:
-        item.checked=False
 
 def luganoleftoverclear(ev):
     document["lugano_suma"].textContent ="-"
