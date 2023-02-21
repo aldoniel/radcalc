@@ -585,7 +585,7 @@ def isnumber(s)->bool:
     except ValueError:
         return False
 
-def recist_switch(ev):
+def recist_inverse(ev):
     # inverse les listes avant et après (c'est peut être plus élégant que calcrecist mais comme ce dernier marche...)
     lirecist:list=document.select('[irecist]')
     del lirecist[-1]  #le dernier item c'est le bouton qui n'a pas de valeur
@@ -596,7 +596,7 @@ def recist_switch(ev):
         a.value=c
     calcrecist(None)
 
-document["recist_inverse"].bind("click", recist_switch)
+document["recist_inverse"].bind("click", recist_inverse)
 
 def calcrecist(ev):
     sumb_manuel=None #super hackish... sert à désactiver les vérifications de tableau
@@ -843,8 +843,8 @@ def lugano_pd(formule:str,just_split:bool=False):
     except ValueError:
         raise ValueError
 
-def calclugano(ev):
-    #cette fonction est illisible, faudrait couper, peut être avec des objets clairs qu'on initialise... et faire des if else fermés.
+def calclugano(ev): #cette fonction est horriblement mal écrite, hackish et longue. J'ai peur.
+    #gère le calcul et l'affichage de lugano
     sumb_manuel=None #super hackish... sert à désactiver les vérifications de tableau
     suma_manuel=None
     lugano_warning:str=""
@@ -976,13 +976,13 @@ def calclugano(ev):
                     lugano_cr=True
 
         lugano_avis:str=f"Progression : {' '.join(reversed(lugano_p_justif))}" if lugano_p_justif else "Réponse complète (si les non-cibles ont aussi disparu)." if lugano_cr else "Réponse partielle." if lugano_pr else "Maladie stable." if lugano_warning=="" else ""
-        lugano_avis+=(" Splénomégalie." if lilugano_rate[0]>130 else "" ) + (" Adénomégalie(s)." if lugano_pasadenomegalie==False else "")
+        lugano_avis+=(" Splénomégalie." if (lugano_ratedefined and lilugano_rate[0]>130) else "" ) + (" Adénomégalie(s)." if lugano_pasadenomegalie==False else "") #le if (lugano_ratedefined est un vieux hack car le code est dégueu et je lis une varible parfois indéfinie avec un nom réutilisé...
         document["lugano_lugano"].textContent ='SPD {:+.1f} %. {} {}'.format(lugano,lugano_avis,lugano_warning) #1 chiffre après , et signé
     except ZeroDivisionError as e:
         document["lugano_lugano"].textContent = "division par zéro : il doit y avoir une erreur de saisie de la colone 1 "
         document["lugano_suma"].textContent ="-"
         document["lugano_sumb"].textContent ="-"
-    except TypeError as e:
+    except TypeError as e:#TypeError as e:
         ermsg:str="erreur de saisie"
         if len(e.args)==1:
             ermsg=f"{ermsg} ligne {e.args[0]}"
@@ -1003,6 +1003,19 @@ def luganoleftoverclear(ev):
 
 document["lugano_clear"].bind("click", lambda ev:iclear("ilugano"))
 document["lugano_clear"].bind("click", luganoleftoverclear)
+
+def lugano_inverse(ev):
+    # inverse les listes avant et après de lugano
+    lilugano:list=document.select('[ilugano]')
+    del lilugano[-1] #le dernier item c'est le bouton
+    c:str=""
+    for a,b in zip(lilugano[::2],lilugano[1::2]):
+        c=b.value
+        b.value=a.value
+        a.value=c
+    calclugano(None)
+
+document["lugano_inverse"].bind("click", lugano_inverse)
 
 # mesa
 def calcmesa(ev):
