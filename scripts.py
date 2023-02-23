@@ -700,19 +700,40 @@ document["recist_clear"].bind("click", recistleftoverclear)
 #washout
 
 def calcwashout(ev):
+    #calcule et affiche indépendamment WO rel, abs, relative enhancement
+    #il ne faut pas initialiser les variables... car l'affichage gère l'échec d'initialisation
+    zero:str="(division par 0)"
     try:
         uh0:float=float(document["uh0"].value)
         uh70:float=float(document["uh70"].value)
         uh15:float=float(document["uh15"].value)
-        worel:float= 100*(uh70-uh15)/uh70
-        woabs:float=100*(uh70-uh15)/(uh70-uh0)
-
+    except:
+        pass
+    try:
+        #print(f"uh0:{uh0} uh70:{uh70} uh15:{uh15}")
         document["washout_avis"].html="Remarque : la densité spontanée est entre -30 et -115 U.H., ne s'agit-il pas d'un myélolipome ? ...</p>" if (uh0<=-30 and uh0>=-115) else "<p>Remarque : la densité spontanée est ≤ à 10 U.H., en faveur d'un adénome. Le calcul du lavage n'était pas nécessaire.</p>" if uh0<=10 else "erreur de saisie ?" if uh0>200 else ""
+    except:
+        document["washout_avis"].html=""
+    try:
+        rel_en=(uh70-uh0)/uh0*100
+        document["relative_enhancement"].textContent = '{:+.1f} % : {}'.format(rel_en,"en faveur d'un adénome" if rel_en>=210 else "indéterminé")
+    except ZeroDivisionError:
+        document["relative_enhancement"].textContent = zero
+    except Exception:
+        document["relative_enhancement"].textContent = "-"
+    try:
+        worel:float= 100*(uh70-uh15)/uh70
         document["washout_relatif"].textContent ='{:+.1f} % : {}'.format(worel,"en faveur d'un adénome" if worel>=40 else "indéterminé")
-        document["washout_absolu"].textContent = '{:+.1f} % : {}'.format(woabs,"en faveur d'un adénome" if woabs>=60 else "indéterminé")
-
+    except ZeroDivisionError:
+        document["washout_relatif"].textContent = zero
     except Exception:
         document["washout_relatif"].textContent = "-"
+    try:
+        woabs:float=100*(uh70-uh15)/(uh70-uh0)
+        document["washout_absolu"].textContent = '{:+.1f} % : {}'.format(woabs,"en faveur d'un adénome" if woabs>=60 else "indéterminé")
+    except ZeroDivisionError:
+        document["washout_absolu"].textContent = zero
+    except Exception:
         document["washout_absolu"].textContent = "-"
 
 formulaire_anime("washout",calcwashout)
@@ -982,12 +1003,12 @@ def calclugano(ev): #cette fonction est horriblement mal écrite, hackish et lon
         document["lugano_lugano"].textContent = "division par zéro : il doit y avoir une erreur de saisie de la colone 1 "
         document["lugano_suma"].textContent ="-"
         document["lugano_sumb"].textContent ="-"
-    except TypeError as e:#TypeError as e:
+    except TypeError as e:
         ermsg:str="erreur de saisie"
         if len(e.args)==1:
             ermsg=f"{ermsg} ligne {e.args[0]}"
         document["lugano_lugano"].textContent = ermsg
-    except Exception:#Exception:
+    except Exception:
         document["lugano_lugano"].textContent = "erreur générique : merci de m'envoyer une capture des données saisies..."
 
 formulaire_anime("lugano",calclugano)

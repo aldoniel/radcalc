@@ -278,7 +278,7 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
   margin: auto;
   display: block;
   width: 100%;
-  max-width: 1000px;
+  /*max-width: 1000px; je ne sais pas trop d'où ça sort*/
   text-align: center;
   color: #ccc;
   padding: 10px 0;

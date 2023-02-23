@@ -17,7 +17,7 @@ Permet de calculer
 * Endoc
     * calcul wash-out surrénales
     * volume testicule ; volume surface ovaire
-    * [ ] mémo tirads, lirads...
+    * mémo tirads, lirads...
 * Vasculaire
     * % sténose
     * score d'accident coronarien MESA à 10 ans
@@ -40,7 +40,7 @@ Il faut ensuite ouvrir l'application une fois depuis son icône sur l'écran d'a
 
 ## Todo
 1. [ ] se motiver pour étudier un auto adaptateur d'injection d'iode même si la SFR est pas intéressée...
-1. [ ] ajout nouveau calcul adénomes
+1. [x] ajout nouveau calcul adénomes
 1. [x] ajouter inverser à lugano
 1. [x] essayer de publier une web app ios
 1. [x] ajouter inverser avant et après dans le recist

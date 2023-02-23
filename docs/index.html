@@ -755,9 +755,11 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
             <p><label class="w3-text-teal"><b>Densité au temps tardif à 15' (10-15')</b></label>
                 <input required class="w3-input w3-border w3-light-grey" iwashout=3 type="number" min="-115" step="any" id="uh15" title="Seulement des chiffres S.V.P."></p>
             <div id="washout_avis"></div>
-            <p><span class="w3-tag w3-large w3-teal">Wash out relatif</span> <span id="washout_relatif">-</span></p>
-            <p><span class="w3-tag w3-large w3-teal">Wash out absolu</span> <span id="washout_absolu">-</span></p>
-            <p><button class="w3-btn w3-indigo" iwashout=4 >Calculer</button></p> <!--je mets plus d'id, ac formulaire_anime, ça sert plus -->
+            <p><span class="w3-tag w3-large w3-teal">Wash out absolu</span> <span id="washout_absolu">-</span><br>à privilégier</p>
+            <p><span class="w3-tag w3-large w3-teal">Wash out relatif</span> <span id="washout_relatif">-</span><br>si IV- non fait</p>
+            <p><span class="w3-tag w3-large w3-teal">Relative enhancement ratio<a href="#yasunori">*</a></span> <span id="relative_enhancement">-</span><br>non validé. Si pas de tardif.</p>
+            <p><button class="w3-btn w3-indigo" iwashout=4 >Calculer</button></p>
+            <p>NB : Ces calculs ont des conditions de validité (cf mémo).</p>
             
             <div class="w3-container w3-teal">
                 <h5>Chute de signal en IRM</h5>
@@ -777,11 +779,14 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
 
             
             <div class="w3-container w3-teal">Mémo</div>
+            <h5>Recommandation ACR 2017</h5>
+            <p><a href="https://www.jacr.org/article/S1546-1440(17)30551-3/fulltext" target="_blank">Management of Incidental Adrenal Masses: A White Paper of the ACR Incidental Findings Committee</a></p>
+            <button type="button" modalbouton="" class="w3-button w3-indigo" src="img/acr2017.png" alt="Algorithm for evaluation of an incidentally detected adrenal mass. (1) Consider biochemical assays[...] (3) “Isolated” defined as no other metastatic disease identified. (4) May consider chemical-shift MRI (CS-MR). APW = absolute percentage washout; Ca++ = calcification[calcified mass]; F/U = follow-up; HU = Hounsfield units; Hx = history; NCCT = CT without intravenous contrast; RPW = relative percentage washout; + = positive.">Algorithme ACR 2017</button>  
             <h5>Algorithme décisionnel</h5>
             <ol> 
                 <li>Contexte ? (oncologique, syndrome hormonal, hématome, tuberculose...)</li>
                 <li>Si la masse est > 6cm ou à croissance rapide, elle est suspecte (25% de néoplasies après 6cm); les adénomes sont <4 cm et homogènes.</li>
-                <li>Si la densité spontanée est <10U.H., → STOP : en faveur d'un adénome (riche en graisse) (seuil pour Se 71% ; Sp 98% <a href="https://www.ajronline.org/doi/10.2214/ajr.171.1.9648789" target="_blank">cf. réf</a>)</li>
+                <li>Si la densité spontanée est ≤10U.H., → STOP : en faveur d'un adénome (riche en graisse) (seuil pour Se 71% ; Sp 98% <a href="https://www.ajronline.org/doi/10.2214/ajr.171.1.9648789" target="_blank">cf. réf</a>)</li>
                 <ul><li>Remarque, les informations infra sont données pour les adénomes pauvres en graisse (Les seuils et couples Se/Sp sont différents sinon) et non-nécrotiques.</li></ul>
                 <li>Calcul du washout (W.O.) relatif et absolu au scanner</li>
                     <ol type='A'>
@@ -805,7 +810,9 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
             </ul>
             <h5>Références</h5>
             <ul><li>Notes largement issues de <a href="https://dx.doi.org/10.1259/bjr.20151018" target="_blank">Adrenal imaging for adenoma characterization..., BJR 2016, Jung Jae Park et al.</a> </li>
-            <li><a href="http://www.sfendocrino.org/_images/mediatheque/articles/pdf/recommandations/2006%20consensus%20sfe%20incidentalomes%20surrenaliens.pdf" target="_blank">Consensus SFE 2006 incidentalomes surrénaliens</a></li></ul>
+            <li><a href="http://www.sfendocrino.org/_images/mediatheque/articles/pdf/recommandations/2006%20consensus%20sfe%20incidentalomes%20surrenaliens.pdf" target="_blank">Consensus SFE 2006 incidentalomes surrénaliens</a></li>
+            <li>* <a id="yasunori"></a><a href="https://pubs.rsna.org/doi/full/10.1148/radiol.2021210231" target="_blank">Relative Enhancement Ratio of Portal Venous Phase to Unenhanced CT in the Diagnosis of Lipid-poor Adrenal Adenomas</a>, Yasunori Nagayama, Radiology 2021 </li>
+            <ul><li>Une seule étude. Se 86% Sp 95% pour détecter les adénomes pauvres en graisse avec un seuil >210%. Ne nécessite qu'un IV- et un portal (à 70-80").</li></ul></ul>
         </div>
         <!--onglet apropos -->
         <div id="apropos" class="w3-container w3-border onglet" style="display:none">
@@ -850,7 +857,7 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                     <li>Les informations sont traitées localement, hors ligne.</li>
                     <li>Il n'y a pas de contenu distant en dehors des hyperliens.</li>
                     <li>Il n'y a pas de publicité (ni aucun financement externe.)</li>
-                    <li>Le code est un mélange de python via <a href="https://brython.info/" target="_blank">Brython</a>, de <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">W3.CSS</a>, html, javascript.</li>
+                    <li>Le <a href="https://github.com/aldoniel/radcalc" target="_blank">code, open-source</a>, est un mélange de python via <a href="https://brython.info/" target="_blank">Brython</a>, de <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">W3.CSS</a>, html, javascript.</li>
                     <li>L'application est portée sur android par <a href="https://cordova.apache.org/" target="_blank">Cordova</a>.</li>
                     <li>Les jolies icônes sont de <a href="https://openmoji.org/" target="_blank">OpenMoji</a>, le sigle du chaos qui sert à caser les onglets divers est de Fibonacci sous licence GFDL</li>
                     <li>La fonction <a href="https://github.com/anitasv/zoom" target="_blank">Zoom it!</a> est de anitasv</li>
@@ -1137,13 +1144,14 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                 <p><span class="w3-tag w3-large w3-teal">Surface : </span> <span id="surface_bsa">-</span></p>
                 <p><span class="w3-tag w3-large w3-teal">IMC : </span> <span id="surface_imc">-</span></p>
             <p><button class="w3-btn w3-indigo" isurface=3>Calculer</button></p>
-            <div class="w3-container w3-teal">Remarques</div>
+            <button type="button" class="collapsible collapsible100 w3-teal">Remarques</button>
+            <div class="collapsecontent">
                 <ul><li>Le choix de l'équation de la surface corporelle est délicat car il en existe un grand nombre, certaines a priori plus précises que d'autres, sans que la différence 
                     entre les meilleures soit cliniquement très significative (car les meilleures formules donnent des résultats voisins qui se perdent dans l'arrondi, alors même que la surface corporelle donne une impression de rigueur scientifique tout en ignorant les 
                     variants enzymatiques, rénaux, vasculaires etc.). La formule de Mosteller, établie en 1987, est une approximation de la formule de Gehan and George (obtenue en 1970 par mesure directe sur 401 individus). Elle a l'avantage
                 unique de donner le même résultat si on inverse le poids et la taille par erreur [Mosteller = (taille_cm * poids_kg /3600)<sup>0,5</sup>] tout en restant précise, valable chez l'enfant, simple. Elle est 
             recommandée par <a href="https://www.cancercareontario.ca/sites/ccocancercare/files/assets/CCOBodyCalculation.pdf" target="_blank">l'Action Cancer Ontario.</a></li>
-                </ul>
+                </ul></div>
         </div> 
 
         <script>
