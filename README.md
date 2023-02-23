@@ -17,7 +17,7 @@ Permet de calculer
 * Endoc
     * calcul wash-out surrénales
     * volume testicule ; volume surface ovaire
-    * mémo tirads, lirads...
+    * mémo tirads
 * Vasculaire
     * % sténose
     * score d'accident coronarien MESA à 10 ans

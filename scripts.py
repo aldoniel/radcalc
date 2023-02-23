@@ -455,10 +455,17 @@ def vtd_3m(ev):
     a.setMonth(a.getMonth() - 3)
     document["vtd_date1"].value=a.toISOString()[0:10]
 
+def vtd_1a(ev):
+    #calculter today-12m
+    a=Date.new()
+    a.setMonth(a.getMonth() - 12)
+    document["vtd_date1"].value=a.toISOString()[0:10]
 
 document["vtd_3m"].bind("click", vtd_3m)
 document["vtd_ajd"].bind("click", vtd_calc)
 document["vtd_3m"].bind("click", vtd_calc)
+document["vtd_1a"].bind("click", vtd_1a)
+document["vtd_1a"].bind("click", vtd_1a)
 
 # modal
 
