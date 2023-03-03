@@ -710,14 +710,19 @@ def calcwashout(ev):
     #calcule et affiche indépendamment WO rel, abs, relative enhancement
     #il ne faut pas initialiser les variables... car l'affichage gère l'échec d'initialisation
     zero:str="(division par 0)"
-    try:
+    try: #c'est moche mais je ne vois pas d'alternative à part obtenir un type inconnu et le caster au calcul
         uh0:float=float(document["uh0"].value)
+    except:
+        pass
+    try:
         uh70:float=float(document["uh70"].value)
+    except:
+        pass
+    try:
         uh15:float=float(document["uh15"].value)
     except:
         pass
     try:
-        #print(f"uh0:{uh0} uh70:{uh70} uh15:{uh15}")
         document["washout_avis"].html="Remarque : la densité spontanée est entre -30 et -115 U.H., ne s'agit-il pas d'un myélolipome ? ...</p>" if (uh0<=-30 and uh0>=-115) else "<p>Remarque : la densité spontanée est ≤ à 10 U.H., en faveur d'un adénome. Le calcul du lavage n'était pas nécessaire.</p>" if uh0<=10 else "erreur de saisie ?" if uh0>200 else ""
     except:
         document["washout_avis"].html=""

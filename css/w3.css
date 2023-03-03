@@ -338,6 +338,7 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
   width: 100%;
   padding: 10px;
   font-size: 15px; */
+  background-color:#4CAF50; /*test lié au comportement différent du fond coloré sous android, qui sans ça reste gris après un contact... */
   border: none;
   outline: none;
   cursor: pointer;

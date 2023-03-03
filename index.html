@@ -31,7 +31,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
             document.addEventListener('deviceready', brython, false); // l'event deviceready est lancé quand le code natif codova a fini de charger (au cas où brython appelle une function javascript de cordova)
             brython() // pour tester dans le navigateur, à enlever sur téléphone
         }
-        var versionweb=true; //idem. global
+        var versionweb=true; //idem. global. sert à couper la licence si true
     </script>
 </head>
 
@@ -755,12 +755,20 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
             <p><label class="w3-text-teal"><b>Densité au temps tardif à 15' (10-15')</b></label>
                 <input required class="w3-input w3-border w3-light-grey" iwashout=3 type="number" min="-115" step="any" id="uh15" title="Seulement des chiffres S.V.P."></p>
             <div id="washout_avis"></div>
-            <p><span class="w3-tag w3-large w3-teal">Wash out absolu</span> <span id="washout_absolu">-</span><br>à privilégier</p>
-            <p><span class="w3-tag w3-large w3-teal">Wash out relatif</span> <span id="washout_relatif">-</span><br>si IV- non fait</p>
-            <p><span class="w3-tag w3-large w3-teal">Relative enhancement ratio<a href="#yasunori">*</a></span> <span id="relative_enhancement">-</span><br>non validé. Si pas de tardif.</p>
+            <p><span class="w3-tag w3-large w3-teal">Wash out absolu</span> <span id="washout_absolu">-</span></p>
+            <p><span class="w3-tag w3-large w3-teal">Wash out relatif</span> <span id="washout_relatif">-</span></p>
+            <p><span class="w3-tag w3-large w3-teal">Relative enhancement ratio<a href="#yasunori">*</a></span> <span id="relative_enhancement">-</span></p>
             <p><button class="w3-btn w3-indigo" iwashout=4 >Calculer</button></p>
-            <p>NB : Ces calculs ont des conditions de validité (cf mémo).</p>
-            
+            <button type="button" class="collapsible collapsible100 w3-teal">Remarques</button>
+                    <div class="collapsecontent">
+                    <ul>
+                    <li>NB : Ces calculs ont des conditions de validité (cf mémo).</li>
+                    <li>Le wash out absolu est à privilégier.</li>
+                    <li>Le wash out relatif est utilisable si l'IV- est non fait.</li>
+                    <li>Le relative enhancement ratio est non validé (une étude cf réf., reproduite), mais peut suggérer fortement un adénome si on n'a juste un IV- et un portal.</li>
+
+                    </ul>
+                    </div>            
             <div class="w3-container w3-teal">
                 <h5>Chute de signal en IRM</h5>
             </div>
