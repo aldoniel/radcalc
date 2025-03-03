@@ -31,7 +31,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
             document.addEventListener('deviceready', brython, false); // l'event deviceready est lancé quand le code natif codova a fini de charger (au cas où brython appelle une function javascript de cordova)
             brython() // pour tester dans le navigateur, à enlever sur téléphone
         }
-        var versionweb=true; //idem. global
+        var versionweb=true; //idem. global. sert à couper la licence si true
     </script>
 </head>
 
@@ -46,6 +46,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                 <div class="w3-dropdown-content w3-bar-block w3-card-4" style="display:none">
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'volume')">Volume ellipsoïde</a>
                     <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'surface')">IMC ; Surface corporelle</a>
+                    <a href="#" class="w3-bar-item w3-button tablink"  onclick="openonglet(event,'prema')">Âge</a>
                     <a href="#" class="w3-bar-item w3-button tablink" id="evapropos" onclick="openonglet(event,'apropos')">À propos</a>
                 </div>
             </div></td>
@@ -122,7 +123,7 @@ Ce logiciel est régi par la licence CeCILL "http://www.cecill.info".-->
                 </p>
                 <p><span class="w3-tag w3-large w3-teal">MDRD</span> <span id="MDRD">-</span> ml/min/1,73 m<sup>2</sup> de DFG</p>
                 <p><span class="w3-tag w3-large w3-teal">CKD-EPI</span> <span id="CKD">-</span> ml/min/1,73 m<sup>2</sup> de DFG</p>
-                <p><input id="IDMS"  type="checkbox"> Standardisation IDMS (indispensable pour l'équation du CKD-EPI)</p>
+                <p><input id="IDMS"  type="checkbox" checked> Standardisation IDMS (indispensable pour l'équation du CKD-EPI)</p>
 
                 <label class="w3-text-teal"><b>Poids (kg ; seulement pour Cockcroft) ?</b></label>
                 <input class="w3-input w3-border w3-light-grey" type="number" min="1"  step="any" id=poids ipoids=1 title="Seulement des chiffres S.V.P.">
@@ -755,13 +756,23 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
             <p><label class="w3-text-teal"><b>Densité au temps tardif à 15' (10-15')</b></label>
                 <input required class="w3-input w3-border w3-light-grey" iwashout=3 type="number" min="-115" step="any" id="uh15" title="Seulement des chiffres S.V.P."></p>
             <div id="washout_avis"></div>
-            <p><span class="w3-tag w3-large w3-teal">Wash out absolu</span> <span id="washout_absolu">-</span><br>à privilégier</p>
-            <p><span class="w3-tag w3-large w3-teal">Wash out relatif</span> <span id="washout_relatif">-</span><br>si IV- non fait</p>
-            <p><span class="w3-tag w3-large w3-teal">Relative enhancement ratio<a href="#yasunori">*</a></span> <span id="relative_enhancement">-</span><br>non validé. Si pas de tardif.</p>
+            <p><span class="w3-tag w3-large w3-teal">Wash out absolu</span> <span id="washout_absolu">-</span></p>
+            <p><span class="w3-tag w3-large w3-teal">Wash out relatif</span> <span id="washout_relatif">-</span></p>
+            <p><span class="w3-tag w3-large w3-teal">Relative enhancement ratio<a href="#yasunori">*</a></span> <span id="relative_enhancement">-</span></p>
             <p><button class="w3-btn w3-indigo" iwashout=4 >Calculer</button></p>
-            <p>NB : Ces calculs ont des conditions de validité (cf mémo).</p>
-            
+            <button type="button" class="collapsible collapsible100 w3-teal">Remarques</button>
+                    <div class="collapsecontent">
+                    <ul>
+                    <li>NB : Ces calculs ont des conditions de validité (cf mémo).</li>
+                    <li>Le wash out absolu est à privilégier.</li>
+                    <li>Le wash out relatif est utilisable si l'IV- est non fait.</li>
+                    <li>Le relative enhancement ratio est non validé (une étude cf réf., reproduite), mais peut suggérer fortement un adénome si on n'a juste un IV- et un portal.</li>
+
+                    </ul>
+                    </div>
+                    <p></p>
             <div class="w3-container w3-teal">
+                <p></p>
                 <h5>Chute de signal en IRM</h5>
             </div>
             <p><label class="w3-text-teal"><b>Surrénale : Signal en phase</b></label>
@@ -851,7 +862,7 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                     </ul>
                 </div>
                 <p></p>
-            <button type="button" class="collapsible collapseh5 w3-teal">À propos : RadCalc 1.6</button>
+            <button type="button" class="collapsible collapseh5 w3-teal">À propos : RadCalc 1.7</button>
                 <div class="collapsecontent"> 
                 <ul>
                     <li>Les informations sont traitées localement, hors ligne.</li>
@@ -1151,6 +1162,27 @@ En 3D, par le volume du prisme X*Y*Z/2.</p>
                     variants enzymatiques, rénaux, vasculaires etc.). La formule de Mosteller, établie en 1987, est une approximation de la formule de Gehan and George (obtenue en 1970 par mesure directe sur 401 individus). Elle a l'avantage
                 unique de donner le même résultat si on inverse le poids et la taille par erreur [Mosteller = (taille_cm * poids_kg /3600)<sup>0,5</sup>] tout en restant précise, valable chez l'enfant, simple. Elle est 
             recommandée par <a href="https://www.cancercareontario.ca/sites/ccocancercare/files/assets/CCOBodyCalculation.pdf" target="_blank">l'Action Cancer Ontario.</a></li>
+                </ul></div>
+        </div> 
+
+
+         <!--onglet prema -->
+
+         <div id="prema" class="w3-container w3-border onglet" style="display:none">
+            <div class="w3-container w3-teal">
+                <h5>Âge</h5>
+            </div>
+            <p><button class="w3-btn w3-red" id="prema_clear">Effacer les valeurs</button></p>
+            <p><label class="w3-text-teal"><b>Date de naissance ?</b></label>
+                <input required class="w3-input w3-border w3-light-grey" iprema=1 type="date" id="prema_ddn" placeholder="dd-mm-yyyy" value="" title="Date"></p>
+                <p><label class="w3-text-teal"><b>Terme en S.A. (ex "35+2" pour 35SA+2j, "37" pour 37SA+0)</b></label>
+                    <input required class="w3-input w3-border w3-light-grey" iprema=2 type="tel" min="0" step="any" id="prema_terme"></p>
+                <p><span class="w3-tag w3-large w3-teal">Âge : </span> <span id="prema_age">-</span></p>
+                <p><span class="w3-tag w3-large w3-teal">Âge corrigé : </span> <span id="prema_agecor">-</span></p>
+            <p><button class="w3-btn w3-indigo" iprema=3>Calculer</button></p>
+            <button type="button" class="collapsible collapsible100 w3-teal">Remarques</button>
+            <div class="collapsecontent">
+                <ul><li>Arbitrairement : On retient un seuil de 40SA pour le calcul du terme attendu. L'enfant naît à minuit et a 0 jours d'âge avant midi et 1 jour après avec l'arrondi.</a></li>
                 </ul></div>
         </div> 
 

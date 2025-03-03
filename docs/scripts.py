@@ -710,14 +710,19 @@ def calcwashout(ev):
     #calcule et affiche indépendamment WO rel, abs, relative enhancement
     #il ne faut pas initialiser les variables... car l'affichage gère l'échec d'initialisation
     zero:str="(division par 0)"
-    try:
+    try: #c'est moche mais je ne vois pas d'alternative à part obtenir un type inconnu et le caster au calcul
         uh0:float=float(document["uh0"].value)
+    except:
+        pass
+    try:
         uh70:float=float(document["uh70"].value)
+    except:
+        pass
+    try:
         uh15:float=float(document["uh15"].value)
     except:
         pass
     try:
-        #print(f"uh0:{uh0} uh70:{uh70} uh15:{uh15}")
         document["washout_avis"].html="Remarque : la densité spontanée est entre -30 et -115 U.H., ne s'agit-il pas d'un myélolipome ? ...</p>" if (uh0<=-30 and uh0>=-115) else "<p>Remarque : la densité spontanée est ≤ à 10 U.H., en faveur d'un adénome. Le calcul du lavage n'était pas nécessaire.</p>" if uh0<=10 else "erreur de saisie ?" if uh0>200 else ""
     except:
         document["washout_avis"].html=""
@@ -1124,3 +1129,54 @@ def calcovr(ev):
 
 formulaire_anime("ovr",calcovr)
 document["ovr_clear"].bind("click", lambda ev:iclear("iovr"))
+
+#prema
+
+def prema_sa_en_j(sa:str)->int:
+    #calcule le nb de jour des semaines
+    if sa=="":
+        return 0#fomulaire vide
+    j:int=0 #nb de jours
+    try:
+        j=int(sa)*7
+    except ValueError:
+        try:
+            t:tuple=tuple(map(int,sa.lower().split("+"))) #conversion en tupple de int
+            #On admet qu'on gère les cas type 35+2+3 comme 35+2
+            j=t[0]*7+t[1]
+        except ValueError:
+            raise ValueError
+    return(280-j)
+
+def convert_days(days:int):
+    days_in_month = 30
+    years:int = days // 365
+    remaining_days:int = days % 365
+    months:int = remaining_days // days_in_month
+    remaining_days %= days_in_month
+    return years, months, remaining_days 
+
+def calcprema(ev):
+    try:
+        prema_ddn:str=str(document["prema_ddn"].value)
+        prema_jours:int=prema_sa_en_j(document["prema_terme"].value)
+        age:int=round((Date.new().getTime()-Date.new(prema_ddn).getTime())/86400000)#en jours
+        age_cor:int=age-prema_jours
+        y,m,d=convert_days(age)
+        if age_cor<0:
+            age_cor_str=f"{(280+age_cor)//7}SA + {(280+age_cor)%7}j."
+        else:
+            y2,m2,d2=convert_days(age_cor)
+            age_cor_str=f"{y2} an(s), {m2} mois, {d2} jours"
+
+        document["prema_age"].textContent =f"{y} an(s), {m} mois, {d} jours"
+        document["prema_agecor"].textContent =age_cor_str
+        #document["prema_agecor"].textContent ='{:.1f} kg/m²'.format((surface_kg/((surface_cm/100)**2)))
+
+    except ValueError:#mettre exception après test
+        document["prema_age"].textContent = '-'
+        document["prema_agecor"].textContent = '-'
+        
+
+formulaire_anime("prema",calcprema)
+document["prema_clear"].bind("click", lambda ev:iclear("iprema"))
