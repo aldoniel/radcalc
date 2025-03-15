@@ -1162,18 +1162,19 @@ def calcprema(ev):
         prema_jours:int=prema_sa_en_j(document["prema_terme"].value)
         age:int=round((Date.new().getTime()-Date.new(prema_ddn).getTime())/86400000)#en jours
         age_cor:int=age-prema_jours
+        if Number.isNaN(age_cor):
+            raise ValueError
         y,m,d=convert_days(age)
         if age_cor<0:
             age_cor_str=f"{(280+age_cor)//7}SA + {(280+age_cor)%7}j."
         else:
             y2,m2,d2=convert_days(age_cor)
             age_cor_str=f"{y2} an(s), {m2} mois, {d2} jours"
-
+        
         document["prema_age"].textContent =f"{y} an(s), {m} mois, {d} jours"
         document["prema_agecor"].textContent =age_cor_str
-        #document["prema_agecor"].textContent ='{:.1f} kg/m²'.format((surface_kg/((surface_cm/100)**2)))
 
-    except ValueError:#mettre exception après test
+    except Exception:
         document["prema_age"].textContent = '-'
         document["prema_agecor"].textContent = '-'
         
