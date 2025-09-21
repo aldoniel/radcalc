@@ -1148,13 +1148,14 @@ def prema_sa_en_j(sa:str)->int:
             raise ValueError
     return(280-j)
 
-def convert_days(days:int):
-    days_in_month = 30
-    years:int = days // 365
-    remaining_days:int = days % 365
-    months:int = remaining_days // days_in_month
-    remaining_days %= days_in_month
-    return years, months, remaining_days 
+def convert_days(days:int)->tuple[int,int,int]:
+    # convertit un nombre de jours en années, mois, jours avec une précision d'environ 1j. (car pas de date de référence)
+    # à noter que la définition float des années, mois donne des arrondis non intuitifs pour 365, 30
+    mois_greg:float = 30.436875
+    annee_greg:float =365.2425
+    ans,reste_jours=divmod(days,annee_greg)
+    mois,reste_jours = divmod(reste_jours , mois_greg)
+    return int(ans), int(mois), round(reste_jours)
 
 def calcprema(ev):
     try:
